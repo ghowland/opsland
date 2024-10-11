@@ -41,7 +41,7 @@ def GetLoginSessionFromRequest(config, request):
   return None
 
 
-def EnhancePagePayload(config, payload, request):
+def EnhancePagePayload(config, path_data, payload, request):
   # Duplicate to protect top level object
   payload = dict(payload)
 
@@ -57,27 +57,63 @@ def EnhancePagePayload(config, payload, request):
   # # Add the CPU Status
   # payload['cpu_status'] = f'''<span class="text-teal-600">CPU: {config.server_info.get('cpu_used', -1):.1f}%</span> Status: {thread_manager.CPU_INFO.current_info}'''
 
-  payload['breadcrumbs'] = generic_widget.DataForBreadcrumbs('Crumb', [{'For': '/else'}, {'The': '/no'}, {'Break': '/other'}])
+  page_name = path_data.get('page', 'Unknown Page')
+
+  payload['breadcrumbs'] = generic_widget.DataForBreadcrumbs(page_name, path_data.get('breadcrumbs', []))
+
+  payload['page_nav'] = config.data['nav']
+  
+  # Start trying to get the `page_group`, if it doesnt exist, get the page.  This is used to set the Nav Bar highlight so you know what section you are in
+  payload['page'] = path_data.get('page_group', path_data.get('page', 'Unknown Page'))
 
   return payload
 
 
-def ProcessPayloadData(payload_in):
-  payload_out = dict(payload_in)
+def ProcessPayloadData(config, path_data, payload_in):
+  payload = dict(payload_in)
 
-  # Process the Table Data
-  if 'tables' in payload_in:
-    # # Remove this from the output
-    # del payload_out['tables']
 
-    for table_key, table_info in payload_in['tables'].items():
-      LOG.info(f'Processing table: {table_key}   Data: {table_info}')
-      # payload_out[table_key] = generic_widget.DataForTableDictOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['fields'], '/hosts/%(_key)s')
-      payload_out['tables'][table_key] = generic_widget.DataForTableDictOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['fields'], '/hosts/%(_key)s')
+  # Perform data processing
+  if 'data' in path_data:
+    # Process Table: Dict of Dicts
+    if 'table_dict' in path_data['data']:
+      # Ensure we have a tables dict to store all our tables
+      if 'tables' not in payload: payload['tables'] = {}
 
-      # payload_out['table_data'][table_key] = generic_widget.DataForTableListOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['pkey'], table_info['fields'], f'/hostgroups/%(first)s')
+      for out_table_key, table_info in path_data['data']['table_dict'].items():
+        LOG.info(f'Processing table: Dict: {out_table_key}   Data: {table_info}')
 
-  return payload_out
+        if table_info['key'] not in payload:
+          LOG.error(f'''Missing Data Table key: {table_info['key']}''')
+          continue
+
+        # Get the table_data from our payload
+        table_data = payload[table_info['key']]
+        table_element = table_info.get('element', utility.GetRandomString())
+        primary_field_name = table_info['name']
+
+        payload['tables'][out_table_key] = generic_widget.DataForTableDictOfDicts(table_data, table_element, primary_field_name, table_info['fields'], table_info['link'])
+
+    # Process Table :List of Dicts
+    if 'table_list' in path_data['data']:
+      # Ensure we have a tables dict to store all our tables
+      if 'tables' not in payload: payload['tables'] = {}
+
+      for out_table_key, table_info in path_data['data']['table_list'].items():
+        LOG.info(f'Processing table: List: {out_table_key}   Data: {table_info}')
+
+        if table_info['key'] not in payload:
+          LOG.error(f'''Missing Data Table key: {table_info['key']}''')
+          continue
+
+        # Get the table_data from our payload
+        table_data = payload[table_info['key']]
+        table_element = table_info.get('element', utility.GetRandomString())
+        primary_field_name = table_info['name']
+
+        payload['tables'][out_table_key] = generic_widget.DataForTableListOfDicts(table_data, table_element, primary_field_name, table_info['link_field'], table_info['fields'], table_info['link'])
+
+  return payload
 
 
 def RenderPathData(request, config, path_data):
@@ -101,11 +137,11 @@ def RenderPathData(request, config, path_data):
 
     # LOG.debug(f'Base Payload: {payload}')
 
-    payload = ProcessPayloadData(payload)
+    payload = ProcessPayloadData(config, path_data, payload)
 
     LOG.debug(f'After Processing Payload: {payload}')
 
-    payload = EnhancePagePayload(config, payload, request)
+    payload = EnhancePagePayload(config, path_data, payload, request)
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 

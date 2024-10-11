@@ -3,6 +3,20 @@ git: {}
 cache_path_format:
   login_sessions: ~/.secure/opsland/logins.json
 
+nav:
+  bar:
+    Home: /
+    Info: /info
+    Work: /work
+    Status: /status
+    Problems: /problem
+  
+  user:
+    Status: /status
+    Progress: /progress
+    Work: /work
+    Settings: /settings
+    Sign Out: /signout
 
 http:
   get:
@@ -10,3 +24,35 @@ http:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
       dir: /mnt/d/_OpsLand/opsland-example/
       template: pages/generic_view.html.j2
+
+      page: Home
+      page_group: Info
+
+      breadcrumbs:
+        - For: /else
+        - The: /if
+        - Win: /not
+
+      data:
+        table_dict:
+          # Payload output key
+          table_data_dict:
+            key: data_dict
+            name: Example Data 1
+            element: generic_table
+            link: "/example/%(_key)s"
+            fields:
+              - "First": first
+              - "Second": second
+
+        table_list:
+          # Payload output key
+          table_data_list:
+            key: data_list
+            name: Example Data 2
+            element: generic_table
+            link: "/example/%(second)s"
+            link_field: id
+            fields:
+              - "First": first
+              - "Second": second
