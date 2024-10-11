@@ -1,1 +1,8 @@
 git: {}
+
+
+http:
+  get:
+    "status":
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
+      dir: /mnt/d/_OpsLand/opsland-example/

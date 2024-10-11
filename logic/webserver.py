@@ -32,6 +32,8 @@ from jinja2_fragments import render_block
 from logic.log import LOG
 from logic import utility_jinja
 
+from logic import utility
+
 
 # Globals to connect to other OpsLand components
 THREAD_MANAGER = None
@@ -95,14 +97,50 @@ def Shutdown():
   os.kill(os.getpid(), signal.SIGTERM)
 
 
+def GetPathData(method, path):
+  """Returns a dict with the path_data, or None of not found for this method and path"""
+  global CONFIG
+  
+  http_data_methods = CONFIG.data['http']
+
+  if method not in http_data_methods:
+    return None
+  
+  http_data = http_data_methods[method]
+
+  if path not in http_data:
+    return None
+  
+  return http_data[path]
+
+
+def PageMissing():
+  rendered_html = '404: The page you were looking for doesnt exist'
+  return Response(status_code=404, content=rendered_html)
+
+
+def RenderPathData(path_data):
+  """Render the Path Data"""
+  (status, output, error) = utility.ExecuteCommand(path_data['command'])
+
+  rendered_html = output
+  
+  return Response(status_code=200, content=rendered_html)
+
+
+
 # -- Handle Every HTTP Method and all paths with per-method handler --
 #       We route internally after this, and dont use FastAPI/Starlette routing, because they are code based and we want data based
 
 @APP.get("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method GET, and then we route ourselves"""
-  rendered_html = f'GET: {full_path}'
-  return Response(status_code=200, content=rendered_html)
+
+  path_data = GetPathData('get', full_path)
+  if path_data == None:
+    return PageMissing()
+
+  return RenderPathData(path_data)
 
 
 @APP.post("/{full_path:path}", response_class=HTMLResponse)
