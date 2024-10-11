@@ -13,14 +13,10 @@
   {% set search_prompt = "Search" %}
   {% include 'includes/generic/generic_input_search_next_table.html.j2' %}
 
-  {% set generic_table = tables.table_data_dict %}
-  {% set no_max_height = 1 %}
-  {% include 'includes/generic/generic_table_dict_of_dict.html.j2' %}
+  {{ tables.table_data_dict | safe }}
 
   <br><br>
-  {% set generic_table = tables.table_data_list %}
-  {% set no_max_height = 0 %}
-  {% include 'includes/generic/generic_table_list_of_dict.html.j2' %}
+  {{ tables.table_data_list | safe }}
 
   <br><br>
   

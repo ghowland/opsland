@@ -20,7 +20,8 @@ nav:
 
 http:
   get:
-    "status":
+    # Paths
+    status:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
       dir: /mnt/d/_OpsLand/opsland-example/
       template: pages/generic_view.html.j2
@@ -44,6 +45,7 @@ http:
             fields:
               - "First": first
               - "Second": second
+            no_max_height: True
 
         table_list:
           # Payload output key
