@@ -67,13 +67,13 @@ def ProcessPayloadData(payload_in):
 
   # Process the Table Data
   if 'tables' in payload_in:
-    # Remove this from the output
-    del payload_out['tables']
+    # # Remove this from the output
+    # del payload_out['tables']
 
     for table_key, table_info in payload_in['tables'].items():
       LOG.info(f'Processing table: {table_key}   Data: {table_info}')
       # payload_out[table_key] = generic_widget.DataForTableDictOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['fields'], '/hosts/%(_key)s')
-      payload_out[table_key] = generic_widget.DataForTableDictOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['fields'], '/hosts/%(_key)s')
+      payload_out['tables'][table_key] = generic_widget.DataForTableDictOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['fields'], '/hosts/%(_key)s')
 
       # payload_out['table_data'][table_key] = generic_widget.DataForTableListOfDicts(table_info['data'], table_info.get('element', utility.GetRandomString()), table_info['name'], table_info['pkey'], table_info['fields'], f'/hostgroups/%(first)s')
 
