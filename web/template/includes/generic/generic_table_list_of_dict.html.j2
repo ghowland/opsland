@@ -1,0 +1,42 @@
+{% set table_data = generic_table.rows %}
+{% set table_key_label = generic_table.key_label %}
+{% set table_key_field = generic_table.key_field %}
+{% set table_fields = generic_table.fields %}
+
+<div id="{{ generic_table.id }}" class="relative overflow-x-auto {% if no_max_height != 1 %}max-h-96{% endif %}">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    {{ table_key_label }}
+                </th>
+{% for field in table_fields %}
+                <th scope="col" class="px-6 py-3">
+                    {{ field.label }}
+                </th>
+{% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+{% for row_data in table_data %}
+    {% set _ = row_data.update({'_key': table_key_label}) %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {% if generic_table.key_url %}
+                        <a href="{{ generic_table.key_url | format(**row_data) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    {% endif %}
+                        {{row_data[table_key_field] | safe }}
+                    {% if generic_table.key_url %}
+                        </a>
+                    {% endif %}
+                </th>
+    {% for field in table_fields %}
+                <td class="px-6 py-4">
+                    {{row_data[field.name] | safe }}
+                </td>
+    {% endfor %}
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+</div>

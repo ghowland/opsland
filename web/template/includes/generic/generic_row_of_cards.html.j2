@@ -1,0 +1,7 @@
+<div class="columns-{{cards|length}}">
+    {% for item in cards %}
+        {% set title = item.title %}{% set info = item.info %}{% set uuid = item.uuid %}{% set popover = item.popover %}
+        {% set card_color  = item.color %}{% set card_color_text  = item.color_text %}
+        {% include 'includes/generic/generic_card.html.j2' %}
+    {% endfor %}
+</div>

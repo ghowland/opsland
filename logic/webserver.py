@@ -14,12 +14,11 @@ import os, signal
 # We import these here, but all the child modules can use them through their `parent` reference
 from fastapi import FastAPI, Request, Response, Depends
 from fastapi.responses import HTMLResponse
-from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.responses import RedirectResponse
 
-import requests
 import secrets
 
 from pydantic import BaseModel
@@ -32,7 +31,8 @@ from jinja2_fragments import render_block
 from logic.log import LOG
 from logic import utility_jinja
 
-from logic import utility
+# This is where we render the pages
+from logic import webserver_render
 
 
 # Globals to connect to other OpsLand components
@@ -114,33 +114,16 @@ def GetPathData(method, path):
   return http_data[path]
 
 
-def PageMissing():
-  rendered_html = '404: The page you were looking for doesnt exist'
-  return Response(status_code=404, content=rendered_html)
-
-
-def RenderPathData(path_data):
-  """Render the Path Data"""
-  (status, output, error) = utility.ExecuteCommand(path_data['command'])
-
-  rendered_html = output
-  
-  return Response(status_code=200, content=rendered_html)
-
-
-
 # -- Handle Every HTTP Method and all paths with per-method handler --
 #       We route internally after this, and dont use FastAPI/Starlette routing, because they are code based and we want data based
 
 @APP.get("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method GET, and then we route ourselves"""
-
   path_data = GetPathData('get', full_path)
-  if path_data == None:
-    return PageMissing()
+  if path_data == None: return webserver_render.PageMissing(request, CONFIG)
 
-  return RenderPathData(path_data)
+  return webserver_render.RenderPathData(request, CONFIG, path_data)
 
 
 @APP.post("/{full_path:path}", response_class=HTMLResponse)

@@ -11,6 +11,7 @@ Requirements:
 import argparse
 import signal
 import sys
+import os
 
 from logic import cache_manager
 from logic import status_manager
@@ -42,6 +43,10 @@ def Main(config):
 
   # Capture the path, so we know the directory
   config.exec_path = __file__
+  config.dir_path = os.path.dirname(__file__)
+
+  # Get the original Working Directory.  We will have to keep resetting to this as we execute shell scripts that need to changed temporarily
+  config.directory_origin = os.getcwd()
 
   # Load our configuration data, or fail
   config.data = utility.LoadYaml(config.data_path)

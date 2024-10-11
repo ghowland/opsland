@@ -1,0 +1,24 @@
+{% include 'includes/page/page_start_with_header.html.j2' %}
+
+<div class="p-10">
+
+  {% include 'includes/page/breadcrumb.html.j2' %}
+
+  <br><br>
+
+  <h1 class="text-3xl font-bold underline pb-3 text-blue-600">
+    Value: {{ result }}
+  </h1>
+
+  {% set search_prompt = "Search Hosts" %}
+  {% include 'includes/generic/generic_input_search_next_table.html.j2' %}
+
+  {% set generic_table = table_data %}
+  {% set no_max_height = 1 %}
+  {% include 'includes/generic/generic_table_dict_of_dict.html.j2' %}
+
+  <br><br>
+  
+</div>  
+
+{% include 'includes/page/page_end_with_footer.html.j2' %}

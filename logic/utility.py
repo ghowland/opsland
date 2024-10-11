@@ -13,6 +13,8 @@ import glob
 
 import yaml
 import humanize
+import random
+import string
 
 from logic.log import LOG
 
@@ -229,45 +231,6 @@ def UpdateLoginSessions(config, session_id, data):
   local_cache.Set(path, sessions)
 
 
-def GetLoginSessionFromRequest(config, request):
-  """"Returns the user session or None, based on the session_id from the cookie `opsland_session_id`"""
-  session_id = request.cookies['opsland_session_id']
-
-  path = config.data['cache_path_format']['login_sessions']
-  sessions = local_cache.GetData(path)
-  if sessions == None:
-    return None
-
-  # Find the matching session and return it
-  for (_, session) in sessions.items():
-    # LOG.info(f'''Pre-Comparing sessions: {session}''')
-    # LOG.info(f'''Comparing sessions: {session['session_id']} == {session_id}''')
-    if session['session_id'] == session_id:
-      session['authed'] = True
-      return session
-  
-  return None
-
-
-# def EnhancePagePayload(config, payload, request):
-#   # Duplicate to protect top level object
-#   payload = dict(payload)
-
-#   # Defaults to add
-#   payload['auth_user'] = {'name': 'Guest', 'email': 'unknown@who.you', 'authed': False}
-
-#   # App unique overrides to the defaults
-#   if 'opsland_session_id' in request.cookies:
-#     session = GetLoginSessionFromRequest(config, request)
-#     if session:
-#       payload['auth_user'] = session
-  
-#   # Add the CPU Status
-#   payload['cpu_status'] = f'''<span class="text-teal-600">CPU: {config.server_info.get('cpu_used', -1):.1f}%</span> Status: {thread_manager.HOST_MANAGER.current_info}'''
-
-#   return payload
-
-
 def ConvertPathSpecialChars(path):
   """Converts any special characters in a string into text"""
   path = path.replace('*', '_STAR_')
@@ -339,4 +302,10 @@ def GetLinkHtml(url, name=None):
   link = f'''<a href="{url}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{name}</a>'''
   
   return link
+
+
+def GetRandomString(length=10):
+  """Returns a randown string of characters, with the length specified"""
+  letters = string.ascii_lowercase
+  return ''.join(random.choice(letters) for i in range(length))
 

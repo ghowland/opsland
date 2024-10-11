@@ -1,0 +1,30 @@
+{% set table_data = generic_table %}
+{% set table_key_label = "key" %}
+{% set table_key_field = "value" %}
+
+<div id="{{ generic_table.id }}" class="relative overflow-x-auto  {% if no_max_height != 1 %}max-h-96{% endif %}">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Key
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Value
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+{% for row_data in table_data %}
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4">
+              {{row_data.key}}
+            </td>
+            <td class="px-6 py-4">
+              {{row_data.value}}
+            </td>
+          </tr>
+{% endfor %}
+        </tbody>
+    </table>
+</div>

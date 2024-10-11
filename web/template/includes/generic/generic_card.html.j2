@@ -1,0 +1,31 @@
+{% if card_color %}
+{% set color = card_color %}
+{% else %}
+{% set color = "gray" %}
+{% endif %}
+
+{% if card_color_text %}
+{% set color_text = card_color_text + "-300" %}
+{% else %}
+{% set color_text = "white" %}
+{% endif %}
+
+<div class="flex items-center justify-center"  id="card_{{uuid}}" >
+    <a href="#" 
+        {% if popover %}data-popover-target="popover-{{uuid}}" data-popover-placement="bottom-end"{% endif %} 
+        class="block max-w-sm min-w-52 p-6 bg-white border border-{{color}}-200 rounded-lg shadow hover:bg-{{color}}-100 dark:bg-{{color}}-800 dark:border-{{color}}-700 dark:hover:bg-{{color}}-700">
+
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-{{color}}-900 dark:text-{{color_text}}">
+            {{title}}
+        </h5>
+        <p class="font-normal text-{{color_text}} dark:text-{{color}}-400">
+            {{info}}
+        </p>
+    </a>
+</div>
+
+
+{% if popover %}
+{% set title = popover.title %}{% set info = popover.info %}{% set subtitle = popover.subtitle %}{% set subinfo = popover.subinfo %}
+{% include 'includes/generic/generic_popover_info.html.j2' %}
+{% endif %}
