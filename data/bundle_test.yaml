@@ -26,7 +26,26 @@ schedule:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
       dir: /mnt/d/_OpsLand/opsland-example/
       period: 15s
-      store: single
+      # store: single
+      store: queue
+      max: 50
+
+
+# Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
+summary:
+  # Will be found in Cache with the prefix "summary.schedule.period.mtr", but with specific things being like: `summary.schedule.period.mtr.average` and then 
+  #   their summary being: `summary.schedule.period.mtr.average.max` for the max value
+  schedule.period.mtr:
+    # Final values will be coerced to float values.  Creates: min, max, last, average, mean, stddev, timeseries
+    type: float
+    # If group_by exists, we will make N results.  1 per each group found
+    group_by: [index]
+    fields:
+      average: [mtr, null, average]
+      last: [mtr, null, last]
+      best: [mtr, null, best]
+      worst: [mtr, null, worst]
+      loss: [mtr, null, loss]
 
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
