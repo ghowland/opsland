@@ -37,9 +37,6 @@ class ThreadBase(threading.Thread):
     self._tasks = []
     self._lock = threading.Lock()
 
-    # Call the overloaded Init method, so classes dont have to override __init__, even though that is common, it requires more Python knowledge with super, etc
-    self.Init()
-
 
   def Init(self):
     """TODO: Override this, for your derived class setup.  Use `self._data` to populate configuration information here"""
@@ -50,6 +47,8 @@ class ThreadBase(threading.Thread):
     """Once start() is called, this function is executed, which is the thread's
     run function.
     """
+    # Call the overloaded Init method, so classes dont have to override __init__, even though that is common, it requires more Python knowledge with super, etc
+    self.Init()
     
     # Loop forever, or until we quit, whichever comes first
     while not self._shutdown:

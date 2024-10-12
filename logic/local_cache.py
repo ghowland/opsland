@@ -30,6 +30,15 @@ def Get(path_raw):
         return None
 
 
+def GetData(path):
+    result = Get(path)
+
+    if result:
+        return result['data']
+    else:
+        return result
+
+
 def Set(path_raw, data):
     """Put the data in this cache, at the path specified.  Will save the time and time cache was cleared"""
     path = os.path.expanduser(path_raw)

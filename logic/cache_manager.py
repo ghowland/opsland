@@ -44,9 +44,13 @@ class CacheManager():
     paths = utility.Glob(cache_glob)
 
     for path in paths:
-      path_data = utility.GlobReverse(cache_glob, path)
+      path_key = utility.GlobReverse(cache_glob, path)
 
-      LOG.info(f'Path Key: {cache_glob} -> {path} -> {path_data}')
+      LOG.info(f'Path Key: {cache_glob} -> {path} -> {path_key}')
+
+      cache_value = local_cache.GetData(path)
+
+      self.SetBundleKeyData(bundle_name, path_key, cache_value)
 
 
   def GetBundleSilo(self, name):

@@ -98,7 +98,7 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_dict_of_dict.html.j2', 
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)
-        # LOG.debug(f'Table: Dict of Dicts: {generic_data}')
+        LOG.debug(f'Table: Dict of Dicts: {generic_data}')
         payload['tables'][out_table_key] = template_result.body.decode()
 
     # Process Table :List of Dicts
@@ -143,17 +143,13 @@ def RenderPathData(request, config, bundle_name, bundle, path_data):
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
-    # template = f'''{config.dir_path}/{path_data['template']}'''
     template = path_data['template']
-
-    # LOG.debug(f'Output before Payload: {output}')
-    # payload = json.loads(output)
 
     # LOG.debug(f'Base Payload: {payload}')
 
     payload = ProcessPayloadData(config, bundle, path_data, payload, request)
 
-    LOG.debug(f'After Processing Payload: {payload}')
+    # LOG.debug(f'After Processing Payload: {payload}')
 
     payload = EnhancePagePayload(config, bundle, path_data, payload, request)
 
