@@ -38,8 +38,8 @@ summary:
   schedule.period.mtr:
     # Final values will be coerced to float values.  Creates: min, max, last, average, mean, stddev, timeseries
     type: float
-    # If group_by exists, we will make N results.  1 per each group found
-    group_by: [index]
+    # If group_by exists, we will make N results.  1 per each group found, this will append an additional string, so you need to know how to reference this
+    group_by: "{index}"
     fields:
       average: [mtr, null, average]
       last: [mtr, null, last]
@@ -58,6 +58,7 @@ http:
       # Extract data from this Cache, to be used for rendering
       cache:
         schedule.period.mtr: mtr
+        summary.schedule.period.mtr.average: series_avg
 
       page: Home
       page_group: Info
