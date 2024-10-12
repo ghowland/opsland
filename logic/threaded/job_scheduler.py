@@ -14,7 +14,8 @@ class JobScheduler(thread_base.ThreadBase):
 
   def Init(self):
     """Save our _data to vars"""
-    # self.api_token = local_secret.Get(self._data['token_path'])
+    # Memory of what we have done, so we can schedule jobs properly
+    self.history = {}
 
     # Give ourselves a single task which will never be removed and doesnt matter.  We just run forever like this.
     self.AddTask({})

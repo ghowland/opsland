@@ -1,8 +1,21 @@
+name: Example 0 Bundle
+
+
+# HTTP root for this bundle.  Allows multiple bundles to coexist on the same server.  Hostnames are not considered, all paths are global once they reach OpsLand
+#NOTE: No leading / for the root.  If mounted at "/" then leave this empty
+root: ""
+
+
+# Git repos we want to sync
 git: {}
 
+
+# Where we store data
 cache_path_format:
   login_sessions: ~/.secure/opsland/logins.json
 
+
+# Site NavBar and User links.  Overlays over the `root`.
 nav:
   bar:
     Home: /
@@ -28,6 +41,7 @@ schedule:
       period: 15s
 
 
+# HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
   get:
     # Paths

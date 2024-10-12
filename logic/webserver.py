@@ -97,56 +97,70 @@ def Shutdown():
   os.kill(os.getpid(), signal.SIGTERM)
 
 
-def GetPathData(method, path):
+def GetBundlePathData(method, path):
   """Returns a dict with the path_data, or None of not found for this method and path"""
   global CONFIG
   
-  http_data_methods = CONFIG.data['http']
+  for bundle_path, bundle in CONFIG.data.items():
+    # Skip this path if it doesnt match the bundle root
+    #TODO(geoff): Need to strip off leading "/" for the root, but I'm being naive here to start and just making it an empty string to make the code simpler.  Fix
+    LOG.info(f'''{bundle_path}: Root: {path}  Starts with: "{bundle['root']}"''')
+    if not path.startswith(bundle['root']):
+      continue
+    else:
+      # This is the path we test with, which we remove the root mount path
+      test_path = path.replace(bundle['root'], '', 1)
 
-  if method not in http_data_methods:
-    return None
-  
-  http_data = http_data_methods[method]
+    http_data_methods = bundle['http']
 
-  if path not in http_data:
-    return None
-  
-  return http_data[path]
+    if method not in http_data_methods:
+      continue
+    
+    http_data = http_data_methods[method]
+
+    if test_path not in http_data:
+      continue
+    
+    return (bundle, http_data[test_path])
+
+  # Couldnt find a Bundle for a page
+  return (None, None)
 
 
 # -- Handle Every HTTP Method and all paths with per-method handler --
 #       We route internally after this, and dont use FastAPI/Starlette routing, because they are code based and we want data based
 
+# GET
 @APP.get("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method GET, and then we route ourselves"""
-  path_data = GetPathData('get', full_path)
-  if path_data == None: return webserver_render.PageMissing(request, CONFIG)
+  (bundle, path_data) = GetBundlePathData('get', full_path)
+  if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
-  return webserver_render.RenderPathData(request, CONFIG, path_data)
+  return webserver_render.RenderPathData(request, CONFIG, bundle, path_data)
 
-
+# POST
 @APP.post("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method POST, and then we route ourselves"""
   rendered_html = f'POST: {full_path}'
   return Response(status_code=200, content=rendered_html)
 
-
+# PUT
 @APP.put("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method PUT, and then we route ourselves"""
   rendered_html = f'PUT: {full_path}'
   return Response(status_code=200, content=rendered_html)
 
-
+# PATCH
 @APP.patch("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method PATCH, and then we route ourselves"""
   rendered_html = f'PATCH: {full_path}'
   return Response(status_code=200, content=rendered_html)
 
-
+# DELETE
 @APP.delete("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method DELETE, and then we route ourselves"""

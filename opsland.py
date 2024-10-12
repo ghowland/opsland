@@ -49,7 +49,8 @@ def Main(config):
   config.directory_origin = os.getcwd()
 
   # Load our configuration data, or fail
-  config.data = utility.LoadYaml(config.data_path)
+  config.bundles = utility.LoadYaml(config.data_path)
+  config.data = {}
 
   # In charge of storing all our data and making it available.  CLI program results are ephemeral, and this makes them persist
   config.cache = cache_manager.CacheManager(config)
@@ -79,7 +80,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(
     prog='OpsLand',
     description='A CLI-extensible web, cache and threaded job server.',
-    epilog='Do all the hard things easy.')
+    epilog='Do all the hard things easily.')
 
   parser.add_argument('-d', '--debug', default=False, action='store_true', help='Debug logging')
   parser.add_argument('-p', '--port', default=DEFAULT_PORT, type=int, help='Listening port')
@@ -89,7 +90,7 @@ if __name__ == '__main__':
   parser.add_argument('-T', '--test', default=None, type=str, help='Execute one of the available tests')
   parser.add_argument('-D', '--test-data', default=None, type=str, help='Test data.  Whatever is required to help the test, paths, commands, etc')
 
-  parser.add_argument('data_path', help='Configuration path')
+  parser.add_argument('data_path', help='Path to Server Bundle Set YAML.  Contains a list of all our bundles.')
   args = parser.parse_args()
   Main(args)
 

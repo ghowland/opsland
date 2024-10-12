@@ -16,7 +16,7 @@ from logic import webserver
 from logic import generic_widget
 
 
-def PageMissing(request, config):
+def PageMissing(request, bundle, config):
   rendered_html = '404: The page you were looking for doesnt exist'
   return Response(status_code=404, content=rendered_html)
 
@@ -41,7 +41,7 @@ def GetLoginSessionFromRequest(config, request):
   return None
 
 
-def EnhancePagePayload(config, path_data, payload, request):
+def EnhancePagePayload(config, bundle, path_data, payload, request):
   # Duplicate to protect top level object
   payload = dict(payload)
 
@@ -61,7 +61,7 @@ def EnhancePagePayload(config, path_data, payload, request):
 
   payload['breadcrumbs'] = generic_widget.DataForBreadcrumbs(page_name, path_data.get('breadcrumbs', []))
 
-  payload['page_nav'] = config.data['nav']
+  payload['page_nav'] = bundle['nav']
 
   # Start trying to get the `page_group`, if it doesnt exist, get the page.  This is used to set the Nav Bar highlight so you know what section you are in
   payload['page'] = path_data.get('page_group', path_data.get('page', 'Unknown Page'))
@@ -69,7 +69,7 @@ def EnhancePagePayload(config, path_data, payload, request):
   return payload
 
 
-def ProcessPayloadData(config, path_data, payload_in, request):
+def ProcessPayloadData(config, bundle, path_data, payload_in, request):
   payload = dict(payload_in)
 
 
@@ -128,7 +128,7 @@ def ProcessPayloadData(config, path_data, payload_in, request):
   return payload
 
 
-def RenderPathData(request, config, path_data):
+def RenderPathData(request, config, bundle, path_data):
   """Render the Path Data"""
   # Execute the command
   if path_data.get('command', None):
@@ -149,11 +149,11 @@ def RenderPathData(request, config, path_data):
 
     # LOG.debug(f'Base Payload: {payload}')
 
-    payload = ProcessPayloadData(config, path_data, payload, request)
+    payload = ProcessPayloadData(config, bundle, path_data, payload, request)
 
     LOG.debug(f'After Processing Payload: {payload}')
 
-    payload = EnhancePagePayload(config, path_data, payload, request)
+    payload = EnhancePagePayload(config, bundle, path_data, payload, request)
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 
