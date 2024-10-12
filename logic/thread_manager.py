@@ -36,7 +36,7 @@ def StartThreads(config):
 
   # Job Manager: Process jobs in the queue
   global JOB_MANAGER
-  JOB_MANAGER = job_manager.JobManager('Job Manager', config, {}, sleep_duration=5, remove_task=False)
+  JOB_MANAGER = job_manager.JobManager('Job Manager', config, {}, sleep_duration=5)
   JOB_MANAGER.start()
 
   # Job Schedule: Add new jobs to Job Manager queue

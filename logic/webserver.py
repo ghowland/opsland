@@ -121,10 +121,10 @@ def GetBundlePathData(method, path):
     if test_path not in http_data:
       continue
     
-    return (bundle, http_data[test_path])
+    return (bundle_path, bundle, http_data[test_path])
 
   # Couldnt find a Bundle for a page
-  return (None, None)
+  return (None, None, None)
 
 
 # -- Handle Every HTTP Method and all paths with per-method handler --
@@ -134,10 +134,10 @@ def GetBundlePathData(method, path):
 @APP.get("/{full_path:path}", response_class=HTMLResponse)
 async def Web_Overview(request: Request, full_path: str):
   """Matches all paths for Method GET, and then we route ourselves"""
-  (bundle, path_data) = GetBundlePathData('get', full_path)
+  (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path)
   if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
-  return webserver_render.RenderPathData(request, CONFIG, bundle, path_data)
+  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data)
 
 # POST
 @APP.post("/{full_path:path}", response_class=HTMLResponse)

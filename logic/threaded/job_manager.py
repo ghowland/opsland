@@ -3,10 +3,13 @@ Job Manager: Watch our Job specifications for changes and hot reload them
 """
 
 
+import json
+
 from logic.log import LOG
 
 from logic import thread_base
-from logic import local_secret
+from logic import utility
+from logic import thread_manager
 
 
 class JobManager(thread_base.ThreadBase):
@@ -14,15 +17,26 @@ class JobManager(thread_base.ThreadBase):
 
   def Init(self):
     """Save our _data to vars"""
-    # self.api_token = local_secret.Get(self._data['token_path'])
-
     # Give ourselves a single task which will never be removed and doesnt matter.  We just run forever like this.
     self.AddTask({})
 
-    LOG.info(f'{self.name} Started')
+    LOG.debug(f'{self.name} Started')
 
 
   def ExecuteTask(self, task):
     """Proess the task data dict"""
-    LOG.info(f'{self.name}: Updated')
+    LOG.info(f'{self.name}: Executing Task: {task}')
+
+    # Skip initial empty task
+    if 'data' not in task:
+      LOG.error(f'Cant execute this task, skipping: {task}')
+      return
+
+    (status, output, error) = utility.ExecuteCommand(task['data']['command'])
+
+    payload = json.loads(output)
+
+    self._config.cache.SetBundleKeyData(task['bundle'], task['key'], payload)
+
+
 

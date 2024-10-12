@@ -59,7 +59,7 @@ class ThreadBase(threading.Thread):
       try:
         if self._tasks:
           current_task = self.GetNextTask()
-          self.ExecuteTask(current_task)
+          self._ExecuteTask(current_task)
         
       # Log and ignore
       except Exception as e:
@@ -72,31 +72,31 @@ class ThreadBase(threading.Thread):
         if self._shutdown:
           break
     
-    LOG.info(f'Task Manager: Finished: {self.name}')
+    LOG.info(f'{self.name}: Finished: {self.name}')
 
 
   def Shutdown(self):
     """Tell this thread to shut down"""
-    LOG.info(f'Task Shutdown: {self.name}')
+    LOG.info(f'{self.name}: Task Shutdown: {self.name}')
     self._shutdown = True
 
 
   def _ExecuteTask(self, task, log=False):
     """This is the shadow ExecuteTask() which calls the overridable"""
-    if log: LOG.info(f'Starting task: {task}')
+    if log: LOG.info(f'{self.name}: Starting task: {task}')
 
     self.ExecuteTask(task)
 
-    if log: LOG.info(f'Completed task: {task}')
+    if log: LOG.info(f'{self.name}: Completed task: {task}')
 
-    # Normally, we want to remove tasks when they are done.  But we 
-    if self._remove_task: 
+    # Normally, we want to remove tasks when they are done.  But we allow a permanent task so we just do 1 thing forever
+    if self._remove_task:
       self.RemoveTask(task)
 
 
   def ExecuteTask(self, task):
     """YOU: Override This: Execute this task, in whatever way the inheritor of this base class wants.  This is where the action will be."""
-    LOG.info(task)
+    LOG.info(f'{self.name}: Execute Task: {task}')
   
 
   def ListTasks(self):
@@ -111,10 +111,10 @@ class ThreadBase(threading.Thread):
   def GetNextTask(self):
     """Gets the oldest task in the list, thread safe with locking"""
     with self._lock:
-      # Get the first task (oldest)
+      # Get the first task (oldest).  We verify that we have a task before we call this
       task = self._tasks[0]
 
-    return task
+      return task
 
 
   def AddTask(self, task):
@@ -122,7 +122,7 @@ class ThreadBase(threading.Thread):
     with self._lock:
       # Append
       self._tasks.append(task)
-      LOG.info(f'Added task: {task}')
+      # LOG.debug(f'{self.name}: Added task: {task}')
     
 
   def RemoveTask(self, task):
@@ -130,7 +130,7 @@ class ThreadBase(threading.Thread):
     with self._lock:
       # Remove
       self._tasks.remove(task)
-      LOG.info(f'Removed task: {task}')
+      # LOG.debug(f'{self.name}: Removed task: {task}')
     
 
 class ExampleThread(ThreadBase):

@@ -309,3 +309,14 @@ def GetRandomString(length=10):
   letters = string.ascii_lowercase
   return ''.join(random.choice(letters) for i in range(length))
 
+
+def GlobReverse(glob, text):
+  """Returns the data from a glob as text"""
+  glob = os.path.expanduser(glob)
+  glob_parts = glob.split('*')
+
+  for part in glob_parts:
+    text = text.replace(part, '')
+  
+  return text
+

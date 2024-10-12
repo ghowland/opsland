@@ -10,6 +10,7 @@ from logic.log import LOG
 
 from logic import thread_base
 from logic import utility
+from logic import thread_manager
 
 
 class BundleManager(thread_base.ThreadBase):
@@ -21,7 +22,7 @@ class BundleManager(thread_base.ThreadBase):
     self.timestamps = {}
 
     for bundle_path in self._config.bundles:
-      self.LoadBundle(bundle_path)
+      self.LoadBundle(bundle_path, load_cache=True)
     
     # Give ourselves a single task which will never be removed and doesnt matter.  We just run forever like this.
     self.AddTask({})
@@ -29,7 +30,7 @@ class BundleManager(thread_base.ThreadBase):
     LOG.debug(f'{self.name} Started')
 
 
-  def LoadBundle(self, path):
+  def LoadBundle(self, path, load_cache=False):
     """Load this bundle and update the timestamp"""
     bundle_data = utility.LoadYaml(path)
 
@@ -38,6 +39,10 @@ class BundleManager(thread_base.ThreadBase):
       self.timestamps[path] = time.time()
 
     LOG.debug(f'Loaded Bundle: {path}')
+
+    # If this is the first time, we want to load cache off storage so we start with the last data.  Allows smooth restarts
+    if load_cache:
+      self._config.cache.LoadInitialBundleCache(path, self.GetBundles())
 
 
   def ExecuteTask(self, task):
@@ -50,3 +55,15 @@ class BundleManager(thread_base.ThreadBase):
       # If this file is newer, try to reload it
       if stat_result.st_ctime > self.timestamps[bundle_path]:
         self.LoadBundle(bundle_path)
+  
+
+  def GetBundles(self):
+    """Returns a new dictionary that will not cause problems with threaded updates, so we can run without worry"""
+    bundles = {}
+
+    # Recreate the top 2 levels of our bundles with new dicts, so that threaded changes will do nothing for any execution
+    with self._lock:
+      for bundle in self._config.data:
+        bundles[bundle] = dict(self._config.data[bundle])
+
+    return bundles

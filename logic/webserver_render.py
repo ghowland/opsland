@@ -88,7 +88,7 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
           continue
 
         # Get the table_data from our payload
-        table_data = payload[table_info['key']]
+        table_data = payload[table_info['cache']][table_info['key']]
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -98,6 +98,7 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_dict_of_dict.html.j2', 
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)
+        # LOG.debug(f'Table: Dict of Dicts: {generic_data}')
         payload['tables'][out_table_key] = template_result.body.decode()
 
     # Process Table :List of Dicts
@@ -113,13 +114,14 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
           continue
 
         # Get the table_data from our payload
-        table_data = payload[table_info['key']]
+        table_data = payload[table_info['cache']][table_info['key']]
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
         no_max_height = table_info.get('no_max_height', False)
 
         generic_data = generic_widget.DataForTableListOfDicts(table_data, table_element, primary_field_name, table_info['link_field'], table_info['fields'], table_info['link'])
+        # LOG.debug(f'Table: List of Dicts: {generic_data}')
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_list_of_dict.html.j2', 
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)
@@ -128,24 +130,24 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
   return payload
 
 
-def RenderPathData(request, config, bundle, path_data):
+def RenderPathData(request, config, bundle_name, bundle, path_data):
   """Render the Path Data"""
-  # Execute the command
-  if path_data.get('command', None):
-    (status, output, error) = utility.ExecuteCommand(path_data['command'])
+  # Our starting payload
+  payload = {}
 
-  # Else, we dont have a command, we assume everything is empty and can still template and render
-  else:
-    (status, output, error) = (0, '{}', '{}')
+  # Put any cache into our payload
+  for (cache_key, payload_key) in path_data.get('cache', {}).items():
+    payload[payload_key] = config.cache.GetBundleKeyData(bundle_name, cache_key)
+
+  LOG.info(f'Payload before rendering: {payload}')
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
     # template = f'''{config.dir_path}/{path_data['template']}'''
     template = path_data['template']
 
-    LOG.debug(f'Output before Payload: {output}')
-
-    payload = json.loads(output)
+    # LOG.debug(f'Output before Payload: {output}')
+    # payload = json.loads(output)
 
     # LOG.debug(f'Base Payload: {payload}')
 
@@ -159,5 +161,5 @@ def RenderPathData(request, config, bundle, path_data):
 
   # Else, just return the output  
   else:
-    return Response(status_code=200, content=output)
+    return Response(status_code=200, content=payload)
 
