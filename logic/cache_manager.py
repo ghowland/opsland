@@ -68,7 +68,7 @@ class CacheManager():
     """Returns a single Bundle dict item"""
     bundle = self.GetBundleSilo(bundle_name)
 
-    LOG.info(f'Get Bundle Key: {bundle_name}  Key: {name}  Bundle: {bundle}')
+    # LOG.info(f'Get Bundle Key: {bundle_name}  Key: {name}')
 
     with self.lock_bundles_each[bundle_name]:
       return bundle.get(name, default)
@@ -88,7 +88,7 @@ class CacheManager():
 
       path = bundle_data['cache_path'].replace('{key}', name)
 
-      LOG.debug(f'Set Bundle Key Data: {bundle_name}   Key: {name}  Path: {path}')
+      # LOG.debug(f'Set Bundle Key Data: {bundle_name}   Key: {name}  Path: {path}')
 
       local_cache.Set(path, value)
 

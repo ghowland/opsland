@@ -104,7 +104,7 @@ def GetBundlePathData(method, path):
   for bundle_path, bundle in CONFIG.data.items():
     # Skip this path if it doesnt match the bundle root
     #TODO(geoff): Need to strip off leading "/" for the root, but I'm being naive here to start and just making it an empty string to make the code simpler.  Fix
-    LOG.info(f'''{bundle_path}: Root: {path}  Starts with: "{bundle['root']}"''')
+    # LOG.info(f'''{bundle_path}: Root: {path}  Starts with: "{bundle['root']}"''')
     if not path.startswith(bundle['root']):
       continue
     else:

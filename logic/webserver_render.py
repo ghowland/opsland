@@ -81,10 +81,10 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
       if 'tables' not in payload: payload['tables'] = {}
 
       for out_table_key, table_info in path_data['data']['table_dict'].items():
-        LOG.info(f'Processing table: Dict: {out_table_key}   Data: {table_info}')
+        # LOG.info(f'Processing table: Dict: {out_table_key}   Data: {table_info}')
 
-        if table_info['key'] not in payload:
-          LOG.error(f'''Missing Data Table key: {table_info['key']}''')
+        if table_info['cache'] not in payload or table_info['key'] not in payload[table_info['cache']]:
+          LOG.error(f'''Missing Data Table key: Cache: {table_info['cache']}  Key: {table_info['key']}   Payload: {payload}''')
           continue
 
         # Get the table_data from our payload
@@ -98,7 +98,7 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_dict_of_dict.html.j2', 
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)
-        LOG.debug(f'Table: Dict of Dicts: {generic_data}')
+        # LOG.debug(f'Table: Dict of Dicts: {generic_data}')
         payload['tables'][out_table_key] = template_result.body.decode()
 
     # Process Table :List of Dicts
@@ -107,10 +107,10 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
       if 'tables' not in payload: payload['tables'] = {}
 
       for out_table_key, table_info in path_data['data']['table_list'].items():
-        LOG.info(f'Processing table: List: {out_table_key}   Data: {table_info}')
+        # LOG.info(f'Processing table: List: {out_table_key}   Data: {table_info}')
 
-        if table_info['key'] not in payload:
-          LOG.error(f'''Missing Data Table key: {table_info['key']}''')
+        if table_info['cache'] not in payload or table_info['key'] not in payload[table_info['cache']]:
+          LOG.error(f'''Missing Data Table key: Cache: {table_info['cache']}  Key: {table_info['key']}   Payload: {payload}''')
           continue
 
         # Get the table_data from our payload
@@ -139,7 +139,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data):
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
     payload[payload_key] = config.cache.GetBundleKeyData(bundle_name, cache_key)
 
-  LOG.info(f'Payload before rendering: {payload}')
+  # LOG.info(f'Payload before rendering: {payload}')
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
