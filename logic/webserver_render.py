@@ -92,8 +92,12 @@ def ProcessPayloadData(config, path_data, payload_in, request):
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
+        no_max_height = table_info.get('no_max_height', False)
+
         generic_data = generic_widget.DataForTableDictOfDicts(table_data, table_element, primary_field_name, table_info['fields'], table_info['link'])
-        template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_dict_of_dict.html.j2', context={'generic_table': generic_data}, request=request)
+        template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_dict_of_dict.html.j2', 
+                                                               context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
+                                                               request=request)
         payload['tables'][out_table_key] = template_result.body.decode()
 
     # Process Table :List of Dicts
@@ -113,8 +117,12 @@ def ProcessPayloadData(config, path_data, payload_in, request):
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
+        no_max_height = table_info.get('no_max_height', False)
+
         generic_data = generic_widget.DataForTableListOfDicts(table_data, table_element, primary_field_name, table_info['link_field'], table_info['fields'], table_info['link'])
-        template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_list_of_dict.html.j2', context={'generic_table': generic_data}, request=request)
+        template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_list_of_dict.html.j2', 
+                                                               context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
+                                                               request=request)
         payload['tables'][out_table_key] = template_result.body.decode()
 
   return payload

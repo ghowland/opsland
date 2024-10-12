@@ -18,17 +18,27 @@ nav:
     Settings: /settings
     Sign Out: /signout
 
+
+# Running commands while waiting on shell commands is no good, so everything should be done in a deferred manner.  Scheduled or as a Job execution.  Same thing ultimately
+schedule:
+  period:
+    mtr:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
+      dir: /mnt/d/_OpsLand/opsland-example/
+      period: 15s
+
+
 http:
   get:
     # Paths
     status:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
-      dir: /mnt/d/_OpsLand/opsland-example/
       template: pages/generic_view.html.j2
+
+      cache:
+        - schedule.period.mtr: mtr
 
       page: Home
       page_group: Info
-
       breadcrumbs:
         - For: /else
         - The: /if
@@ -37,7 +47,7 @@ http:
       data:
         table_dict:
           # Payload output key
-          table_data_dict:
+          mtr.table_data_dict:
             key: data_dict
             name: Example Data 1
             element: generic_table
@@ -49,12 +59,20 @@ http:
 
         table_list:
           # Payload output key
-          table_data_list:
-            key: data_list
-            name: Example Data 2
+          mtr.table_data_list:
+            key: mtr
+            name: Hop
             element: generic_table
-            link: "/example/%(second)s"
-            link_field: id
+            link: "/example/%(target)s"
+            link_field: index
             fields:
-              - "First": first
-              - "Second": second
+              - "First": ip
+              - "Loss": loss
+              - "Sent": sent
+              - "Last": last
+              - "Avg": average
+              - "Best": best
+              - "Worst": worst
+              - "StdDev": stddev
+            no_max_height: True
+

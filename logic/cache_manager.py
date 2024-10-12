@@ -7,7 +7,6 @@ This can be backed with DBs or other persistent storage (file system), or run ju
 """
 
 import threading
-import time
 
 from logic.log import LOG
 
@@ -19,60 +18,39 @@ class CacheManager():
     # Store our config, everything uses it
     self.config = config
 
-    # These are all the items we have
-    self.items = {}
+    # At the top level, all bundles will have separate data from each other
+    self.bundles = {}
 
-    # If we are making changes to the items, use the lock so we dont crash
-    self.items_lock = threading.Lock()
+    # All our locks, to make sure we dont have dictionary problems
+    self.lock_bundles_all = threading.Lock()
+
+    # Every bundles cache is a Silo, and we need locks for all of them
+    self.lock_bundles_each = {}
   
 
-  def AddItem(self, key, item):
-    """Safely add this item to our list"""
-    # timestamp = timestamp
-    timestamp = time.time()
-
-    key = str(key)
-
-    with self.items_lock:
-      # Ensure the timestamp exists as a dict
-      if timestamp not in self.items:
-        self.items[timestamp] = {}
+  def GetBundleSilo(self, name):
+    """Returns the Bundle dict"""
+    with self.lock_bundles_all:
+      # Ensure we have a dictionary to store the Bundle data, and a lock for each
+      if name not in self.bundles:
+        self.bundles[name] = {}
+        self.lock_bundles_each[name] = threading.Lock()
       
-      # Set the item at the key
-      self.items[timestamp][key] = item
-
-      LOG.debug(f'Add Status Item: {timestamp}: {key}: {item}')
-  
-
-  def GetCurrentItems(self):
-    """Returns a copy of all our items, in reverse order so newest is first."""
-    # Make sure we dont go crazy here, keep purging
-    self.PurgeOlderThan()
-
-    keys = list(self.items.keys())
-    keys.sort()
-    keys.reverse()
-
-    items = []
-    for key in keys:
-      data = {
-        'time': key, 
-        'data': self.items[key]
-        }
-      items.append(data)
-
-    return items
+      return self.bundles[name]
 
 
-  def PurgeOlderThan(self, seconds=1200):
-    """Default purge time is 20 minutes, adjust as needed"""
-    #TODOD: Move the defalt purge time to the YAML config?  Probably
-    cur_time = int(time.time())
+  def GetBundleKeyData(self, bundle_name, name, default=None):
+    """Returns the Bundle dict"""
+    bundle = self.GetBundleSilo(bundle_name)
 
-    # Loop over all our top level item times, and purge them if they are too old
-    for item_time in list(self.items.keys()):
-      if item_time + seconds < cur_time:
-        del self.items[item_time]
+    with self.lock_bundles_each[bundle_name]:
+      return bundle.get(name, default)
 
 
+  def SetBundleKeyData(self, bundle_name, name, value):
+    """Set the value of the bundle cache"""
+    bundle = self.GetBundleSilo(bundle_name)
+
+    with self.lock_bundles_each[bundle_name]:
+      bundle[name] = value
 
