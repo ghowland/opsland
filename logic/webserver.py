@@ -100,6 +100,8 @@ def Shutdown():
 def GetBundlePathData(method, path):
   """Returns a dict with the path_data, or None of not found for this method and path"""
   global CONFIG
+
+  LOG.debug(f'Get Bundle Path: {method}  Path: {path}')
   
   for bundle_path, bundle in CONFIG.data.items():
     # Skip this path if it doesnt match the bundle root
@@ -144,11 +146,15 @@ async def Web_GET(request: Request, full_path: str):
 @APP.post("/{full_path:path}", response_class=HTMLResponse)
 async def Web_POST(request: Request, full_path: str):
   """Matches all paths for Method POST, and then we route ourselves"""
-  data = dict(await request.form())
-  headers = dict(request.headers)
+  request_data = dict(await request.form())
+  request_headers = dict(request.headers)
 
-  rendered_html = f'POST: {full_path}  Data: {data}  Headers: {headers}'
-  return Response(status_code=200, content=rendered_html)
+  (bundle_name, bundle, path_data) = GetBundlePathData('post', full_path)
+  if path_data == None: return Response(status_code=404, content={'error': 'URI not found'})
+
+  # LOG.debug(f'POST: {full_path}  Data: {request_data}  Headers: {request_headers}')
+
+  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_data=request_data, request_headers=request_headers)
 
 
 # PUT

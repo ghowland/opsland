@@ -11,6 +11,17 @@
     Value: {{ result }}
   </h1>
 
+<button 
+id="showButton"
+hx-post="/modal/yes_no" 
+hx-target="#modals-here" 
+hx-on="htmx:afterSwap: ShowTheModal();"
+class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+  Open Modal
+</button>
+<div id="modals-here"></div>
+
+
   {% set search_prompt = "Search" %}
   {% include 'includes/generic/generic_input_search_next_table.html.j2' %}
 
@@ -23,15 +34,10 @@
   
 </div>  
 
-<button type="button" id="showButton" hx-post="/modal/yes_no" hx-target="#modals-here" _="on htmx:afterOnLoad wait 10ms then add .modal-open to #modal"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-  Open Modal
-</button>
-
-<div id="modals-here"></div>
 
 <br><br>
 
 {{ graph.timeseries_graph | safe }}
+
 
 {% include 'includes/page/page_end_with_footer.html.j2' %}

@@ -41,7 +41,7 @@ def GetLoginSessionFromRequest(config, request):
   return None
 
 
-def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request):
+def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args):
   # Duplicate to protect top level object
   payload = dict(payload)
 
@@ -69,7 +69,7 @@ def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request)
   return payload
 
 
-def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, request):
+def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, request, request_headers, request_data, request_args):
   payload = dict(payload_in)
 
   # Ensure we have a tables dict to store all our tables
@@ -143,7 +143,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
           continue
 
         generic_data = generic_widget.DataForGraph(graph_info['label'], graph_info['element'], graph_cache)
-        LOG.debug(f'Graph: {generic_data}')
+        # LOG.debug(f'Graph: {generic_data}')
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_graph.html.j2', 
                                                                context={'generic_graph': generic_data}, 
                                                                request=request)
@@ -153,7 +153,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
   return payload
 
 
-def RenderPathData(request, config, bundle_name, bundle, path_data):
+def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
   """Render the Path Data"""
   # Our starting payload
   payload = {}
@@ -170,11 +170,11 @@ def RenderPathData(request, config, bundle_name, bundle, path_data):
 
     # LOG.debug(f'Base Payload: {payload}')
 
-    payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request)
+    payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
 
     # LOG.debug(f'After Processing Payload: {payload}')
 
-    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request)
+    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 
