@@ -11,11 +11,14 @@ git: {}
 
 
 # Put all our data cache in here, 1 file per Cache Key to make it simple and glob them all back up
-cache_path: ~/.cache/opsland/example0/{key}
+path:
+  # Cache results from CLI-JSON runs.  This will get as big as the content times the number of max items if they are a queue.
+  cache: ~/.cache/opsland/example0/cache/{key}
 
+  # Keep summary separate, just to be more organized on disk.  In memory, Cache and Summary data are in the same Bundle cache bucket
+  summary: ~/.cache/opsland/example0/summary/{key}
 
-# Where we store data
-path_format:
+  # Login static information.  Not using Okta 
   login_sessions: ~/.secure/opsland/logins.json
 
 
@@ -28,7 +31,7 @@ schedule:
       period: 15s
       # store: single
       store: queue
-      max: 50
+      max: 20
 
 
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
@@ -38,14 +41,15 @@ summary:
   schedule.period.mtr:
     # Final values will be coerced to float values.  Creates: min, max, last, average, mean, stddev, timeseries
     type: float
+
     # If group_by exists, we will make N results.  1 per each group found, this will append an additional string, so you need to know how to reference this
-    group_by: "{index}"
     fields:
-      average: [mtr, null, average]
-      last: [mtr, null, last]
-      best: [mtr, null, best]
-      worst: [mtr, null, worst]
-      loss: [mtr, null, loss]
+      hop_count: [hop_count]
+      average: [mtr_last, average]
+      last: [mtr_last, last]
+      best: [mtr_last, best]
+      worst: [mtr_last, worst]
+      loss: [mtr_last, loss]
 
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
@@ -58,7 +62,8 @@ http:
       # Extract data from this Cache, to be used for rendering
       cache:
         schedule.period.mtr: mtr
-        summary.schedule.period.mtr.average: series_avg
+        summary.schedule.period.mtr.best.timeseries: series
+        summary.schedule.period.mtr.best.mean: series_mean
 
       page: Home
       page_group: Info
@@ -68,6 +73,7 @@ http:
         - Win: /not
 
       data:
+        # A table using a Dict of Dicts
         table_dict:
           # Payload output key
           table_data_dict:
@@ -81,6 +87,7 @@ http:
               - "Second": second
             no_max_height: True
 
+        # A table using a List of Dicts
         table_list:
           # Payload output key
           table_data_list:
@@ -100,6 +107,15 @@ http:
               - "Worst": worst
               - "StdDev": stddev
             no_max_height: True
+        
+        # Graphs.  Like like graphs, or scatter plots.  With Graph.js
+        graph:
+          # Payload output key
+          timeseries_graph:
+            label: Best ICMP in ms
+            cache: summary.schedule.period.mtr.best.timeseries
+            element: timeseries_graph
+
 
 
 # Site NavBar and User links.  Overlays over the `root`.

@@ -91,3 +91,21 @@ def DataForTableListOfDicts(row_data, table_id, key_label, key_field, fields, ke
   
   return data
 
+
+def DataForGraph(label, element, timeseries):
+  """Returns data for a Graph"""
+  data = {'label': label, 'element': element, 'timeseries_csv': [], 'labels_csv': []}
+
+  for count in range(0, len(timeseries)):
+    value = timeseries[count]
+
+    value_str = f'{value:.2f}'
+
+    data['timeseries_csv'].append(value_str)
+    data['labels_csv'].append(f'{count}')
+
+  data['timeseries_csv'] = ', '.join(data['timeseries_csv'])
+  data['labels_csv'] = ', '.join(data['labels_csv'])
+
+  return data
+

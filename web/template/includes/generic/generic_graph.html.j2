@@ -1,0 +1,28 @@
+
+<div class="size-2/4 ml-80">
+  <canvas id="{{ generic_graph.element }}"></canvas>
+</div>
+
+<script>
+  const data = {
+    labels: [{{ generic_graph.labels_csv | safe }} ],
+    datasets: [{
+      label: '{{ generic_graph.label }}',
+      data: [{{ generic_graph.timeseries_csv | safe }}],
+      fill: false,
+      borderColor: 'rgb(23, 3, 252)',
+      tension: 0.1
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+  };
+
+  const ctx = document.getElementById('{{ generic_graph.element }}');
+
+  new Chart(ctx, config);
+
+</script>
+

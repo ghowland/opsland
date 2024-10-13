@@ -41,7 +41,7 @@ def GetLoginSessionFromRequest(config, request):
   return None
 
 
-def EnhancePagePayload(config, bundle, path_data, payload, request):
+def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request):
   # Duplicate to protect top level object
   payload = dict(payload)
 
@@ -69,18 +69,20 @@ def EnhancePagePayload(config, bundle, path_data, payload, request):
   return payload
 
 
-def ProcessPayloadData(config, bundle, path_data, payload_in, request):
+def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, request):
   payload = dict(payload_in)
 
+  # Ensure we have a tables dict to store all our tables
+  if 'table' not in payload: payload['table'] = {}
+
+  # Ensure we have a graphs dict to store all our graphs
+  if 'graph' not in payload: payload['graph'] = {}
 
   # Perform data processing
   if 'data' in path_data:
     # Process Table: Dict of Dicts
     if 'table_dict' in path_data['data']:
-      # Ensure we have a tables dict to store all our tables
-      if 'tables' not in payload: payload['tables'] = {}
-
-      for out_table_key, table_info in path_data['data']['table_dict'].items():
+      for (out_table_key, table_info) in path_data['data']['table_dict'].items():
         # LOG.info(f'Processing table: Dict: {out_table_key}   Data: {table_info}')
 
         if table_info['cache'] not in payload or table_info['key'] not in payload[table_info['cache']]:
@@ -99,17 +101,18 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)
         # LOG.debug(f'Table: Dict of Dicts: {generic_data}')
-        payload['tables'][out_table_key] = template_result.body.decode()
+        payload['table'][out_table_key] = template_result.body.decode()
 
-    # Process Table :List of Dicts
+    # Process Table: List of Dicts
     if 'table_list' in path_data['data']:
-      # Ensure we have a tables dict to store all our tables
-      if 'tables' not in payload: payload['tables'] = {}
+      for (out_table_key, table_info) in path_data['data']['table_list'].items():
+        # LOG.info(f'Processing table: {out_table_key}   Data: {table_info}')
 
-      for out_table_key, table_info in path_data['data']['table_list'].items():
-        # LOG.info(f'Processing table: List: {out_table_key}   Data: {table_info}')
-
-        if table_info['cache'] not in payload or table_info['key'] not in payload[table_info['cache']]:
+        # Skip and report problems to be solved
+        if table_info['cache'] not in payload:
+          LOG.error(f'''Missing Data Table cache: Cache: {table_info['cache']}  Payload: {payload}''')
+          continue
+        elif table_info['key'] not in payload[table_info['cache']]:
           LOG.error(f'''Missing Data Table key: Cache: {table_info['cache']}  Key: {table_info['key']}   Payload: {payload}''')
           continue
 
@@ -125,7 +128,27 @@ def ProcessPayloadData(config, bundle, path_data, payload_in, request):
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_list_of_dict.html.j2', 
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)
-        payload['tables'][out_table_key] = template_result.body.decode()
+        payload['table'][out_table_key] = template_result.body.decode()
+
+    # Process Graph (ex: line, scatter, bar)
+    if 'graph' in path_data['data']:
+      for (out_graph_key, graph_info) in path_data['data']['graph'].items():
+        LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
+
+        # Get our cached value, which should be a timeseries (list of floats)
+        graph_cache = config.cache.GetBundleKeyDirect(bundle_name, graph_info['cache'])
+
+        if not graph_cache:
+          LOG.error(f'''Missing Data Graph key: Cache: {graph_info['cache']}  Result: {graph_cache}  Bundle: {config.cache.GetBundleSilo(bundle_name)}''')
+          continue
+
+        generic_data = generic_widget.DataForGraph(graph_info['label'], graph_info['element'], graph_cache)
+        LOG.debug(f'Graph: {generic_data}')
+        template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_graph.html.j2', 
+                                                               context={'generic_graph': generic_data}, 
+                                                               request=request)
+        payload['graph'][out_graph_key] = template_result.body.decode()
+
 
   return payload
 
@@ -147,11 +170,11 @@ def RenderPathData(request, config, bundle_name, bundle, path_data):
 
     # LOG.debug(f'Base Payload: {payload}')
 
-    payload = ProcessPayloadData(config, bundle, path_data, payload, request)
+    payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request)
 
     # LOG.debug(f'After Processing Payload: {payload}')
 
-    payload = EnhancePagePayload(config, bundle, path_data, payload, request)
+    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request)
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 
