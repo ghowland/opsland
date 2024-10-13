@@ -54,6 +54,10 @@ summary:
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
+  post:
+    modal/yes_no:
+      template: returns/modal_yes_no.html.j2
+
   get:
     # Paths
     status:

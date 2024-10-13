@@ -132,38 +132,54 @@ def GetBundlePathData(method, path):
 
 # GET
 @APP.get("/{full_path:path}", response_class=HTMLResponse)
-async def Web_Overview(request: Request, full_path: str):
+async def Web_GET(request: Request, full_path: str):
   """Matches all paths for Method GET, and then we route ourselves"""
   (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path)
   if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
   return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data)
 
+
 # POST
 @APP.post("/{full_path:path}", response_class=HTMLResponse)
-async def Web_Overview(request: Request, full_path: str):
+async def Web_POST(request: Request, full_path: str):
   """Matches all paths for Method POST, and then we route ourselves"""
-  rendered_html = f'POST: {full_path}'
+  data = dict(await request.form())
+  headers = dict(request.headers)
+
+  rendered_html = f'POST: {full_path}  Data: {data}  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
+
 
 # PUT
 @APP.put("/{full_path:path}", response_class=HTMLResponse)
-async def Web_Overview(request: Request, full_path: str):
+async def Web_PUT(request: Request, full_path: str):
   """Matches all paths for Method PUT, and then we route ourselves"""
-  rendered_html = f'PUT: {full_path}'
+  data = dict(await request.form())
+  headers = dict(request.headers)
+
+  rendered_html = f'PUT: {full_path}  Data: {data}  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
+
 
 # PATCH
 @APP.patch("/{full_path:path}", response_class=HTMLResponse)
-async def Web_Overview(request: Request, full_path: str):
+async def Web_PATCH(request: Request, full_path: str):
   """Matches all paths for Method PATCH, and then we route ourselves"""
-  rendered_html = f'PATCH: {full_path}'
+  data = dict(await request.form())
+  headers = dict(request.headers)
+
+  rendered_html = f'PATCH: {full_path}  Data: {data}  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
+
 
 # DELETE
 @APP.delete("/{full_path:path}", response_class=HTMLResponse)
-async def Web_Overview(request: Request, full_path: str):
+async def Web_DELETE(request: Request, full_path: str):
   """Matches all paths for Method DELETE, and then we route ourselves"""
-  rendered_html = f'DELETE: {full_path}'
+  data = dict(await request.form())
+  headers = dict(request.headers)
+
+  rendered_html = f'DELETE: {full_path}  Data: {data}  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
 
