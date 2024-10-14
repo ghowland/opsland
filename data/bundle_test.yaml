@@ -26,8 +26,8 @@ path:
 schedule:
   period:
     mtr:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
-      dir: /mnt/d/_OpsLand/opsland-example/
+      command: python3 ~/work/opsland-example/opsland_example.py go
+      dir: ~/work/opsland-example/
       period: 15s
       # store: single
       store: queue
