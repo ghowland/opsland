@@ -26,7 +26,7 @@ path:
 schedule:
   period:
     mtr:
-      command: python3 ~/work/opsland-example/opsland_example.py go
+      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py go
       dir: ~/work/opsland-example/
       period: 15s
       # store: single
@@ -87,8 +87,8 @@ http:
             element: generic_table
             link: "/example/%(_key)s"
             fields:
-              - "First": first
-              - "Second": second
+              - first: First
+              - second: Second
             no_max_height: True
 
         # A table using a List of Dicts
@@ -102,14 +102,14 @@ http:
             link: "/example/%(target)s"
             link_field: index
             fields:
-              - "First": ip
-              - "Loss": loss
-              - "Sent": sent
-              - "Last": last
-              - "Avg": average
-              - "Best": best
-              - "Worst": worst
-              - "StdDev": stddev
+              - ip: IP
+              - loss: Loss
+              - sent: Sent
+              - last: Last
+              - average: Avg
+              - best: Best
+              - worst: Worse
+              - stddev: StdDev
             no_max_height: True
         
         # Graphs.  Like like graphs, or scatter plots.  With Graph.js
@@ -117,7 +117,7 @@ http:
           # Payload output key
           timeseries_graph:
             label: Best ICMP in ms
-            cache: summary.schedule.period.mtr.best.timeseries
+            cache: series
             element: timeseries_graph
 
 

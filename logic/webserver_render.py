@@ -90,7 +90,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
           continue
 
         # Get the table_data from our payload
-        table_data = payload[table_info['cache']][table_info['key']]
+        table_data = utility.GetDataByDictKeyList(payload[table_info['cache']], table_info['key'])
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -117,7 +117,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
           continue
 
         # Get the table_data from our payload
-        table_data = payload[table_info['cache']][table_info['key']]
+        table_data = utility.GetDataByDictKeyList(payload[table_info['cache']], table_info['key'])
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -135,8 +135,10 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
       for (out_graph_key, graph_info) in path_data['data']['graph'].items():
         LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
 
+        cache_label = utility.GetDictKeyByValue(path_data['cache'], graph_info['cache'])
+
         # Get our cached value, which should be a timeseries (list of floats)
-        graph_cache = config.cache.GetBundleKeyDirect(bundle_name, graph_info['cache'])
+        graph_cache = config.cache.GetBundleKeyDirect(bundle_name, cache_label)
 
         if not graph_cache:
           LOG.error(f'''Missing Data Graph key: Cache: {graph_info['cache']}  Result: {graph_cache}  Bundle: {config.cache.GetBundleSilo(bundle_name)}''')
@@ -148,7 +150,6 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
                                                                context={'generic_graph': generic_data}, 
                                                                request=request)
         payload['graph'][out_graph_key] = template_result.body.decode()
-
 
   return payload
 

@@ -74,7 +74,7 @@ def DataForTableDictOfDicts(row_data, table_id, key_label, fields, key_url = Non
   for field in fields:
     key = list(field.keys())[0]
     name = field[key]
-    data['fields'].append({'label': key, 'name': name})
+    data['fields'].append({'label': name, 'name': key})
   
   return data
 
@@ -87,7 +87,7 @@ def DataForTableListOfDicts(row_data, table_id, key_label, key_field, fields, ke
   for field in fields:
     key = list(field.keys())[0]
     name = field[key]
-    data['fields'].append({'label': key, 'name': name})
+    data['fields'].append({'label': name, 'name': key})
   
   return data
 
