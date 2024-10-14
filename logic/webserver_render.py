@@ -2,7 +2,6 @@
 Render the Webserver Requests: Keep rendering and serving logic separated for readability
 """
 
-import json
 
 from fastapi import Response
 from fastapi.responses import HTMLResponse
