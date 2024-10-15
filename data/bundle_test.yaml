@@ -126,11 +126,10 @@ http:
         
         # Graphs.  Like like graphs, or scatter plots.  With Graph.js
         graph:
-          # Payload output key
-          timeseries_graph:
+          best:
             label: Best ICMP in ms
             cache: series
-            element: timeseries_graph
+            element: graph_best
 
 
 

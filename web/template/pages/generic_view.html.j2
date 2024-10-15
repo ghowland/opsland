@@ -37,7 +37,13 @@ class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
 
 <br><br>
 
-{{ graph.timeseries_graph | safe }}
+{{ graph.best | safe }}
+
+<br><br>
+
+<p class="p-10">
+  Mean Time: {{ series_mean }}
+</p>
 
 
 {% include 'includes/page/page_end_with_footer.html.j2' %}

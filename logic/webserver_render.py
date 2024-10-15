@@ -162,6 +162,10 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
     payload[payload_key] = config.cache.GetBundleKeyData(bundle_name, cache_key)
 
+    # If this doesnt exist, try to get it directly
+    if payload[payload_key] == None:
+      payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
+
   # LOG.info(f'Payload before rendering: {payload}')
 
   # If we have a template, then run it through Jinja
