@@ -80,7 +80,8 @@ http:
         schedule.period.mtr: mtr
         summary.schedule.period.mtr.best.timeseries: series_best
         summary.schedule.period.mtr.worst.timeseries: series_worst
-        
+        summary.schedule.period.mtr.loss.timeseries: series_loss
+
         summary.schedule.period.mtr.best.mean: series_mean
 
       page: Home
@@ -138,6 +139,10 @@ http:
             cache: series_worst
             element: graph_worst
 
+          loss:
+            label: Loss in ICMP
+            cache: series_loss
+            element: graph_loss
 
 
 # Site NavBar and User links.  Overlays over the `root`.
