@@ -135,7 +135,6 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
         LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
 
         cache_label = utility.GetDictKeyByValue(path_data['cache'], graph_info['cache'])
-
         # Get our cached value, which should be a timeseries (list of floats)
         graph_cache = config.cache.GetBundleKeyDirect(bundle_name, cache_label)
 
@@ -166,17 +165,11 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     if payload[payload_key] == None:
       payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
 
-  # LOG.info(f'Payload before rendering: {payload}')
-
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
     template = path_data['template']
 
-    # LOG.debug(f'Base Payload: {payload}')
-
     payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
-
-    # LOG.debug(f'After Processing Payload: {payload}')
 
     payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
 
