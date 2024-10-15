@@ -78,7 +78,9 @@ http:
       # Extract data from this Cache, to be used for rendering
       cache:
         schedule.period.mtr: mtr
-        summary.schedule.period.mtr.best.timeseries: series
+        summary.schedule.period.mtr.best.timeseries: series_best
+        summary.schedule.period.mtr.worst.timeseries: series_worst
+        
         summary.schedule.period.mtr.best.mean: series_mean
 
       page: Home
@@ -128,8 +130,13 @@ http:
         graph:
           best:
             label: Best ICMP in ms
-            cache: series
+            cache: series_best
             element: graph_best
+
+          worst:
+            label: Worst ICMP in ms
+            cache: series_worst
+            element: graph_worst
 
 
 
