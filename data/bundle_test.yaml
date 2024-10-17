@@ -72,13 +72,10 @@ http:
       template: returns/modal_yes_no.html.j2
 
   get:
-<<<<<<< HEAD
     # Paths
     test:
       template: pages/generic_test.html.j2
 
-    # Paths
-=======
     # /other
     other:
       template: pages/generic_other.html.j2
@@ -87,7 +84,6 @@ http:
         schedule.period.deep: deep
 
     # /status
->>>>>>> 3398fc73996518578b210a1999e0f74b2a82d2b6
     status:
       template: pages/generic_view.html.j2
 
