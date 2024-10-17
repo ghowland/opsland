@@ -60,6 +60,10 @@ http:
 
   get:
     # Paths
+    test:
+      template: pages/generic_test.html.j2
+
+    # Paths
     status:
       template: pages/generic_view.html.j2
 
