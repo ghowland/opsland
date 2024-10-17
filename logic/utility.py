@@ -65,6 +65,17 @@ def SaveYaml(path_raw, data, create_dirs=True):
     yaml.dump(data, stream, default_flow_style=False)
 
 
+def SaveJson(path_raw, data, create_dirs=True):
+  """Save YAML data to a path"""
+  path = os.path.expanduser(path_raw)
+
+  if create_dirs:
+    EnsureDirectoryExists(path)
+
+  with open(path, 'w') as stream:
+    json.dump(data, stream)
+
+
 def EnsureDirectoryExists(path):
   """Gets the directory of this path, and ensures it exists"""
   dir_name = os.path.basename(path)

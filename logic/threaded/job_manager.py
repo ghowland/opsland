@@ -9,7 +9,6 @@ from logic.log import LOG
 
 from logic import thread_base
 from logic import utility
-from logic import thread_manager
 
 
 class JobManager(thread_base.ThreadBase):
@@ -31,6 +30,16 @@ class JobManager(thread_base.ThreadBase):
     if 'data' not in task:
       LOG.error(f'Cant execute this task, skipping: {task}')
       return
+    
+    # Create our output file, if specified
+    if 'output' in task['data'] and 'output_path' in task['data']:
+      output_data = {}
+      for key, value in task['data']['output'].items():
+        output_data[value] = self._config.cache.GetBundleKeyDirect(task['bundle'], key)
+      
+      utility.SaveJson(task['data']['output_path'], output_data)
+      LOG.debug(f'''Command Output Path: {task['data']['output_path']}''')
+
 
     (status, output, error) = utility.ExecuteCommand(task['data']['command'])
 

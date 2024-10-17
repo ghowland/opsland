@@ -38,6 +38,14 @@ schedule:
       dir: ~/work/opsland-example/
       period: 15s
 
+    2x:
+      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py -i /tmp/input_2x.json 2x
+      dir: ~/work/opsland-example/
+      period: 15s
+      output_path: /tmp/input_2x.json
+      output:
+        schedule.period.mtr: mtr
+
 
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
 summary:
@@ -86,6 +94,7 @@ http:
       # Extract data from this Cache, to be used for rendering
       cache:
         schedule.period.mtr: mtr
+        schedule.period.2x: twox
         summary.schedule.period.mtr.best.timeseries: series_best
         summary.schedule.period.mtr.worst.timeseries: series_worst
         summary.schedule.period.mtr.loss.timeseries: series_loss
