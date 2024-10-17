@@ -8,7 +8,7 @@
   <br><br>
 
   <h1 class="text-3xl font-bold underline pb-3 text-blue-600">
-    Value: {{ result }}
+    Value: {{ mtr.result }}
   </h1>
 
 <button 
@@ -37,7 +37,15 @@ class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
 
 <br><br>
 
-{{ graph.timeseries_graph | safe }}
+{{ graph.best | safe }}
+{{ graph.worst | safe }}
+{{ graph.loss | safe }}
+
+<br><br>
+
+<p class="p-10">
+  Mean Time: {{ series_mean }}
+</p>
 
 
 {% include 'includes/page/page_end_with_footer.html.j2' %}

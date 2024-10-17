@@ -34,6 +34,8 @@ class JobManager(thread_base.ThreadBase):
 
     (status, output, error) = utility.ExecuteCommand(task['data']['command'])
 
+    LOG.debug(f'Output: {output}')
+    LOG.debug(f'Status: {status}  Error: {error}')
     payload = json.loads(output)
 
     self._config.cache.SetBundleKeyData(task['bundle'], task['key'], payload)

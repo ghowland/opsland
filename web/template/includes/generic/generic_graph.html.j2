@@ -4,7 +4,7 @@
 </div>
 
 <script>
-  const data = {
+  const data_{{ generic_graph.element }} = {
     labels: [{{ generic_graph.labels_csv | safe }} ],
     datasets: [{
       label: '{{ generic_graph.label }}',
@@ -15,14 +15,14 @@
     }]
   };
 
-  const config = {
+  const config_{{ generic_graph.element }} = {
     type: 'line',
-    data: data,
+    data: data_{{ generic_graph.element }},
   };
 
-  const ctx = document.getElementById('{{ generic_graph.element }}');
+  const ctx_{{ generic_graph.element }} = document.getElementById('{{ generic_graph.element }}');
 
-  new Chart(ctx, config);
+  new Chart(ctx_{{ generic_graph.element }}, config_{{ generic_graph.element }});
 
 </script>
 

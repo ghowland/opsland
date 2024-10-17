@@ -320,3 +320,39 @@ def GlobReverse(glob, text):
   
   return text
 
+
+def GetDataByDictKeyList(source_data, key_list=None):
+  """Can take a few different options to get the data.
+
+  If `key_list`==None, then the entire `source_data` is returned.
+  If `key_list` is a string, then it will return the index of that string in the `source_data`.
+  If `key_list` is list, then each field will be used to navigate deeper.  Can be string or int for arrays, can single slice.
+  """
+  if key_list == None:
+    return source_data
+  
+  if type(key_list) == str:
+    return source_data[key_list]
+  
+  if type(key_list) in (list, tuple, dict):
+    try:
+      cur_data = source_data
+      for key in key_list:
+        cur_data = cur_data[key]
+    
+    except Exception as e:
+      LOG.error(f'Failed to traverse key list: {key_list} in source_data: {source_data}  Failure: {e}')
+      return None
+  
+  else:
+    LOG.error(f'Couldnt find key_list: {key_list} in source_data: {source_data}')
+    return None
+
+
+def GetDictKeyByValue(data, value):
+  """Returns the first key that matchies this value.  Uniqueness and order is not guaranteed"""
+  for key, key_value in data.items():
+    if value == key_value:
+      return key
+  
+  return None

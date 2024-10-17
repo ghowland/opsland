@@ -175,9 +175,13 @@ class CacheManager():
           bundle[name] = value
 
         # Test for max and crop
-        if cache_data.get('max', DEFAULT_MAX_QUEUE_SIZE) >= len(bundle[name]):
+        max_queue_size = cache_data.get('max', DEFAULT_MAX_QUEUE_SIZE)
+        if max_queue_size < len(bundle[name]):
           # Slice to crop queue, we always chop from the 0 side because we append new items
-          bundle[name] = bundle[name][-DEFAULT_MAX_QUEUE_SIZE:]
+          bundle[name] = bundle[name][-max_queue_size:]
+          LOG.debug(f'Reduced queue length: {bundle_name}: {name}: {len(bundle[name])}')
+        else:
+          LOG.debug(f'Queue length: {bundle_name}: {name}: {len(bundle[name])}')
 
         # If this key is in our `summary` system
         self.ProcessSummary(bundle_data, bundle_name, bundle, name, bundle[name])

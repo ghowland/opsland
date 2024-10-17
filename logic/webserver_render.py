@@ -2,7 +2,6 @@
 Render the Webserver Requests: Keep rendering and serving logic separated for readability
 """
 
-import json
 
 from fastapi import Response
 from fastapi.responses import HTMLResponse
@@ -90,7 +89,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
           continue
 
         # Get the table_data from our payload
-        table_data = payload[table_info['cache']][table_info['key']]
+        table_data = utility.GetDataByDictKeyList(payload[table_info['cache']], table_info['key'])
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -117,7 +116,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
           continue
 
         # Get the table_data from our payload
-        table_data = payload[table_info['cache']][table_info['key']]
+        table_data = utility.GetDataByDictKeyList(payload[table_info['cache']], table_info['key'])
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -135,8 +134,9 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
       for (out_graph_key, graph_info) in path_data['data']['graph'].items():
         LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
 
+        cache_label = utility.GetDictKeyByValue(path_data['cache'], graph_info['cache'])
         # Get our cached value, which should be a timeseries (list of floats)
-        graph_cache = config.cache.GetBundleKeyDirect(bundle_name, graph_info['cache'])
+        graph_cache = config.cache.GetBundleKeyDirect(bundle_name, cache_label)
 
         if not graph_cache:
           LOG.error(f'''Missing Data Graph key: Cache: {graph_info['cache']}  Result: {graph_cache}  Bundle: {config.cache.GetBundleSilo(bundle_name)}''')
@@ -148,7 +148,6 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
                                                                context={'generic_graph': generic_data}, 
                                                                request=request)
         payload['graph'][out_graph_key] = template_result.body.decode()
-
 
   return payload
 
@@ -162,17 +161,15 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
     payload[payload_key] = config.cache.GetBundleKeyData(bundle_name, cache_key)
 
-  # LOG.info(f'Payload before rendering: {payload}')
+    # If this doesnt exist, try to get it directly
+    if payload[payload_key] == None:
+      payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
     template = path_data['template']
 
-    # LOG.debug(f'Base Payload: {payload}')
-
     payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
-
-    # LOG.debug(f'After Processing Payload: {payload}')
 
     payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
 
