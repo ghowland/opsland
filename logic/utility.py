@@ -339,6 +339,8 @@ def GetDataByDictKeyList(source_data, key_list=None):
   If `key_list` is a string, then it will return the index of that string in the `source_data`.
   If `key_list` is list, then each field will be used to navigate deeper.  Can be string or int for arrays, can single slice.
   """
+  LOG.debug(f'Get Data by Dict Key List: {key_list}')
+
   if key_list == None:
     return source_data
   
@@ -349,7 +351,10 @@ def GetDataByDictKeyList(source_data, key_list=None):
     try:
       cur_data = source_data
       for key in key_list:
+        # LOG.debug(f'Cur Key: {key}  Data: {cur_data}')
         cur_data = cur_data[key]
+      
+      return cur_data
     
     except Exception as e:
       LOG.error(f'Failed to traverse key list: {key_list} in source_data: {source_data}  Failure: {e}')

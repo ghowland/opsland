@@ -44,7 +44,8 @@ schedule:
       period: 15s
       output_path: /tmp/input_2x.json
       output:
-        schedule.period.mtr: mtr
+        schedule.period.mtr:
+          mtr: [-1, mtr, -1]
 
 
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)

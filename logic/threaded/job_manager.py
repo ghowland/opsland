@@ -34,8 +34,11 @@ class JobManager(thread_base.ThreadBase):
     # Create our output file, if specified
     if 'output' in task['data'] and 'output_path' in task['data']:
       output_data = {}
-      for key, value in task['data']['output'].items():
-        output_data[value] = self._config.cache.GetBundleKeyDirect(task['bundle'], key)
+      for cache_key, output_spec in task['data']['output'].items():
+        cache_value = self._config.cache.GetBundleKeyDirect(task['bundle'], cache_key)
+
+        for spec_key, field_list in output_spec.items():
+          output_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
       
       utility.SaveJson(task['data']['output_path'], output_data)
       LOG.debug(f'''Command Output Path: {task['data']['output_path']}''')
