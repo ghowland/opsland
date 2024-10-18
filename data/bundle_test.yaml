@@ -42,8 +42,8 @@ schedule:
       command: /Users/geoff/work/opsland/opsland-example/opsland_example.py -i /tmp/input_2x.json 2x
       dir: ~/work/opsland-example/
       period: 15s
-      output_path: /tmp/input_2x.json
-      output:
+      input_path: /tmp/opsland/input_2x.json
+      input:
         schedule.period.mtr:
           mtr: [-1, mtr, -1]
 
@@ -66,11 +66,31 @@ summary:
       loss: [mtr_last, loss]
 
 
+# These commands will be executed at specific times, such as during an HTTP request
+execute:
+  # This bucket helps organize different things we want to execute, but other things could potentially call things from api
+  api:
+    crud_test:
+      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py -i /tmp/input_2x.json 2x
+      dir: ~/work/opsland-example/
+      input_path: /tmp/opsland/crud_test.json
+      input:
+        request:
+          record: [user_input]
+
+      # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
+      cache_path_suffix: "{id}"
+
+
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
   post:
     modal/yes_no:
       template: returns/modal_yes_no.html.j2
+
+  post:
+    api/crud_test:
+      execute: execute.api.crud_test
 
   get:
     # Paths

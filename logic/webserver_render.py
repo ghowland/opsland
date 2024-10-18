@@ -155,7 +155,12 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
   """Render the Path Data"""
   # Our starting payload
-  payload = {}
+  payload = {'request': {'arg': {}, 'header': {}, 'data': {}}}
+
+  # If we have request args, assign them into the payload
+  if request_args: payload['request']['arg'] = request_args
+  if request_data: payload['request']['data'] = request_data
+  if request_headers: payload['request']['header'] = request_headers
 
   # Put any cache into our payload
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
@@ -164,7 +169,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     # If this doesnt exist, try to get it directly
     if payload[payload_key] == None:
       payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
-
+  
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
     template = path_data['template']
