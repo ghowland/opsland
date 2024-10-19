@@ -32,28 +32,7 @@ class JobManager(thread_base.ThreadBase):
       return
 
     # Execute this command.  We wrap it here so we can call this from mutliple paths and all are handled the same
-    execute_command.ExecuteCommand(self._config, task)
-
-    # # Create our output file, if specified
-    # if 'input' in task['data'] and 'input_path' in task['data']:
-    #   output_data = {}
-    #   for cache_key, output_spec in task['data']['input'].items():
-    #     cache_value = self._config.cache.GetBundleKeyDirect(task['bundle'], cache_key)
-
-    #     for spec_key, field_list in output_spec.items():
-    #       output_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
-      
-    #   utility.SaveJson(task['data']['input_path'], output_data)
-    #   LOG.debug(f'''Command Output Path: {task['data']['input_path']}''')
-
-
-    # (status, output, error) = utility.ExecuteCommand(task['data']['command'])
-
-    # LOG.debug(f'Output: {output}')
-    # LOG.debug(f'Status: {status}  Error: {error}')
-    # payload = json.loads(output)
-
-    # self._config.cache.SetBundleKeyData(task['bundle'], task['key'], payload)
+    execute_command.ExecuteCommand(self._config, task['data'], task['bundle'], task['key'])
 
 
 

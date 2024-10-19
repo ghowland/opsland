@@ -15,7 +15,7 @@ from logic import utility
 from logic import local_cache
 from logic import webserver
 from logic import generic_widget
-from logic import thread_manager
+from logic import execute_command
 
 
 def PageMissing(request, bundle, config):
@@ -155,7 +155,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
   return payload
 
 
-def ExecuteStoredCommand(config, bundle_name, execute_name):
+def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
   """"""
   parts = execute_name.split('.')
 
@@ -163,6 +163,12 @@ def ExecuteStoredCommand(config, bundle_name, execute_name):
 
   LOG.info(f'Exec Stored Command: {execute_name}   Data: {execute_data}')
 
+  # Execute the command
+  result = execute_command.ExecuteCommand(config, execute_data, bundle_name, execute_name, update_data=update_data)
+
+  LOG.info(f'Exec Stored Command: {execute_name}   Result: {result}')
+
+  return result
 
 
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
@@ -186,10 +192,10 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
 
   # Check if we want to execute a command directly (API)
   if 'execute' in path_data:
-    exec_result = ExecuteStoredCommand(config, bundle_name, path_data['execute'])
-    LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
+    exec_result = ExecuteStoredCommand(config, bundle_name, path_data['execute'], payload)
     if exec_result:
-      payload.update(exec_result)
+      payload[path_data['execute']] = exec_result
+      LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
 
 
   # If we have a template, then run it through Jinja

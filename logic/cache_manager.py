@@ -150,6 +150,7 @@ class CacheManager():
 
     # LOG.info(f'Bundle: {bundle_name}  Data: {bundle_data}')
 
+    # Lock this bundle, so we are the only one operating on it
     with self.lock_bundles_each[bundle_name]:
       path = bundle_data['path']['cache'].replace('{key}', name)
 

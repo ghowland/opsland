@@ -10,31 +10,36 @@ from logic import utility
 from logic.log import LOG
 
 
-def ExecuteCommand(config, command):
+def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None):
   """Execute a command"""
   # Create our output file, if specified
-  if 'input' in command['data'] and 'input_path' in command['data']:
+  if 'input' in command and 'input_path' in command:
     output_data = {}
-    for cache_key, output_spec in command['data']['input'].items():
-      cache_value = config.cache.GetBundleKeyDirect(command['bundle'], cache_key)
+    if update_data:
+      output_data.update(update_data)
+
+    for cache_key, output_spec in command['input'].items():
+      cache_value = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
 
       for spec_key, field_list in output_spec.items():
         output_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
     
-    utility.SaveJson(command['data']['input_path'], output_data)
-    LOG.debug(f'''Command Output Path: {command['data']['input_path']}''')
+    utility.SaveJson(command['input_path'], output_data)
+    LOG.debug(f'''Command Output Path: {command['input_path']}''')
 
 
-  (status, output, error) = utility.ExecuteCommand(command['data']['command'])
+  (status, output, error) = utility.ExecuteCommand(command['command'])
 
   if status == 0:
     LOG.debug(f'Output: {output}')
   else:
     LOG.debug(f'Status: {status}  Error: {error}')
-    
+
   payload = json.loads(output)
 
-  config.cache.SetBundleKeyData(command['bundle'], command['key'], payload)
+  config.cache.SetBundleKeyData(bundle_name, set_cache_key, payload)
+
+  return payload
 
 
 
