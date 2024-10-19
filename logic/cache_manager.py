@@ -16,7 +16,7 @@ from logic import utility
 from logic import local_cache
 
 
-# Cannot have a queue size larger than this
+# Default max queue size
 DEFAULT_MAX_QUEUE_SIZE = 1000
 
 
@@ -84,6 +84,20 @@ class CacheManager():
       return self.bundles[name]
 
 
+  def GetBundleKeyDirect(self, bundle_name, name, default=None):
+    """Returns a single Bundle dict item.  If not found, returns `default`.  If `single`==True will only return 1 value, otherwise the raw values"""
+    if bundle_name in self.lock_bundles_each:
+      #TODO(geoff): Do I need to lock all?  I think I do because things could be changing, and Im working through indexing.  So I should switch to silo mode, and verify I can write to it
+      #   or write a new GetWritableSilo() func so I can write into it without using the global lock, because the get-by-itself is safe
+      with self.lock_bundles_all:
+        with self.lock_bundles_each[bundle_name]:
+          return self.bundles[bundle_name].get(name, default)
+
+    else:
+      LOG.error(f'Bundle requested that doesnt have a lock: {bundle_name}')
+      return None
+
+
   def GetCacheDataByKey(self, bundle_name, bundle_data, cache_key):
     """Get the spec for this `cache_key`, because its strictly-named, we can reverse it"""
     part_cache_key = cache_key
@@ -101,19 +115,6 @@ class CacheManager():
     
     return None
 
-
-  def GetBundleKeyDirect(self, bundle_name, name, default=None):
-    """Returns a single Bundle dict item.  If not found, returns `default`.  If `single`==True will only return 1 value, otherwise the raw values"""
-    if bundle_name in self.lock_bundles_each:
-      #TODO(geoff): Do I need to lock all?  I think I do because things could be changing, and Im working through indexing.  So I should switch to silo mode, and verify I can write to it
-      #   or write a new GetWritableSilo() func so I can write into it without using the global lock, because the get-by-itself is safe
-      with self.lock_bundles_all:
-        with self.lock_bundles_each[bundle_name]:
-          return self.bundles[bundle_name].get(name, default)
-
-    else:
-      LOG.error(f'Bundle requested that doesnt have a lock: {bundle_name}')
-      return None
 
 
   def GetBundleKeyData(self, bundle_name, name, default=None, single=True):
@@ -149,6 +150,7 @@ class CacheManager():
 
     # LOG.info(f'Bundle: {bundle_name}  Data: {bundle_data}')
 
+    # Lock this bundle, so we are the only one operating on it
     with self.lock_bundles_each[bundle_name]:
       path = bundle_data['path']['cache'].replace('{key}', name)
 
@@ -238,10 +240,10 @@ class CacheManager():
         # Update the bundle with all our summary data.  Same as setting it directly, but now we can cache the summary data separately for cleanliness
         bundle.update(summary_update)
 
-        LOG.debug(f'''Summary: {summary_key}  Min: {bundle[f'{summary_key}.min']}  Max: {bundle[f'{summary_key}.max']}  Mean: {bundle[f'{summary_key}.mean']}''')
+        # LOG.debug(f'''Summary: {summary_key}  Min: {bundle[f'{summary_key}.min']}  Max: {bundle[f'{summary_key}.max']}  Mean: {bundle[f'{summary_key}.mean']}''')
 
         summary_path = bundle_data['path']['summary'].replace('{key}', summary_key)
         local_cache.Set(summary_path, summary_update)
-        LOG.debug(f'Summary written: {summary_path}')
+        # LOG.debug(f'Summary written: {summary_path}')
 
 

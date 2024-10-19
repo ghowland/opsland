@@ -8,8 +8,7 @@ import json
 from logic.log import LOG
 
 from logic import thread_base
-from logic import utility
-from logic import thread_manager
+from logic import execute_command
 
 
 class JobManager(thread_base.ThreadBase):
@@ -32,13 +31,8 @@ class JobManager(thread_base.ThreadBase):
       LOG.error(f'Cant execute this task, skipping: {task}')
       return
 
-    (status, output, error) = utility.ExecuteCommand(task['data']['command'])
-
-    LOG.debug(f'Output: {output}')
-    LOG.debug(f'Status: {status}  Error: {error}')
-    payload = json.loads(output)
-
-    self._config.cache.SetBundleKeyData(task['bundle'], task['key'], payload)
+    # Execute this command.  We wrap it here so we can call this from mutliple paths and all are handled the same
+    execute_command.ExecuteCommand(self._config, task['data'], task['bundle'], task['key'])
 
 
 

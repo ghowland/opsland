@@ -56,9 +56,13 @@ class ThreadBase(threading.Thread):
       time_to_awake = time.time() + self._sleep_duration
 
       try:
-        if self._tasks:
+        # Process all pending tasks sequentially now
+        while self._tasks:
           current_task = self.GetNextTask()
           self._ExecuteTask(current_task)
+
+          # If this task never gets removed, then break and dont loop forever
+          if not self._remove_task: break
         
       # Log and ignore
       except Exception as e:

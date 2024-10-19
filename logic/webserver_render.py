@@ -3,6 +3,8 @@ Render the Webserver Requests: Keep rendering and serving logic separated for re
 """
 
 
+import json
+
 from fastapi import Response
 from fastapi.responses import HTMLResponse
 from fastapi.responses import RedirectResponse
@@ -13,6 +15,7 @@ from logic import utility
 from logic import local_cache
 from logic import webserver
 from logic import generic_widget
+from logic import execute_command
 
 
 def PageMissing(request, bundle, config):
@@ -152,10 +155,31 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
   return payload
 
 
+def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
+  """"""
+  parts = execute_name.split('.')
+
+  execute_data = config.data[bundle_name]['execute'][parts[1]][parts[2]]
+
+  LOG.info(f'Exec Stored Command: {execute_name}   Data: {execute_data}')
+
+  # Execute the command
+  result = execute_command.ExecuteCommand(config, execute_data, bundle_name, execute_name, update_data=update_data)
+
+  LOG.info(f'Exec Stored Command: {execute_name}   Result: {result}')
+
+  return result
+
+
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
   """Render the Path Data"""
   # Our starting payload
-  payload = {}
+  payload = {'request': {'arg': {}, 'data': {}, 'header': {}}}
+
+  # If we have request args, assign them into the payload
+  if request_args: payload['request']['arg'] = request_args
+  if request_data: payload['request']['data'] = request_data
+  # if request_headers: payload['request']['header'] = request_headers
 
   # Put any cache into our payload
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
@@ -164,6 +188,15 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     # If this doesnt exist, try to get it directly
     if payload[payload_key] == None:
       payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
+  
+
+  # Check if we want to execute a command directly (API)
+  if 'execute' in path_data:
+    exec_result = ExecuteStoredCommand(config, bundle_name, path_data['execute'], payload)
+    if exec_result:
+      payload[path_data['execute']] = exec_result
+      LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
+
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
@@ -177,5 +210,6 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
 
   # Else, just return the output  
   else:
-    return Response(status_code=200, content=payload)
+    return Response(status_code=200, content=json.dumps(payload))
+  
 

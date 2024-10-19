@@ -139,7 +139,12 @@ async def Web_GET(request: Request, full_path: str):
   (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path)
   if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
-  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data)
+  args = dict(request.query_params._dict)
+  headers = dict(request.headers)
+
+  LOG.debug(f'GET: {full_path}  Args: {args}  Headers: {headers}')
+
+  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_headers=headers, request_args=args)
 
 
 # POST
@@ -152,7 +157,7 @@ async def Web_POST(request: Request, full_path: str):
   (bundle_name, bundle, path_data) = GetBundlePathData('post', full_path)
   if path_data == None: return Response(status_code=404, content={'error': 'URI not found'})
 
-  # LOG.debug(f'POST: {full_path}  Data: {request_data}  Headers: {request_headers}')
+  LOG.debug(f'POST: {full_path}  Data: {request_data}  Headers: {request_headers}')
 
   return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_data=request_data, request_headers=request_headers)
 
