@@ -372,3 +372,13 @@ def GetDictKeyByValue(data, value):
       return key
   
   return None
+
+
+def FormatTextFromDictKeys(text, data):
+  """Replace text from a dictionary using {name} formatting"""
+  for (key, value) in data.items():
+    if f'{{{key}}}' in text:
+      # Must enforce replace gets a string value
+      text = text.replace(f'{{{key}}}', str(value))
+  
+  return text

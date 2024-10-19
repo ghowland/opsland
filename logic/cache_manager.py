@@ -203,7 +203,15 @@ class CacheManager():
       else:
         LOG.error(f'''Unknown data type for caching: {bundle_name}   Key: {name}  Cache Data: {cache_data}''')
 
-      # LOG.debug(f'Set Bundle Key Data: {bundle_name}   Key: {name}  Path: {path}')
+      # If the cache_data has a `unique_key`
+      if 'unique_key' in cache_data:
+        unique_key = utility.FormatTextFromDictKeys(cache_data['unique_key'], bundle[name])
+        if unique_key and '{' not in unique_key:
+          path = f'''{path}.{unique_key}'''
+        else:
+          raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {name}  Path: {path}  Data: {bundle[name]}''')
+
+      LOG.debug(f'Set Bundle Key Data: {bundle_name}   Key: {name}  Path: {path}')
 
       # Store the data into the cache
       local_cache.Set(path, bundle[name])
