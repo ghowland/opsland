@@ -26,7 +26,7 @@ path:
 schedule:
   period:
     mtr:
-      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py go
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
       dir: ~/work/opsland-example/
       period: 15s
       # store: single
@@ -34,7 +34,7 @@ schedule:
       max: 20
 
     deep:
-      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py deep
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py deep
       dir: ~/work/opsland-example/
       period: 15s
 
@@ -64,13 +64,46 @@ http:
       template: returns/modal_yes_no.html.j2
 
   get:
-<<<<<<< HEAD
     # Paths
     test:
       template: pages/generic_test.html.j2
 
-    # Paths
-=======
+    test2:
+      template: pages/generic_test_flowbite.html.j2
+
+    test3:
+      template: pages/generic_test_flowbite2.html.j2
+
+    test4:
+      template: pages/generic_test_flowbite3.html.j2
+
+    test5:
+      template: pages/generic_test_flowbite4.html.j2
+
+    test6:
+      template: pages/generic_test_flowbite5.html.j2
+
+    test7:
+      template: pages/generic_test_flowbite6.html.j2
+
+    test8:
+      template: pages/generic_test_flowbite7.html.j2
+
+    test9:
+      template: pages/generic_test_flowbite8.html.j2
+
+    test10:
+      template: pages/generic_test_flowbite9.html.j2
+
+    test11:
+      template: pages/generic_test_flowbite10.html.j2
+
+    test12:
+      template: pages/generic_test_flowbite11.html.j2
+
+    test13:
+      template: pages/generic_test_flowbite12.html.j2
+
     # /other
     other:
       template: pages/generic_other.html.j2
@@ -79,7 +112,6 @@ http:
         schedule.period.deep: deep
 
     # /status
->>>>>>> 3398fc73996518578b210a1999e0f74b2a82d2b6
     status:
       template: pages/generic_view.html.j2
 
