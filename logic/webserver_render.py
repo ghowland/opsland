@@ -43,7 +43,7 @@ def GetLoginSessionFromRequest(config, request):
   return None
 
 
-def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args):
+def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data):
   # Duplicate to protect top level object
   payload = dict(payload)
 
@@ -71,7 +71,7 @@ def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request,
   return payload
 
 
-def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, request, request_headers, request_data, request_args):
+def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, request, request_headers, request_data):
   payload = dict(payload_in)
 
   # Ensure we have a tables dict to store all our tables
@@ -171,13 +171,12 @@ def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
   return result
 
 
-def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
+def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None):
   """Render the Path Data"""
   # Our starting payload
-  payload = {'request': {'arg': {}, 'data': {}, 'header': {}}}
+  payload = {'request': {'data': {}, 'header': {}}}
 
   # If we have request args, assign them into the payload
-  if request_args: payload['request']['arg'] = request_args
   if request_data: payload['request']['data'] = request_data
   # if request_headers: payload['request']['header'] = request_headers
 
@@ -202,9 +201,9 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
   if 'template' in path_data:
     template = path_data['template']
 
-    payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
+    payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
 
-    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, request_args)
+    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 

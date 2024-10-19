@@ -2,6 +2,9 @@
 
 {% include 'includes/page/page_start_minimal.html.j2' %}
 
+<div class="p-12">
+
+
 {% for bundle, bundle_data in bundles.items() %}
 <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Bundle: {{ bundle }}</h1>
 <h2 class="mb-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white">Data:</h2>
@@ -12,9 +15,9 @@
       var key_data = null;
       var value_data = {{value | safe}};
       // // If this is an Array of Dicts, we will just take the first one to make it readable
-      if (Array.isArray(value_data) && value_data[0].constructor == Object) {
+      if (Array.isArray(value_data) && value_data[0].constructor == Object && value_data.length > 0) {
 
-        key_data = '<i>First Queue Item (' + value_data.length + ' total) :</i> ' +  JSON.stringify(value_data[0], null, 2);
+        key_data = '<i>First Queue Item (' + value_data.length + ' total) :</i> ' +  JSON.stringify(value_data[value_data.length - 1], null, 2);
       } else {
         key_data = JSON.stringify(value_data, null, 2);
       }
@@ -22,5 +25,7 @@
     </script>
   {% endfor %}
 {% endfor %}
+
+</div>
 
 {% include 'includes/page/page_end_with_footer.html.j2' %}

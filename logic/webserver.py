@@ -148,12 +148,12 @@ async def Web_GET(request: Request, full_path: str):
   (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path)
   if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
-  args = dict(request.query_params._dict)
+  data = dict(request.query_params._dict)
   headers = dict(request.headers)
 
-  LOG.debug(f'GET: {full_path}  Args: {args}')#  Headers: {headers}')
+  LOG.debug(f'GET: {full_path}  Args: {data}')#  Headers: {headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_headers=headers, request_args=args)
+  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_headers=headers, request_data=data)
 
 
 # POST

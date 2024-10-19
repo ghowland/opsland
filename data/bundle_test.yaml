@@ -52,7 +52,7 @@ schedule:
 execute:
   # This bucket helps organize different things we want to execute, but other things could potentially call things from api
   api:
-    crud_test:
+    site_user:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/crud_user.json crud_user
       dir: ~/work/opsland-example/
       input_path: /tmp/opsland/crud_user.json
@@ -61,7 +61,7 @@ execute:
           record_id: [user]
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
-      unique_key: "{id}"
+      unique_key: "{username}"
 
 
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
@@ -88,8 +88,8 @@ http:
     modal/yes_no:
       template: returns/modal_yes_no.html.j2
 
-    api/crud_test:
-      execute: execute.api.crud_test
+    api/site_user:
+      execute: execute.api.site_user
 
   get:
     # Paths

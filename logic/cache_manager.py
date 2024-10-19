@@ -112,9 +112,19 @@ class CacheManager():
 
         if 'schedule' in bundle_data and 'period' in bundle_data['schedule'] and part_cache_key in bundle_data['schedule']['period']:
           return bundle_data['schedule']['period'][part_cache_key]
-    
-    return None
 
+    # Execute
+    elif part_cache_key.startswith('execute.'):
+      part_cache_key = part_cache_key.replace('execute.', '', 1)
+
+      # Periodic job keys
+      if part_cache_key.startswith('api.'):
+        part_cache_key = part_cache_key.replace('api.', '', 1)
+
+        if 'execute' in bundle_data and 'api' in bundle_data['execute'] and part_cache_key in bundle_data['execute']['api']:
+          return bundle_data['execute']['api'][part_cache_key]
+
+    return None
 
 
   def GetBundleKeyData(self, bundle_name, name, default=None, single=True):
@@ -157,6 +167,7 @@ class CacheManager():
       # Determine the type of the value, so we know how to store it properly
       cache_data = self.GetCacheDataByKey(bundle_name, bundle_data, name)
       if not cache_data: return
+
       # LOG.info(f'Cache Data for Set Key: {bundle_name}  Data: {bundle_data}  Cache Key: {name}  Cache: {cache_data}')
 
       # If Single value storage.  This is the default if nothing is specified
