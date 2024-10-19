@@ -142,7 +142,7 @@ async def Web_GET(request: Request, full_path: str):
   args = dict(request.query_params._dict)
   headers = dict(request.headers)
 
-  LOG.debug(f'GET: {full_path}  Args: {args}  Headers: {headers}')
+  LOG.debug(f'GET: {full_path}  Args: {args}')#  Headers: {headers}')
 
   return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_headers=headers, request_args=args)
 
@@ -157,7 +157,7 @@ async def Web_POST(request: Request, full_path: str):
   (bundle_name, bundle, path_data) = GetBundlePathData('post', full_path)
   if path_data == None: return Response(status_code=404, content={'error': 'URI not found'})
 
-  LOG.debug(f'POST: {full_path}  Data: {request_data}  Headers: {request_headers}')
+  LOG.debug(f'POST: {full_path}  Data: {request_data}')#  Headers: {request_headers}')
 
   return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_data=request_data, request_headers=request_headers)
 
@@ -169,7 +169,7 @@ async def Web_PUT(request: Request, full_path: str):
   data = dict(await request.form())
   headers = dict(request.headers)
 
-  rendered_html = f'PUT: {full_path}  Data: {data}  Headers: {headers}'
+  rendered_html = f'PUT: {full_path}  Data: {data}'#  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
 
 
@@ -180,7 +180,7 @@ async def Web_PATCH(request: Request, full_path: str):
   data = dict(await request.form())
   headers = dict(request.headers)
 
-  rendered_html = f'PATCH: {full_path}  Data: {data}  Headers: {headers}'
+  rendered_html = f'PATCH: {full_path}  Data: {data}'#  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
 
 
@@ -191,6 +191,6 @@ async def Web_DELETE(request: Request, full_path: str):
   data = dict(await request.form())
   headers = dict(request.headers)
 
-  rendered_html = f'DELETE: {full_path}  Data: {data}  Headers: {headers}'
+  rendered_html = f'DELETE: {full_path}  Data: {data}'#  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
 

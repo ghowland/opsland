@@ -181,7 +181,7 @@ class CacheManager():
         if max_queue_size < len(bundle[name]):
           # Slice to crop queue, we always chop from the 0 side because we append new items
           bundle[name] = bundle[name][-max_queue_size:]
-          LOG.debug(f'Reduced queue length: {bundle_name}: {name}: {len(bundle[name])}')
+          # LOG.debug(f'Reduced queue length: {bundle_name}: {name}: {len(bundle[name])}')
         else:
           LOG.debug(f'Queue length: {bundle_name}: {name}: {len(bundle[name])}')
 

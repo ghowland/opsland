@@ -39,7 +39,7 @@ schedule:
       period: 15s
 
     2x:
-      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py -i /tmp/opsland/input_2x.json 2x
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/input_2x.json 2x
       dir: ~/work/opsland-example/
       period: 15s
       input_path: /tmp/opsland/input_2x.json
@@ -53,7 +53,7 @@ execute:
   # This bucket helps organize different things we want to execute, but other things could potentially call things from api
   api:
     crud_test:
-      command: /Users/geoff/work/opsland/opsland-example/opsland_example.py -i /tmp/opsland/crud_test.json crud_test
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/crud_test.json crud_test
       dir: ~/work/opsland-example/
       input_path: /tmp/opsland/crud_test.json
       input:

@@ -24,7 +24,7 @@ class JobManager(thread_base.ThreadBase):
 
   def ExecuteTask(self, task):
     """Proess the task data dict"""
-    LOG.info(f'{self.name}: Executing Task: {task}')
+    # LOG.info(f'{self.name}: Executing Task: {task}')
 
     # Skip initial empty task
     if 'data' not in task:

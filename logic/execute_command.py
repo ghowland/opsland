@@ -25,13 +25,14 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
         output_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
     
     utility.SaveJson(command['input_path'], output_data)
-    LOG.debug(f'''Command Output Path: {command['input_path']}''')
+    # LOG.debug(f'''Command Output Path: {command['input_path']}''')
 
 
   (status, output, error) = utility.ExecuteCommand(command['command'])
 
   if status == 0:
-    LOG.debug(f'Output: {output}')
+    # LOG.debug(f'Output: {output}')
+    pass
   else:
     LOG.debug(f'Status: {status}  Error: {error}')
 
