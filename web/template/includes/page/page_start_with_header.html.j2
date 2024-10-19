@@ -10,7 +10,7 @@
           <img src="/static/images/filter.svg"  class="h-8" alt="OpsLand Logo" style="filter: invert(20%) sepia(243%) saturate(1576%) hue-rotate(-21deg) brightness(137%) contrast(73%);" />
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OpsLand</span>
       </a>
-      <div hx-get="/status/opsland" hx-trigger="every 5s" class="hidden w-full max-w-96 md:block text-gray-900 dark:text-white" id="navbar-middle">
+      <div hx-get="/opsland/status" hx-trigger="every 5s" class="hidden w-full max-w-96 md:block text-gray-900 dark:text-white" id="navbar-middle">
         {{ opsland_status | safe }}
       </div>
 

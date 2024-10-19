@@ -101,7 +101,7 @@ def GetBundlePathData(method, path):
   """Returns a dict with the path_data, or None of not found for this method and path"""
   global CONFIG
 
-  LOG.debug(f'Get Bundle Path: {method}  Path: {path}')
+  # LOG.debug(f'Get Bundle Path: {method}  Path: {path}')
   
   for bundle_path, bundle in CONFIG.data.items():
     # Skip this path if it doesnt match the bundle root
