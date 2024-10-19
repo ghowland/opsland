@@ -109,20 +109,4 @@
 
 <div id="crud_results" class="p-8"></div>
 
-<script>
-  function DoCrudTest()
-  {
-
-    elems = document.getElementsByClassName("crud-collect");
-
-    var result = '';
-    for (let i = 0; i < elems.length; i++) {
-      result += `\n name: ${elems[i].name} =  ${elems[i].value}`;
-    }
-
-    alert(result)
-  }
-</script>
-
-
 {% include 'includes/page/page_end_with_footer.html.j2' %}

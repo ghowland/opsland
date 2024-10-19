@@ -239,10 +239,10 @@ class CacheManager():
         # Update the bundle with all our summary data.  Same as setting it directly, but now we can cache the summary data separately for cleanliness
         bundle.update(summary_update)
 
-        LOG.debug(f'''Summary: {summary_key}  Min: {bundle[f'{summary_key}.min']}  Max: {bundle[f'{summary_key}.max']}  Mean: {bundle[f'{summary_key}.mean']}''')
+        # LOG.debug(f'''Summary: {summary_key}  Min: {bundle[f'{summary_key}.min']}  Max: {bundle[f'{summary_key}.max']}  Mean: {bundle[f'{summary_key}.mean']}''')
 
         summary_path = bundle_data['path']['summary'].replace('{key}', summary_key)
         local_cache.Set(summary_path, summary_update)
-        LOG.debug(f'Summary written: {summary_path}')
+        # LOG.debug(f'Summary written: {summary_path}')
 
 

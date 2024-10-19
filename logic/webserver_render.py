@@ -15,6 +15,7 @@ from logic import utility
 from logic import local_cache
 from logic import webserver
 from logic import generic_widget
+from logic import thread_manager
 
 
 def PageMissing(request, bundle, config):
@@ -154,6 +155,16 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
   return payload
 
 
+def ExecuteStoredCommand(config, bundle_name, execute_name):
+  """"""
+  parts = execute_name.split('.')
+
+  execute_data = config.data[bundle_name]['execute'][parts[1]][parts[2]]
+
+  LOG.info(f'Exec Stored Command: {execute_name}   Data: {execute_data}')
+
+
+
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
   """Render the Path Data"""
   # Our starting payload
@@ -172,6 +183,15 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     if payload[payload_key] == None:
       payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
   
+
+  # Check if we want to execute a command directly (API)
+  if 'execute' in path_data:
+    exec_result = ExecuteStoredCommand(config, bundle_name, path_data['execute'])
+    LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
+    if exec_result:
+      payload.update(exec_result)
+
+
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
     template = path_data['template']
