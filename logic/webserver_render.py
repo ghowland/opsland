@@ -3,6 +3,8 @@ Render the Webserver Requests: Keep rendering and serving logic separated for re
 """
 
 
+import json
+
 from fastapi import Response
 from fastapi.responses import HTMLResponse
 from fastapi.responses import RedirectResponse
@@ -155,12 +157,12 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None, request_args=None):
   """Render the Path Data"""
   # Our starting payload
-  payload = {'request': {'arg': {}, 'header': {}, 'data': {}}}
+  payload = {'request': {'arg': {}, 'data': {}, 'header': {}}}
 
   # If we have request args, assign them into the payload
   if request_args: payload['request']['arg'] = request_args
   if request_data: payload['request']['data'] = request_data
-  if request_headers: payload['request']['header'] = request_headers
+  # if request_headers: payload['request']['header'] = request_headers
 
   # Put any cache into our payload
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
@@ -182,5 +184,6 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
 
   # Else, just return the output  
   else:
-    return Response(status_code=200, content=payload)
+    return Response(status_code=200, content=json.dumps(payload))
+  
 
