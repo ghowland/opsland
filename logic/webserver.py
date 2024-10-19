@@ -129,6 +129,15 @@ def GetBundlePathData(method, path):
   return (None, None, None)
 
 
+@APP.get("/opsland/data", response_class=HTMLResponse)
+async def Web_GET(request: Request):
+  """Returns all the data for the Bundles"""
+
+  data = {'bundles': CONFIG.cache.bundles}
+
+  return TEMPLATES.TemplateResponse(name='pages/opsland_data.html.j2', context=data, request=request)
+
+
 # -- Handle Every HTTP Method and all paths with per-method handler --
 #       We route internally after this, and dont use FastAPI/Starlette routing, because they are code based and we want data based
 
