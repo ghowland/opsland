@@ -196,11 +196,8 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
 
     # If this doesnt exist, try to get it directly
     if payload[payload_key] == None:
-      LOG.debug(f'Couldnt find, try directly: {cache_key}')
-      payload[payload_key] = config.cache.Get(bundle_name, cache_key)
-      if payload[payload_key] == None:
-        LOG.debug(f'Couldnt find again...: {cache_key}')
-  
+      LOG.error(f'Couldnt find cache key: Bundle: {bundle_name}  Key: {cache_key}')
+
 
   # Check if we want to execute a command directly (API)
   if 'execute' in path_data:
