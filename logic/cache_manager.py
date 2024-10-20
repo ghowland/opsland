@@ -50,7 +50,7 @@ class CacheManager():
     paths = utility.Glob(cache_glob)
     for path in paths:
       path_key = utility.GlobReverse(cache_glob, path)
-      LOG.info(f'Loaded Cache Path Key: {cache_glob} -> {path} -> {path_key}')
+      # LOG.info(f'Loaded Cache Path Key: {cache_glob} -> {path} -> {path_key}')
 
       cache_value = local_cache.GetData(path)
 
@@ -138,7 +138,7 @@ class CacheManager():
     # Get the path, using the base cache key
     path = bundle_info['path']['cache'].replace('{key}', cache_key)
 
-    LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Path: {path}')
+    # LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Path: {path}')
 
     # Store the data into the cache
     local_cache.Set(path, bundle[cache_key])
@@ -192,7 +192,7 @@ class CacheManager():
       # If Single value storage.  This is the default if nothing is specified
       if cache_info.get('store', 'single') == 'single':
         bundle[cache_key] = value
-        LOG.debug(f'Set Cache: {cache_key}')
+        # LOG.debug(f'Set Cache: {cache_key}')
       
       # Else, if Queue storage
       elif cache_info.get('store', None) == 'queue':
@@ -201,12 +201,12 @@ class CacheManager():
         
         # Append the item
         if not set_all_data:
-          LOG.debug(f'Set Cache: Appended to Queue: {cache_key}')
+          # LOG.debug(f'Set Cache: Appended to Queue: {cache_key}')
           bundle[cache_key].append(value)
 
         # Else, set all the data at once
         else:
-          LOG.debug(f'Set Cache: Set All Queue: {cache_key}')
+          # LOG.debug(f'Set Cache: Set All Queue: {cache_key}')
           bundle[cache_key] = value
 
         # Test for max and crop
@@ -218,7 +218,8 @@ class CacheManager():
           # LOG.debug(f'Reduced queue length: {bundle_name}: {name}: {len(bundle[name])}')
         
         else:
-          LOG.debug(f'Queue length: {bundle_name}: {cache_key}: {len(bundle[cache_key])}')
+          # LOG.debug(f'Queue length: {bundle_name}: {cache_key}: {len(bundle[cache_key])}')
+          pass
 
         # If this key is in our `summary` system
         self.ProcessSummary(bundle_info, bundle_name, bundle, cache_key, bundle[cache_key])

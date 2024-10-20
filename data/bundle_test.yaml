@@ -178,7 +178,7 @@ http:
           # Payload output key
           table_data_dict:
             cache: mtr
-            key: data_dict
+            key: [-1, data_dict]
             name: Example Data 1
             element: generic_table
             link: "/example/%(_key)s"
@@ -192,7 +192,7 @@ http:
           # Payload output key
           table_data_list:
             cache: mtr
-            key: mtr
+            key: [-1, mtr]
             name: Hop
             element: generic_table
             link: "/example/%(target)s"

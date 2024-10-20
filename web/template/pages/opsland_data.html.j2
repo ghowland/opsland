@@ -13,14 +13,15 @@
     <p class="p-2"><span class="font-bold dark:text-white text-blue-600">{{key}}:</span> <span id="{{bundle}}_{{key}}"></span></p>
     <script>
       var key_data = null;
-      var value_data = {{value | safe}};
+      var value_data = {{value | tojson }};
+
       // // If this is an Array of Dicts, we will just take the first one to make it readable
       if (Array.isArray(value_data) && value_data[0].constructor == Object && value_data.length > 0) {
-
         key_data = '<i>First Queue Item (' + value_data.length + ' total) :</i> ' +  JSON.stringify(value_data[value_data.length - 1], null, 2);
       } else {
         key_data = JSON.stringify(value_data, null, 2);
       }
+      
       document.getElementById('{{bundle}}_{{key}}').innerHTML = key_data;
     </script>
   {% endfor %}
