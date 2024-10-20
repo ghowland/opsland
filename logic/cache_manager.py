@@ -128,28 +128,17 @@ class CacheManager():
 
     # If we werent given these, get them
     if not bundle_info or not cache_info:
-      (bundle_info, cache_info, base_cache_key) = self.GetBundleAndCacheInfo(bundle_name, cache_key)
-
-    # Get the path, using the base cache key
-    path = bundle_info['path']['cache'].replace('{key}', base_cache_key)
-
-    LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Initial Path: {path}')
+      (bundle_info, cache_info, _) = self.GetBundleAndCacheInfo(bundle_name, cache_key)
 
     # If we couldnt get them, fail
-    if not bundle_info or not cache_info: 
-      LOG.error(f'Couldnt get our Bundle or Cache data for: {bundle_name}  Key: {cache_key}\nBundle Data: {bundle_info}\nCache Data: {cache_info}')
+    if not bundle_info: 
+      LOG.error(f'Couldnt get our Bundle or Cache data for: {bundle_name}  Key: {cache_key}\nBundle Data: {bundle_info}')
       return
-      
-    # If the cache_data has a `unique_key`
-    if 'unique_key' in cache_info:
-      unique_key = utility.FormatTextFromDictKeys(cache_info['unique_key'], bundle[cache_key])
-      if unique_key and '{' not in unique_key:
-        # Append the `unique_key` to the path, so it is in a unique file or record
-        path = f'''{path}.{unique_key}'''
-      else:
-        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Path: {path}  Data: {bundle[cache_key]}''')
 
-    LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Final Path: {path}')
+    # Get the path, using the base cache key
+    path = bundle_info['path']['cache'].replace('{key}', cache_key)
+
+    LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Path: {path}')
 
     # Store the data into the cache
     local_cache.Set(path, bundle[cache_key])
@@ -189,10 +178,21 @@ class CacheManager():
       raise Exception(f'Failed to get Bundle or Cache Info: Bundle: {bundle_info}   Cache: {cache_info}:  Cache Key: {cache_key}')
 
 
+    # If the cache_data has a `unique_key`
+    if 'unique_key' in cache_info and cache_key == base_cache_key:
+      unique_key = utility.FormatTextFromDictKeys(cache_info['unique_key'], value)
+      if unique_key and '{' not in unique_key:
+        # Suffix the unique key to the cache_key
+        cache_key = f'''{cache_key}.{unique_key}'''
+      else:
+        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Cache Info: {cache_info}''')
+
+
     with self.lock_bundles_each[bundle_name]:
       # If Single value storage.  This is the default if nothing is specified
       if cache_info.get('store', 'single') == 'single':
         bundle[cache_key] = value
+        LOG.debug(f'Set Cache: {cache_key}')
       
       # Else, if Queue storage
       elif cache_info.get('store', None) == 'queue':
@@ -201,10 +201,12 @@ class CacheManager():
         
         # Append the item
         if not set_all_data:
+          LOG.debug(f'Set Cache: Appended to Queue: {cache_key}')
           bundle[cache_key].append(value)
 
         # Else, set all the data at once
         else:
+          LOG.debug(f'Set Cache: Set All Queue: {cache_key}')
           bundle[cache_key] = value
 
         # Test for max and crop
