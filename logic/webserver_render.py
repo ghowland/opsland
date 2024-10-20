@@ -138,8 +138,9 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
         LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
 
         cache_label = utility.GetDictKeyByValue(path_data['cache'], graph_info['cache'])
+        
         # Get our cached value, which should be a timeseries (list of floats)
-        graph_cache = config.cache.GetBundleKeyDirect(bundle_name, cache_label)
+        graph_cache = config.cache.Get(bundle_name, cache_label)
 
         if not graph_cache:
           LOG.error(f'''Missing Data Graph key: Cache: {graph_info['cache']}  Result: {graph_cache}  Bundle: {config.cache.GetBundleSilo(bundle_name)}''')
@@ -186,12 +187,12 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
     LOG.debug(f'Get from cache_key: {cache_key}')
 
-    payload[payload_key] = config.cache.GetBundleKeyData(bundle_name, cache_key)
+    payload[payload_key] = config.cache.Get(bundle_name, cache_key)
 
     # If this doesnt exist, try to get it directly
     if payload[payload_key] == None:
       LOG.debug(f'Couldnt find, try directly: {cache_key}')
-      payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
+      payload[payload_key] = config.cache.Get(bundle_name, cache_key)
       if payload[payload_key] == None:
         LOG.debug(f'Couldnt find again...: {cache_key}')
   

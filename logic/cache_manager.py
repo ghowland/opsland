@@ -45,7 +45,7 @@ class CacheManager():
     
     bundle_data = bundles[bundle_name]
 
-    # Load the Cache
+    # Load the Cache files
     cache_glob = bundle_data['path']['cache'].replace('{key}', '*')
     paths = utility.Glob(cache_glob)
     for path in paths:
@@ -54,10 +54,9 @@ class CacheManager():
 
       cache_value = local_cache.GetData(path)
 
-      self.SetBundleKeyData(bundle_name, path_key, cache_value, set_all_data=True)
+      self.Set(bundle_name, path_key, cache_value, set_all_data=True, save=True)
 
-
-    # Load the Summary
+    # Load the Summary files
     cache_glob = bundle_data['path']['summary'].replace('{key}', '*')
     paths = utility.Glob(cache_glob)
     for path in paths:
@@ -73,33 +72,21 @@ class CacheManager():
           self.bundles[bundle_name].update(summary_fields)
 
 
-  def GetBundleSilo(self, name):
-    """Returns the entire Bundle dict, with all items inside the bundle"""
-    with self.lock_bundles_all:
-      # Ensure we have a dictionary to store the Bundle data, and a lock for each
-      if name not in self.bundles:
-        self.bundles[name] = {}
-        self.lock_bundles_each[name] = threading.Lock()
-      
-      return self.bundles[name]
+  def GetBundleAndCacheInfo(self, bundle_name, name):
+    """Returns a tuple of (bundle_info, cache_info)"""
+    bundles = thread_manager.BUNDLE_MANAGER.GetBundles()
+    bundle_info = bundles[bundle_name]
+
+    (cache_info, base_cache_key) = self.GetCacheInfo(bundle_info, name)
+
+    return (bundle_info, cache_info, base_cache_key)
 
 
-  def GetBundleKeyDirect(self, bundle_name, name, default=None):
-    """Returns a single Bundle dict item.  If not found, returns `default`.  If `single`==True will only return 1 value, otherwise the raw values"""
-    if bundle_name in self.lock_bundles_each:
-      #TODO(geoff): Do I need to lock all?  I think I do because things could be changing, and Im working through indexing.  So I should switch to silo mode, and verify I can write to it
-      #   or write a new GetWritableSilo() func so I can write into it without using the global lock, because the get-by-itself is safe
-      with self.lock_bundles_all:
-        with self.lock_bundles_each[bundle_name]:
-          return self.bundles[bundle_name].get(name, default)
-
-    else:
-      LOG.error(f'Bundle requested that doesnt have a lock: {bundle_name}')
-      return None
-
-
-  def GetCacheDataByKey(self, bundle_name, bundle_data, cache_key):
-    """Get the spec for this `cache_key`, because its strictly-named, we can reverse it"""
+  def GetCacheInfo(self, bundle_info, cache_key):
+    """From the Bundle Info spec: Get the spec for this `cache_key`, because its strictly-named, we can reverse it.
+    
+    Returns tuple: (dict, str): (cache_info, base_cache_key) or (None, None) if not found
+    """
     part_cache_key = cache_key
     
     # Schedule Job keys
@@ -110,8 +97,8 @@ class CacheManager():
       if part_cache_key.startswith('period.'):
         part_cache_key = part_cache_key.replace('period.', '', 1)
 
-        if 'schedule' in bundle_data and 'period' in bundle_data['schedule'] and part_cache_key in bundle_data['schedule']['period']:
-          return bundle_data['schedule']['period'][part_cache_key]
+        if 'schedule' in bundle_info and 'period' in bundle_info['schedule'] and part_cache_key in bundle_info['schedule']['period']:
+          return (bundle_info['schedule']['period'][part_cache_key], f'schedule.period.{part_cache_key}')
 
     # Execute
     elif part_cache_key.startswith('execute.'):
@@ -121,101 +108,127 @@ class CacheManager():
       if part_cache_key.startswith('api.'):
         part_cache_key = part_cache_key.replace('api.', '', 1)
 
-        if 'execute' in bundle_data and 'api' in bundle_data['execute'] and part_cache_key in bundle_data['execute']['api']:
-          return bundle_data['execute']['api'][part_cache_key]
+        # If we have this entire remaining key, return the Cache Info
+        if 'execute' in bundle_info and 'api' in bundle_info['execute'] and part_cache_key in bundle_info['execute']['api']:
+          return (bundle_info['execute']['api'][part_cache_key], f'execute.api.{part_cache_key}')
 
-    return None
+        # Else, we didnt find it
+        else:
+          # Check if this is a `unique_key` by splitting off the first dotted section and testing it
+          prefix_cache_key = part_cache_key.split('.', 1)[0]
+          if 'execute' in bundle_info and 'api' in bundle_info['execute'] and prefix_cache_key in bundle_info['execute']['api']:
+            return (bundle_info['execute']['api'][prefix_cache_key], f'execute.api.{prefix_cache_key}')
+
+    return (None, None)
 
 
-  def GetBundleKeyData(self, bundle_name, name, default=None, single=True):
+  def SaveBundle(self, bundle_name, cache_key, bundle_info=None, cache_info=None):
+    """Save whatever is in the current bundle.  Isolating this makes other logic simpler."""
+    bundle = self._GetBundleSilo(bundle_name)
+
+    # If we werent given these, get them
+    if not bundle_info or not cache_info:
+      (bundle_info, cache_info, base_cache_key) = self.GetBundleAndCacheInfo(bundle_name, cache_key)
+
+    # Get the path, using the base cache key
+    path = bundle_info['path']['cache'].replace('{key}', base_cache_key)
+
+    LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Initial Path: {path}')
+
+    # If we couldnt get them, fail
+    if not bundle_info or not cache_info: 
+      LOG.error(f'Couldnt get our Bundle or Cache data for: {bundle_name}  Key: {cache_key}\nBundle Data: {bundle_info}\nCache Data: {cache_info}')
+      return
+      
+    # If the cache_data has a `unique_key`
+    if 'unique_key' in cache_info:
+      unique_key = utility.FormatTextFromDictKeys(cache_info['unique_key'], bundle[cache_key])
+      if unique_key and '{' not in unique_key:
+        # Append the `unique_key` to the path, so it is in a unique file or record
+        path = f'''{path}.{unique_key}'''
+      else:
+        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Path: {path}  Data: {bundle[cache_key]}''')
+
+    LOG.debug(f'Save Bundle: {bundle_name}   Key: {cache_key}  Final Path: {path}')
+
+    # Store the data into the cache
+    local_cache.Set(path, bundle[cache_key])
+
+
+  def _GetBundleSilo(self, bundle_name):
+    """Returns the entire Bundle dict, with all items inside the bundle.  Bundle is created if doesnt exist yet, so always returns real dict"""
+    with self.lock_bundles_all:
+      # Ensure we have a dictionary to store the Bundle data, and a lock for each
+      if bundle_name not in self.bundles:
+        self.bundles[bundle_name] = {}
+        self.lock_bundles_each[bundle_name] = threading.Lock()
+      
+      return self.bundles[bundle_name]
+
+
+  def Get(self, bundle_name, cache_key, default=None):
+    # Get the bundle, so we have direct access
+    bundle = self._GetBundleSilo(bundle_name)
+
     """Returns a single Bundle dict item.  If not found, returns `default`.  If `single`==True will only return 1 value, otherwise the raw values"""
-    bundle = self.GetBundleSilo(bundle_name)
+    #TODO(geoff): Do I need to lock all?  I think I do because things could be changing, and Im working through indexing.  So I should switch to silo mode, and verify I can write to it
+    #   or write a new GetWritableSilo() func so I can write into it without using the global lock, because the get-by-itself is safe
+    with self.lock_bundles_each[bundle_name]:
+      return bundle.get(cache_key, default)
 
-    # LOG.info(f'Get Bundle Key: {bundle_name}  Key: {name}')
 
-    bundles = thread_manager.BUNDLE_MANAGER.GetBundles()
-    bundle_data = bundles[bundle_name]
+  def Set(self, bundle_name, cache_key, value, set_all_data=False, save=True):
+    """Returns a single Bundle dict item.  If not found, returns `default`.  If `single`==True will only return 1 value, otherwise the raw values"""
+    # Get the bundle, so we have direct access
+    bundle = self._GetBundleSilo(bundle_name)
 
-    cache_data = self.GetCacheDataByKey(bundle_name, bundle_data, name)
-    if not cache_data: return None
+    (bundle_info, cache_info, base_cache_key) = self.GetBundleAndCacheInfo(bundle_name, cache_key)
+
+    # Fail if we cant get this
+    if not bundle_info or not cache_info:
+      raise Exception(f'Failed to get Bundle or Cache Info: Bundle: {bundle_info}   Cache: {cache_info}:  Cache Key: {cache_key}')
+
 
     with self.lock_bundles_each[bundle_name]:
-      if cache_data.get('store', 'single') == 'single':
-        return bundle.get(name, default)
-
-      elif cache_data.get('store', 'single') == 'queue':
-        # If we dont have this queue yet, or it has no items
-        if name not in bundle or len(bundle[name]) == 0: return None
-        
-        # Return the latest item
-        return bundle[name][-1]
-
-
-  def SetBundleKeyData(self, bundle_name, name, value, set_all_data=False):
-    """Set the value of the bundle cache"""
-    bundle = self.GetBundleSilo(bundle_name)
-
-    bundles = thread_manager.BUNDLE_MANAGER.GetBundles()
-    bundle_data = bundles[bundle_name]
-
-    # LOG.info(f'Bundle: {bundle_name}  Data: {bundle_data}')
-
-    # Lock this bundle, so we are the only one operating on it
-    with self.lock_bundles_each[bundle_name]:
-      path = bundle_data['path']['cache'].replace('{key}', name)
-
-      # Determine the type of the value, so we know how to store it properly
-      cache_data = self.GetCacheDataByKey(bundle_name, bundle_data, name)
-      if not cache_data: return
-
-      # LOG.info(f'Cache Data for Set Key: {bundle_name}  Data: {bundle_data}  Cache Key: {name}  Cache: {cache_data}')
-
       # If Single value storage.  This is the default if nothing is specified
-      if cache_data.get('store', 'single') == 'single':
-        bundle[name] = value
+      if cache_info.get('store', 'single') == 'single':
+        bundle[cache_key] = value
       
       # Else, if Queue storage
-      elif cache_data.get('store', None) == 'queue':
+      elif cache_info.get('store', None) == 'queue':
         # Ensure we have our list
-        if name not in bundle: bundle[name] = []
+        if cache_key not in bundle: bundle[cache_key] = []
         
         # Append the item
         if not set_all_data:
-          bundle[name].append(value)
+          bundle[cache_key].append(value)
 
         # Else, set all the data at once
         else:
-          bundle[name] = value
+          bundle[cache_key] = value
 
         # Test for max and crop
-        max_queue_size = cache_data.get('max', DEFAULT_MAX_QUEUE_SIZE)
-        if max_queue_size < len(bundle[name]):
+        max_queue_size = cache_info.get('max', DEFAULT_MAX_QUEUE_SIZE)
+
+        if max_queue_size < len(bundle[cache_key]):
           # Slice to crop queue, we always chop from the 0 side because we append new items
-          bundle[name] = bundle[name][-max_queue_size:]
+          bundle[cache_key] = bundle[cache_key][-max_queue_size:]
           # LOG.debug(f'Reduced queue length: {bundle_name}: {name}: {len(bundle[name])}')
+        
         else:
-          LOG.debug(f'Queue length: {bundle_name}: {name}: {len(bundle[name])}')
+          LOG.debug(f'Queue length: {bundle_name}: {cache_key}: {len(bundle[cache_key])}')
 
         # If this key is in our `summary` system
-        self.ProcessSummary(bundle_data, bundle_name, bundle, name, bundle[name])
-
+        self.ProcessSummary(bundle_info, bundle_name, bundle, cache_key, bundle[cache_key])
+    
       # Else, unknown data type
       else:
         LOG.error(f'''Unknown data type for caching: {bundle_name}   Key: {name}  Cache Data: {cache_data}''')
 
-      # If the cache_data has a `unique_key`
-      if 'unique_key' in cache_data:
-        unique_key = utility.FormatTextFromDictKeys(cache_data['unique_key'], bundle[name])
-        if unique_key and '{' not in unique_key:
-          path = f'''{path}.{unique_key}'''
-        else:
-          raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {name}  Path: {path}  Data: {bundle[name]}''')
+    # If we want to save this.  Normally we do, but when we are initially loading values, we dont  
+    if save:
+      self.SaveBundle(bundle_name, cache_key)
 
-      LOG.debug(f'Set Bundle Key Data: {bundle_name}   Key: {name}  Path: {path}')
-
-      # Store the data into the cache
-      local_cache.Set(path, bundle[name])
-  
 
   def ProcessSummary(self, bundle_data, bundle_name, bundle, bundle_key, raw_data):
     # If this key is in our `summary` system
@@ -264,5 +277,4 @@ class CacheManager():
         summary_path = bundle_data['path']['summary'].replace('{key}', summary_key)
         local_cache.Set(summary_path, summary_update)
         # LOG.debug(f'Summary written: {summary_path}')
-
 

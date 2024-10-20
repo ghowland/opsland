@@ -20,7 +20,7 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
       output_data.update(update_data)
 
     for cache_key, output_spec in command['input'].items():
-      cache_value = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
+      cache_value = config.cache.Get(bundle_name, cache_key)
 
       for spec_key, field_list in output_spec.items():
         output_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
@@ -46,7 +46,7 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
     #TODO(geoff): What authenticated user changed this record?
     pass
 
-  config.cache.SetBundleKeyData(bundle_name, set_cache_key, payload)
+  config.cache.Set(bundle_name, set_cache_key, payload)
 
   return payload
 
