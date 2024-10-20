@@ -182,11 +182,18 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
 
   # Put any cache into our payload
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
+    # Format the cache key with the data
+    cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
+    LOG.debug(f'Get from cache_key: {cache_key}')
+
     payload[payload_key] = config.cache.GetBundleKeyData(bundle_name, cache_key)
 
     # If this doesnt exist, try to get it directly
     if payload[payload_key] == None:
+      LOG.debug(f'Couldnt find, try directly: {cache_key}')
       payload[payload_key] = config.cache.GetBundleKeyDirect(bundle_name, cache_key)
+      if payload[payload_key] == None:
+        LOG.debug(f'Couldnt find again...: {cache_key}')
   
 
   # Check if we want to execute a command directly (API)

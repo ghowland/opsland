@@ -50,7 +50,7 @@ class CacheManager():
     paths = utility.Glob(cache_glob)
     for path in paths:
       path_key = utility.GlobReverse(cache_glob, path)
-      # LOG.info(f'Cache Path Key: {cache_glob} -> {path} -> {path_key}')
+      LOG.info(f'Loaded Cache Path Key: {cache_glob} -> {path} -> {path_key}')
 
       cache_value = local_cache.GetData(path)
 

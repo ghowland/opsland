@@ -135,14 +135,16 @@ http:
     opsland/status:
       template: returns/opsland_status.html.j2
 
-    # /other
-    other:
+    # /user
+    user:
       template: pages/generic_other.html.j2
 
       cache:
         schedule.period.deep: deep
+        # In this way, selectors can be added right into the key to get from the cache.  This means we expect this data
+        execute.api.site_user.{user}: user
 
-      page: Other
+      page: User
       page_group: Status
       breadcrumbs:
         - Any: /else
