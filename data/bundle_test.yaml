@@ -22,6 +22,13 @@ path:
   login_sessions: ~/.secure/opsland/logins.json
 
 
+auth:
+  method:
+    password:
+      cache: execute.api.site_user.user
+      key: [password]
+
+
 # Running commands while waiting on shell commands is no good, so everything should be done in a deferred manner.  Scheduled or as a Job execution.  Same thing ultimately
 schedule:
   period:
@@ -134,6 +141,133 @@ http:
 
     opsland/status:
       template: returns/opsland_status.html.j2
+
+    # /login
+    login:
+      template: pages/site_login.html.j2
+
+    # /register
+    register:
+      template: pages/site_register.html.j2
+
+    # /password-reset
+    password-reset:
+      template: pages/site_password_reset.html.j2
+
+    # /social-proof
+    social-proof:
+      template: pages/example_social_proof.html.j2
+
+    pricing:
+      template: pages/example_pricing.html.j2
+
+    team:
+      template: pages/example_team.html.j2
+
+    user-onboard:
+      template: pages/example_user_onboard.html.j2
+
+    testimonial:
+      template: pages/example_testimonial.html.j2
+
+    newsletter:
+      template: pages/example_newsletter.html.j2
+
+    newsletter2:
+      template: pages/example_newsletter2.html.j2
+
+    maintenance:
+      template: pages/example_maintenance.html.j2
+
+    account-recovery1:
+      template: pages/example_account_recovery1.html.j2
+
+    account-recovery2:
+      template: pages/example_account_recovery2.html.j2
+
+    account-recovery3:
+      template: pages/example_account_recovery3.html.j2
+
+    account-recovery4:
+      template: pages/example_account_recovery4.html.j2
+
+    account-recovery5:
+      template: pages/example_account_recovery5.html.j2
+
+    "500":
+      template: pages/example_500.html.j2
+
+    "404":
+      template: pages/example_404.html.j2
+
+    hero:
+      template: pages/example_hero.html.j2
+
+    feature:
+      template: pages/example_feature.html.j2
+
+    faq:
+      template: pages/example_faq.html.j2
+
+    customer-logos:
+      template: pages/example_customer_logos.html.j2
+
+    banner1:
+      template: pages/example_banner1.html.j2
+
+    banner2:
+      template: pages/example_banner2.html.j2
+
+    banner3:
+      template: pages/example_banner3.html.j2
+
+    banner4:
+      template: pages/example_banner4.html.j2
+
+    banner5:
+      template: pages/example_banner5.html.j2
+
+    cta:
+      template: pages/example_cta.html.j2
+
+    contact:
+      template: pages/example_contact.html.j2
+
+    content-sections:
+      template: pages/example_content_sections.html.j2
+
+    cookie-consent1:
+      template: pages/example_cookie_consent1.html.j2
+
+    cookie-consent2:
+      template: pages/example_cookie_consent2.html.j2
+
+    cookie-consent3:
+      template: pages/example_cookie_consent3.html.j2
+
+    cookie-consent4:
+      template: pages/example_cookie_consent4.html.j2
+
+    headers:
+      template: pages/example_headers.html.j2
+
+    footers:
+      template: pages/example_footers.html.j2
+
+    popup1:
+      template: pages/example_popup1.html.j2
+
+    popup2:
+      template: pages/example_popup2.html.j2
+
+    popup3:
+      template: pages/example_popup3.html.j2
+
+    popup4:
+      template: pages/example_popup4.html.j2
+
+    popup5:
+      template: pages/example_popup5.html.j2
 
     # /user
     user:
