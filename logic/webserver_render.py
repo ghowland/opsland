@@ -190,7 +190,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
     # Format the cache key with the data
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
-    LOG.debug(f'Get from cache_key: {cache_key}')
+    # LOG.debug(f'Get from cache_key: {cache_key}')
 
     payload[payload_key] = config.cache.Get(bundle_name, cache_key)
 

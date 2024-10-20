@@ -137,7 +137,7 @@ http:
 
     # /user
     user:
-      template: pages/generic_other.html.j2
+      template: pages/site_user.html.j2
 
       cache:
         schedule.period.deep: deep
