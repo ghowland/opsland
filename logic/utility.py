@@ -332,7 +332,7 @@ def GlobReverse(glob, text):
   return text
 
 
-def GetDataByDictKeyList(source_data, key_list=None):
+def GetDataByDictKeyList(source_data, key_list=None, missing_value=None):
   """Can take a few different options to get the data.
 
   If `key_list`==None, then the entire `source_data` is returned.
@@ -358,11 +358,11 @@ def GetDataByDictKeyList(source_data, key_list=None):
     
     except Exception as e:
       LOG.error(f'Failed to traverse key list: {key_list} in source_data: {source_data}  Failure: {e}')
-      return None
+      return missing_value
   
   else:
     LOG.error(f'Couldnt find key_list: {key_list} in source_data: {source_data}')
-    return None
+    return missing_value
 
 
 def GetDictKeyByValue(data, value):

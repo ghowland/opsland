@@ -87,12 +87,16 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
       for (out_table_key, table_info) in path_data['data']['table_dict'].items():
         # LOG.info(f'Processing table: Dict: {out_table_key}   Data: {table_info}')
 
-        if table_info['cache'] not in payload or table_info['key'] not in payload[table_info['cache']]:
-          LOG.error(f'''Missing Data Table key: Cache: {table_info['cache']}  Key: {table_info['key']}   Payload: {payload}''')
+        if table_info['cache'] not in payload:
+          LOG.error(f'''Missing Data Table key: Cache: {table_info['cache']}  Key: {table_info['key']}''')#   Payload: {payload}''')
           continue
 
         # Get the table_data from our payload
         table_data = utility.GetDataByDictKeyList(payload[table_info['cache']], table_info['key'])
+        if table_data == None:
+          LOG.error(f'''Missing Data Table key: Key Lookup: {table_info['cache']}  Key: {table_info['key']}''')#   Payload: {payload}''')
+          continue
+
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -112,14 +116,15 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
 
         # Skip and report problems to be solved
         if table_info['cache'] not in payload:
-          LOG.error(f'''Missing Data Table cache: Cache: {table_info['cache']}  Payload: {payload}''')
-          continue
-        elif table_info['key'] not in payload[table_info['cache']]:
-          LOG.error(f'''Missing Data Table key: Cache: {table_info['cache']}  Key: {table_info['key']}   Payload: {payload}''')
+          LOG.error(f'''Missing Data Table cache: Cache: {table_info['cache']}''')#  Payload: {payload}''')
           continue
 
         # Get the table_data from our payload
         table_data = utility.GetDataByDictKeyList(payload[table_info['cache']], table_info['key'])
+        if table_data == None:
+          LOG.error(f'''Missing Data Table key: Key Lookup: {table_info['cache']}  Key: {table_info['key']}''')#   Payload: {payload}''')
+          continue
+
         table_element = table_info.get('element', utility.GetRandomString())
         primary_field_name = table_info['name']
 
@@ -138,7 +143,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
         LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
 
         cache_label = utility.GetDictKeyByValue(path_data['cache'], graph_info['cache'])
-        
+
         # Get our cached value, which should be a timeseries (list of floats)
         graph_cache = config.cache.Get(bundle_name, cache_label)
 
@@ -157,7 +162,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
 
 
 def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
-  """"""
+  """Execute a command from the Bundle Spec"""
   parts = execute_name.split('.')
 
   execute_data = config.data[bundle_name]['execute'][parts[1]][parts[2]]
