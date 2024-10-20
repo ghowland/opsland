@@ -223,7 +223,7 @@ class CacheManager():
     
       # Else, unknown data type
       else:
-        LOG.error(f'''Unknown data type for caching: {bundle_name}   Key: {name}  Cache Data: {cache_data}''')
+        LOG.error(f'''Unknown data type for caching: {bundle_name}   Key: {cache_key}  Cache Data: {cache_info}''')
 
     # If we want to save this.  Normally we do, but when we are initially loading values, we dont  
     if save:
