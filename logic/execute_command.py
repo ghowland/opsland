@@ -13,6 +13,9 @@ from logic.log import LOG
 
 def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None):
   """Execute a command"""
+  # Ensure we have unique input paths
+  uuid = utility.GetUUID()
+
   # Create our output file, if specified
   if 'input' in command and 'input_path' in command:
     output_data = {}
@@ -25,11 +28,16 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
       for spec_key, field_list in output_spec.items():
         output_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
     
-    utility.SaveJson(command['input_path'], output_data)
-    # LOG.debug(f'''Command Output Path: {command['input_path']}''')
+    command_input_path = command['input_path'].replace('{uuid}', uuid)
+    utility.SaveJson(command_input_path, output_data)
 
+    LOG.debug(f'''Command Input Path: {command_input_path}''')
 
-  (status, output, error) = utility.ExecuteCommand(command['command'])
+  command_unique = command['command'].replace('{uuid}', uuid)
+
+  LOG.debug(f'''Execute Command Actual: {command_unique}''')
+
+  (status, output, error) = utility.ExecuteCommand(command_unique)
 
   if status == 0:
     # LOG.debug(f'Output: {output}')
@@ -49,6 +57,3 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
   config.cache.Set(bundle_name, set_cache_key, payload)
 
   return payload
-
-
-

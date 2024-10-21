@@ -77,7 +77,7 @@ execute:
       #TODO(geoff): Need to pass it as STDIN, or make totally unique files
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_login_{uuid}.json site_login
       dir: ~/work/opsland-example/
-      input_path: /tmp/opsland/crud_login_{uuid}.json
+      input_path: /tmp/opsland/site_login_{uuid}.json
       input:
         # Pass through our request data
         request:
