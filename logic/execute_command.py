@@ -16,6 +16,9 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
   # Ensure we have unique input paths
   uuid = utility.GetUUID()
 
+  # If this doesnt get set, then we dont need to remove the temporary file
+  command_input_path = None
+
   # Create our output file, if specified
   if 'input' in command and 'input_path' in command:
     output_data = {}
@@ -55,5 +58,8 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
     pass
 
   config.cache.Set(bundle_name, set_cache_key, payload)
+
+  # Remove the temp file
+  utility.RemoveFilePath(command_input_path)
 
   return payload

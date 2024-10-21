@@ -382,3 +382,26 @@ def FormatTextFromDictKeys(text, data):
       text = text.replace(f'{{{key}}}', str(value))
   
   return text
+
+
+def RemoveFilePath(path):
+  """Deletes the file at `path`.  Wrapping Python code for safety and repeatability.  This needs to be consistent and understood, since its only used in important cases.
+  
+  Returns: (bool, str) as (success, reason):  `success`: True if it removed the file, and False if it didnt.  `reason`: Only important if it didnt succeed, on success `reason`=''
+  """
+  if not os.path.exists(path): return (False, f'Path doesnt exist: {path}')
+  if not os.path.isfile(path): return (False, f'Path is not a file: {path}  Is Dir: {os.path.isdir(path)}  Is Link: {os.path.islink(path)}  Is Mount: {os.path.ismount}')
+
+  # Remove the path
+  try:
+    os.unlink(path)
+  except Exception as e:
+    if os.path.exists(path):
+      # The path still exists, so the unlink failed
+      return (False, f'Remove File Path: Failed during unlink, file still exists: {e}')
+    else:
+      # The file was removed, but Python reports a problem, so pass it along
+      return (True, f'Remove File Path: Failed during unlink, file still exists: {e}')
+  
+  # Successful
+  return (True, '')
