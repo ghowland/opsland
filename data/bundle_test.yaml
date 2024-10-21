@@ -84,7 +84,7 @@ execute:
           record_id: [user]
 
         # Fetch our user data for this use as well
-        execute.api.site_user.{request.user}:
+        execute.api.site_user.{user}:
           matched: []
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
