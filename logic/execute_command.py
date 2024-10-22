@@ -60,6 +60,7 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
   config.cache.Set(bundle_name, set_cache_key, payload)
 
   # Remove the temp file
-  utility.RemoveFilePath(command_input_path)
+  if command_input_path:
+    utility.RemoveFilePath(command_input_path)
 
   return payload
