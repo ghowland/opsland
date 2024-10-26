@@ -140,15 +140,13 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
     # Process Graph (ex: line, scatter, bar)
     if 'graph' in path_data['data']:
       for (out_graph_key, graph_info) in path_data['data']['graph'].items():
-        LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
+        # LOG.info(f'Processing graph: {out_graph_key}   Data: {graph_info}')
 
-        cache_label = utility.GetDictKeyByValue(path_data['cache'], graph_info['cache'])
-
-        # Get our cached value, which should be a timeseries (list of floats)
-        graph_cache = config.cache.Get(bundle_name, cache_label)
+        # Get the graph data directly from our cache assignment
+        graph_cache = payload[graph_info['cache']]
 
         if not graph_cache:
-          LOG.error(f'''Missing Data Graph key: Cache: {graph_info['cache']}  Result: {graph_cache}  Bundle: {config.cache.GetBundleSilo(bundle_name)}''')
+          LOG.error(f'''Missing Data Graph key: Cache: {graph_info['cache']}''')#  Result: {graph_cache}  Bundle: {config.cache._GetBundleSilo(bundle_name)}''')
           continue
 
         generic_data = generic_widget.DataForGraph(graph_info['label'], graph_info['element'], graph_cache)
@@ -190,27 +188,84 @@ def EnsureBaseDotToUnderscore(payload):
   return payload
 
 
+def GetAuthSession(request, config, bundle_name, bundle, headers):
+  """"""
+  session = {}
+
+  if headers.get('cookie', None):
+    # LOG.info(f'''Perform auth check: {headers.get('cookie', None)}''')
+
+    cookie_data = utility.ParseCookieData(headers['cookie'])
+
+    # Get the variable strings we use for the username and token.  It could be something non-default, but we default to username/token in our cached data
+    var_username = bundle['auth']['cookie'].get('username', 'username')
+    var_token = bundle['auth']['cookie'].get('token', 'token')
+
+    # Return early if we dont have this cookie variable
+    if cookie_data.get(var_username, None) == None:
+      LOG.info(f'Cant auth.  Username not found in cookie data: {var_username}  Cookie: {cookie_data}')
+      return session
+
+    format_cache_key = bundle['auth']['cookie']['cache'].replace('{session.username}', cookie_data.get(var_username, None))
+
+    user_auth_data = config.cache.Get(bundle_name, format_cache_key)
+
+    tokens_match = user_auth_data[var_token] == cookie_data[var_token]
+
+    LOG.info(f'''Perform auth check: {cookie_data}  Cache Key: {format_cache_key}  User Auth: {user_auth_data}  Matched: {tokens_match}''')
+
+    # If this is a valid user session, pack the session data
+    if tokens_match:
+      session['username'] = cookie_data[var_username]
+
+      if bundle['auth']['cookie'].get('session', None):
+        for (cache_key, session_data) in bundle['auth']['cookie']['session'].get('cache', {}).items():
+          cache_key = cache_key.replace('{session.username}', cookie_data.get(var_username, None))
+
+          # Process each of our items
+          for (session_key, data_key_list) in session_data.items():
+
+            data_value = config.cache.Get(bundle_name, cache_key)
+            session[session_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
+
+  if session:
+    LOG.info(f'User Session: {session}')
+
+  return session
+
+
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None):
   """Render the Path Data"""
   # Our starting payload
-  payload = {'request': {}, 'header': {}}
+  payload = {'request': {}, 'header': {}, 'session': {}}
+
+  # Check if this user is authed, if our bundle has auth
+  if 'auth' in bundle and 'cookie' in bundle['auth']:
+    payload['session'] = GetAuthSession(request, config, bundle_name, bundle, request_headers)
 
   # If we have request args, assign them into the payload
   if request_data: payload['request'] = request_data
   # if request_headers: payload['header'] = request_headers
 
   # Put any cache into our payload
-  for (cache_key, payload_key) in path_data.get('cache', {}).items():
+  for (cache_key, payload_data) in path_data.get('cache', {}).items():
     # Format the cache key with the data
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
     # LOG.debug(f'Get from cache_key: {cache_key}')
 
-    payload[payload_key] = config.cache.Get(bundle_name, cache_key)
+    # payload[payload_key] = config.cache.Get(bundle_name, cache_key)
 
-    # If this doesnt exist, try to get it directly
-    if payload[payload_key] == None:
-      LOG.error(f'Couldnt find cache key: Bundle: {bundle_name}  Key: {cache_key}')
+    # Process each of our items
+    for (payload_key, data_key_list) in payload_data.items():
+      data_value = config.cache.Get(bundle_name, cache_key)
+      payload[payload_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
 
+      # If this doesnt exist, try to get it directly
+      if payload[payload_key] == None:
+        LOG.error(f'Couldnt find cache key: Bundle: {bundle_name}  Key: {cache_key}')
+
+  # import pprint
+  # pprint.pprint(payload, indent=2)
 
   # Check if we want to execute a command directly (API)
   if 'execute' in path_data:

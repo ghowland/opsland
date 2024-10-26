@@ -24,10 +24,21 @@ path:
 
 # This is how we authenticate into this Bundle
 auth:
-  method:
-    password:
-      cache: execute.api.site_user.user
-      key: [password]
+  # Auth using cookies, compare username and token cookie to our cached data to get their authed session
+  cookie:
+    username: username
+    token: token
+
+    # Use this cache to verify the username and token field
+    cache: execute.api.login.{session.username}
+
+    # Put this data into the user session, so it is always available to us
+    session:
+      cache:
+        execute.api.site_user.{session.username}:
+          email: [email]
+          name_first: [name_first]
+          title: [title]
 
 
 # Running commands while waiting on shell commands is no good, so everything should be done in a deferred manner.  Scheduled or as a Job execution.  Same thing ultimately
@@ -300,9 +311,11 @@ http:
       template: pages/site_user.html.j2
 
       cache:
-        schedule.period.deep: deep
+        schedule.period.deep:
+          deep: []
         # In this way, selectors can be added right into the key to get from the cache.  This means we expect this data
-        execute.api.site_user.{user}: user
+        execute.api.site_user.{user}:
+          user: []
 
       page: User
       page_group: Status
@@ -317,13 +330,18 @@ http:
 
       # Extract data from this Cache, to be used for rendering
       cache:
-        schedule.period.mtr: mtr
-        schedule.period.2x: twox
-        summary.schedule.period.mtr.best.timeseries: series_best
-        summary.schedule.period.mtr.worst.timeseries: series_worst
-        summary.schedule.period.mtr.loss.timeseries: series_loss
-
-        summary.schedule.period.mtr.best.mean: series_mean
+        schedule.period.mtr: 
+          mtr: []
+        schedule.period.2x:
+          twox: []
+        summary.schedule.period.mtr.best.timeseries:
+          series_best: []
+        summary.schedule.period.mtr.worst.timeseries:
+          series_worst: []
+        summary.schedule.period.mtr.loss.timeseries:
+          series_loss: []
+        summary.schedule.period.mtr.best.mean:
+          series_mean: []
 
       page: Home
       page_group: Info

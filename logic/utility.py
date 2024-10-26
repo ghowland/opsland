@@ -417,6 +417,19 @@ def FormatTextFromDictDeep(text, data):
   return text
 
 
+def ParseCookieData(cookie_text):
+  """Takes `cookie_text` and parses it.  ex: 'username=george; token=b0fb805977ee4f2084e5294cbca5160a'"""
+  items = cookie_text.split('; ')
+
+  data = {}
+
+  for item in items:
+    (key, value) = item.split('=')
+    data[key] = value
+  
+  return data
+
+
 def RemoveFilePath(path):
   """Deletes the file at `path`.  Wrapping Python code for safety and repeatability.  This needs to be consistent and understood, since its only used in important cases.
   
