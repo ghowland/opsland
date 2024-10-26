@@ -78,9 +78,10 @@ def SaveJson(path_raw, data, create_dirs=True):
 
 def EnsureDirectoryExists(path):
   """Gets the directory of this path, and ensures it exists"""
-  dir_name = os.path.basename(path)
+  dir_name = os.path.dirname(path)
 
   if not os.path.exists(dir_name):
+    LOG.info(f'Created directory: {dir_name}')
     os.makedirs(dir_name)
 
 
