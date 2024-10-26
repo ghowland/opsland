@@ -10,6 +10,7 @@ import datetime as dt
 import os
 import time
 import glob
+import re
 
 import yaml
 import humanize
@@ -381,6 +382,37 @@ def FormatTextFromDictKeys(text, data):
     if f'{{{key}}}' in text:
       # Must enforce replace gets a string value
       text = text.replace(f'{{{key}}}', str(value))
+  
+  return text
+
+
+def FormatTextFromDictDeep(text, data):
+  """Replace text from a dictionary using {key.name} formatting"""
+  deep_replaces = re.findall('{(.*?)}', text)
+
+  LOG.info(f'Format deep: {data}')
+
+  for deep_replace in deep_replaces:
+    try:
+      parts = deep_replace.split('.')
+
+      cur_value = data
+      parts_remain = parts
+      while parts_remain:
+        LOG.info(f'Parts Remain: {parts_remain}  Cur Value: {cur_value}')
+        try:
+          index = int(parts_remain[0])
+          cur_value = cur_value[index]
+        except ValueError as e:
+          cur_value = cur_value[parts_remain[0]]
+        
+        # Drop the first element
+        parts_remain = parts_remain[1:]
+      
+      # Replace the text with the value we navigated to
+      text = text.replace(f'{{{deep_replace}}}', cur_value)
+    except Exception as e:
+      LOG.debug(f'Couldnt format text deep: Key: {deep_replace}   Error: {e}')
   
   return text
 

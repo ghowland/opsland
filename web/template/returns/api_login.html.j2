@@ -1,0 +1,16 @@
+{% if execute_api_login is defined %}
+
+{{data}}
+
+Found login output: {{ execute_api_login.username }} and {{ execute_api_login.token }}
+
+<script>
+  document.cookie = 'username={{execute_api_login.username}}; expires=Sun, 1 Jan 2033 00:00:00 UTC; path=/'
+  document.cookie = 'token={{execute_api_login.token}}; expires=Sun, 1 Jan 2033 00:00:00 UTC; path=/'
+</script>
+
+{% else %}
+
+Didnt find login output
+
+{% endif %}

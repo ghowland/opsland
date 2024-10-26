@@ -67,7 +67,7 @@ execute:
       input_path: /tmp/opsland/crud_user.json
       input:
         request:
-          record_id: [user]
+          record_id: [username]
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{username}"
@@ -81,10 +81,10 @@ execute:
       input:
         # Pass through our request data
         request:
-          record_id: [user]
+          record_id: [username]
 
         # Fetch our user data for this use as well
-        execute.api.site_user.{user}:
+        execute.api.site_user.{request.username}:
           matched: []
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
@@ -114,6 +114,7 @@ http:
   post:
     # Login
     api/login:
+      template: returns/api_login.html.j2
       execute: execute.api.login
 
     # CRUD: User

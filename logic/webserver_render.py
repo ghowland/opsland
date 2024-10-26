@@ -177,14 +177,27 @@ def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
   return result
 
 
+def EnsureBaseDotToUnderscore(payload):
+  """Returns a new dict, where any keys in the root of the dict get dots converted to underscores so jinja can access them easily.  Work around."""
+  payload = dict(payload)
+
+  for key in list(payload.keys()):
+    if '.' in key:
+      new_key = key.replace('.', '_')
+      
+      payload[new_key] = payload[key]
+
+  return payload
+
+
 def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None):
   """Render the Path Data"""
   # Our starting payload
-  payload = {'request': {'data': {}, 'header': {}}}
+  payload = {'request': {}, 'header': {}}
 
   # If we have request args, assign them into the payload
-  if request_data: payload['request']['data'] = request_data
-  # if request_headers: payload['request']['header'] = request_headers
+  if request_data: payload['request'] = request_data
+  # if request_headers: payload['header'] = request_headers
 
   # Put any cache into our payload
   for (cache_key, payload_key) in path_data.get('cache', {}).items():
@@ -214,6 +227,8 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
 
     payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
+
+    payload = EnsureBaseDotToUnderscore(payload)
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 
