@@ -324,6 +324,40 @@ http:
         - Old: /if
         - Day: /not
 
+
+    # /user_list
+    user_list:
+      template: pages/site_user_list.html.j2
+
+      cache:
+        # In this way, selectors can be added right into the key to get from the cache.  This means we expect this data
+        execute.api.site_user.*:
+          users: []
+
+      page: User
+      page_group: Status
+      breadcrumbs:
+        - Any: /else
+        - Old: /if
+        - Day: /not
+
+      data:
+        # A table using a Dict of Dicts
+        table_dict:
+          # Payload output key
+          user_list:
+            cache: users
+            key: []
+            name: User
+            element: user_table
+            link: "/user?user=%(username)s"
+            key_field: username
+            fields:
+              - email: Email
+              - name_first: Name
+            no_max_height: True
+    
+
     # /status
     status:
       template: pages/generic_view.html.j2

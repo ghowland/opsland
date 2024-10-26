@@ -66,9 +66,9 @@ def DataForBreadcrumbs(current_page, prior_page_crumbs = None):
   return breadcrumbs
 
 
-def DataForTableDictOfDicts(row_data, table_id, key_label, fields, key_url = None):
+def DataForTableDictOfDicts(row_data, table_id, key_label, fields, key_url = None, key_field = None):
   """Returns the data required to format a Table from a Dict of Dicts"""
-  data = {'id': table_id, 'rows': row_data, 'key_label': key_label, 'fields': [], 'key_url': key_url}
+  data = {'id': table_id, 'rows': row_data, 'key_label': key_label, 'fields': [], 'key_url': key_url, 'key_field': key_field}
 
   # Make the fields work easier to templating, but this is uglier for us to create by hand or code
   for field in fields:

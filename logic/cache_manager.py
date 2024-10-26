@@ -8,6 +8,7 @@ This can be backed with DBs or other persistent storage (file system), or run ju
 
 import threading
 import statistics
+import re
 
 from logic.log import LOG
 
@@ -159,11 +160,32 @@ class CacheManager():
     # Get the bundle, so we have direct access
     bundle = self._GetBundleSilo(bundle_name)
 
+    # print('------------START----------------')
+    # import pprint
+    # pprint.pprint(bundle)
+    # print('------------STOP----------------')
+
     """Returns a single Bundle dict item.  If not found, returns `default`.  If `single`==True will only return 1 value, otherwise the raw values"""
     #TODO(geoff): Do I need to lock all?  I think I do because things could be changing, and Im working through indexing.  So I should switch to silo mode, and verify I can write to it
     #   or write a new GetWritableSilo() func so I can write into it without using the global lock, because the get-by-itself is safe
     with self.lock_bundles_each[bundle_name]:
-      return bundle.get(cache_key, default)
+      # If this is not a glob, then return the key or default
+      if '*' not in cache_key:
+        return bundle.get(cache_key, default)
+      
+      # Else, this is a glob, so return all the matching records as a dict of dicts
+      else:
+        data = {}
+
+        key_regex = utility.GlobToRegex(cache_key)
+        key_regex_compiled = re.compile(key_regex)
+        for (key, value) in bundle.items():
+          if key_regex_compiled.match(key):
+            data[key] = value
+
+        LOG.info(f'Found glob data: {data}')
+
+        return data
 
 
   def Set(self, bundle_name, cache_key, value, set_all_data=False, save=True):

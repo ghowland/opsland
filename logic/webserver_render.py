@@ -102,7 +102,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
 
         no_max_height = table_info.get('no_max_height', False)
 
-        generic_data = generic_widget.DataForTableDictOfDicts(table_data, table_element, primary_field_name, table_info['fields'], table_info['link'])
+        generic_data = generic_widget.DataForTableDictOfDicts(table_data, table_element, primary_field_name, table_info['fields'], table_info['link'], table_info.get('key_field', None))
         template_result = webserver.TEMPLATES.TemplateResponse(name='includes/generic/generic_table_dict_of_dict.html.j2', 
                                                                context={'generic_table': generic_data, 'no_max_height': no_max_height}, 
                                                                request=request)

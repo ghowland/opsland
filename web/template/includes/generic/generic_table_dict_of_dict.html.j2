@@ -25,7 +25,11 @@
                     {% if generic_table.key_url %}
                         <a href="{{ generic_table.key_url | format(**table_data[key]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                     {% endif %}
-                        {{key }}
+                        {% if generic_table.key_field %}
+                          {{ table_data[key] | dotted_get(generic_table.key_field, "None") | safe }}
+                        {% else %}
+                          {{ key }}
+                        {% endif %}
                     {% if generic_table.key_url %}
                         </a>
                     {% endif %}
