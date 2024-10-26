@@ -209,8 +209,10 @@ def GetAuthSession(request, config, bundle_name, bundle, headers):
     format_cache_key = bundle['auth']['cookie']['cache'].replace('{session.username}', cookie_data.get(var_username, None))
 
     user_auth_data = config.cache.Get(bundle_name, format_cache_key)
-
-    tokens_match = user_auth_data[var_token] == cookie_data[var_token]
+    if user_auth_data:
+      tokens_match = user_auth_data[var_token] == cookie_data[var_token]
+    else:
+      tokens_match = False
 
     LOG.info(f'''Perform auth check: {cookie_data}  Cache Key: {format_cache_key}  User Auth: {user_auth_data}  Matched: {tokens_match}''')
 

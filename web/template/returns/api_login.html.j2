@@ -7,6 +7,13 @@ Found login output: {{ execute_api_login.username }} and {{ execute_api_login.to
 <script>
   document.cookie = 'username={{execute_api_login.username}}; expires=Sun, 1 Jan 2033 00:00:00 UTC; path=/'
   document.cookie = 'token={{execute_api_login.token}}; expires=Sun, 1 Jan 2033 00:00:00 UTC; path=/'
+
+  if ('{{ execute_api_login.token }}' != '') {
+    document.location = '/user?user={{execute_api_login.username}}'
+  } else {
+    // Handle showing them errors on the fields...
+  }
+  
 </script>
 
 {% else %}

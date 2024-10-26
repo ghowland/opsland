@@ -183,6 +183,10 @@ http:
     login:
       template: pages/site_login.html.j2
 
+    # /logout
+    logout:
+      template: pages/site_logout.html.j2
+
     # /register
     register:
       template: pages/site_register.html.j2
@@ -452,5 +456,5 @@ nav:
     Progress: /progress
     Work: /work
     Settings: /settings
-    Sign Out: /signout
+    Sign Out: /logout
 
