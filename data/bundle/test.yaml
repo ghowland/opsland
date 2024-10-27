@@ -137,6 +137,9 @@ http:
 
   get:
     # Paths
+    site_editor:
+      template: pages/site_editor.html.j2
+
     test:
       template: pages/generic_test.html.j2
 

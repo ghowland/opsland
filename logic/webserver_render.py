@@ -230,8 +230,8 @@ def GetAuthSession(request, config, bundle_name, bundle, headers):
             data_value = config.cache.Get(bundle_name, cache_key)
             session[session_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
 
-  if session:
-    LOG.info(f'User Session: {session}')
+  # if session:
+  #   LOG.info(f'User Session: {session}')
 
   return session
 

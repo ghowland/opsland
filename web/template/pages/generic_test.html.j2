@@ -1,71 +1,548 @@
-
 <!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <link rel="icon" href="../favicon.png"/>
-    <meta name="viewport" content="width=device-width"/>
-    
-		<link href="https://tailwind-generator.com/_app/immutable/assets/0.9gm7QMaz.css" rel="stylesheet">
-		<link href="https://tailwind-generator.com/_app/immutable/assets/app.DxvDqksZ.css" rel="stylesheet">
-		<link href="https://tailwind-generator.com/_app/immutable/assets/SvelteToast.DbLvtVfH.css" rel="stylesheet">
-		<link href="https://tailwind-generator.com/_app/immutable/assets/A11ySingleNotice.COweJAih.css" rel="stylesheet"><title>Tailwind - Card Generator</title><!-- HEAD_svelte-jkr0yi_START --><meta name="description" content="Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards."><meta name="og:title" content="Tailwind - Card Generator"><meta name="og:description" content="Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards."><meta name="og:site_name" content="Tailwind - Card Generator"><meta name="og:url" content="tailwind-generator.com/card-generator"><meta name="og:image" content=""><meta name="og:type" content="website"><meta name="twitter:card"><meta name="twitter:image"><link rel="preconnect" href="https://fonts.bunny.net"><link href="https://fonts.bunny.net/css?family=inter:100,200,300,400,500,600,700,800,900" crossorigin="anonymous" rel="stylesheet"><!-- HEAD_svelte-jkr0yi_END -->
+  <meta charset="utf-8" />
+  <link rel="icon" href="../favicon.png" />
+  <meta name="viewport" content="width=device-width" />
 
-    <!-- Plausible -->
-    <script defer data-domain="tailwind-generator.com" src="https://plausible.io/js/script.tagged-events.js"></script>
-    <script defer data-domain="tailwind-generator.com" src="https://analytics.marcs-apps.com/js/script.tagged-events.js"></script>
+  <link href="https://tailwind-generator.com/_app/immutable/assets/0.9gm7QMaz.css" rel="stylesheet">
+  <link href="https://tailwind-generator.com/_app/immutable/assets/app.DxvDqksZ.css" rel="stylesheet">
+  <link href="https://tailwind-generator.com/_app/immutable/assets/SvelteToast.DbLvtVfH.css" rel="stylesheet">
+  <link href="https://tailwind-generator.com/_app/immutable/assets/A11ySingleNotice.COweJAih.css" rel="stylesheet">
+  <title>Tailwind - Card Generator</title><!-- HEAD_svelte-jkr0yi_START -->
+  <meta name="description"
+    content="Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards.">
+  <meta name="og:title" content="Tailwind - Card Generator">
+  <meta name="og:description"
+    content="Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards.">
+  <meta name="og:site_name" content="Tailwind - Card Generator">
+  <meta name="og:url" content="tailwind-generator.com/card-generator">
+  <meta name="og:image" content="">
+  <meta name="og:type" content="website">
+  <meta name="twitter:card">
+  <meta name="twitter:image">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=inter:100,200,300,400,500,600,700,800,900" crossorigin="anonymous"
+    rel="stylesheet"><!-- HEAD_svelte-jkr0yi_END -->
+
+  <!-- Plausible -->
+  <script defer data-domain="tailwind-generator.com" src="https://plausible.io/js/script.tagged-events.js"></script>
+  <script defer data-domain="tailwind-generator.com"
+    src="https://analytics.marcs-apps.com/js/script.tagged-events.js"></script>
 </head>
+
 <body data-sveltekit-preload-data="hover">
-<div style="display: contents">   <div class="min-h-screen flex flex-col">    <header><nav class="bg-white text-gray-700 border-gray-200 px-4 py-2.5 drop-shadow-xl"><div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"><a href="/" class="flex items-center" data-svelte-h="svelte-83vdr3"><img src="/favicon.svg" class="mr-3 h-9" alt="Tailwind Generator Logo"> <span class="self-center text-xl font-semibold whitespace-nowrap">Tailwind Generator</span></a> <div class="hidden lg:flex w-auto justify-between items-center"><ul class="flex font-bold flex-row space-x-2"><li class="rounded hover:text-primary-700 p-0 text-gray-700"><a href="/" class="flex flex-wrap gap-2 py-2 pr-4 pl-3"> <div data-svelte-h="svelte-2cg5a1">Home</div></a></li> <li class="hover:text-primary-700 p-0 text-gray-700"><a href="/generators" class="flex flex-wrap gap-2 py-2 pr-4 pl-3"> <div data-svelte-h="svelte-1urvkl2">Tools &amp; Generator</div></a></li> <li class="hover:text-primary-700 p-0 text-gray-700"><a href="/faq" class="flex flex-wrap gap-2 py-2 pr-4 pl-3"> <div data-svelte-h="svelte-6em6my">FAQ</div></a></li> <li class="hover:text-primary-700 p-0 text-gray-700"><a href="/blog" class="flex flex-wrap gap-2 py-2 pr-4 pl-3"> <div data-svelte-h="svelte-1fe0v08">Blog</div></a></li></ul></div> <div class="hidden lg:flex items-center" data-svelte-h="svelte-1cfkofd"><a href="/generators" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">Get started</a></div>  <div class="lg:hidden"><button class="btn-ghost btn-square text-primary-800"></button></div></div></nav></header>  <div class="hidden drop-shadow-3xl bg-slate-100"><ul class="menu text-primary"><div class="text-gray-400 text-sm pt-6 px-4" data-svelte-h="svelte-129xodg">Generator</div> <li><a href="/generators">
-				Generator</a></li> <div class="text-gray-400 text-sm pt-6 px-4" data-svelte-h="svelte-1v6o141">Pages</div> <li><a href="/">
-				Home</a></li> <li><a href="/faq">
-				FAQ</a></li> <li><a href="/blog">
-				Blog</a></li></ul></div>  <div class="flex-1 flex bg-custom-gray"><div class="flex flex-col w-full"><div class="flex-col w-full pt-8 hidden" data-svelte-h="svelte-14xbxcf"><h1 class="text-3xl md:text-5xl font-black text-center text-gray-700 tracking-tight">Tailwind Generator</h1></div> <div class="flex-1 flex bg-white">   <div class="flex flex-wrap lg:flex-nowrap w-full bg-white text-gray-700">   <div class="flex order-2 lg:order-1 flex-wrap m-auto lg:m-0 w-full lg:w-1/6 p-8 lg:p-4 border-2 overflow-y-auto max-h-full" style="max-height: 95.3vh;"> <div class="flex flex-col w-full"><div slot="configurations"> <div class="text-lg font-bold py-4" data-svelte-h="svelte-k3pnxr">Layout</div> <div class="flex flex-col pb-4"><div class="font-bold pb-2">Width:
-				<div class="badge badge-ghost">w-96</div></div> <input type="range" min="5" max="17" step="1" class="range range-sm" value="9"></div>  <div class="divider"></div>  <div class="text-lg font-bold py-4" data-svelte-h="svelte-gdhqk4">Settings</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
-			Rounded Corners</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
-			Use Image</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
-			Use Footer</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
-			Center Text</div>  <div class="divider"></div> <div class="text-lg font-bold py-4" data-svelte-h="svelte-1kmk5q9">Card Background</div> <div class="flex flex-row items-center gap-4"><div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk"> <label class="svelte-15ns2n5"><div class="container svelte-15ns2n5"><input type="color" value="#ffffff" aria-haspopup="dialog" class="svelte-15ns2n5"> <div class="alpha svelte-15ns2n5"></div> <div class="color svelte-15ns2n5" style="background: #ffffff;"></div></div> </label>  <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">   <div class="picker svelte-amfbfx" style="--picker-color-bg: #ff0000;"><div class="picker-indicator svelte-i5mg2p" style="--pos-x: 100; --pos-y: 0;"></div> <div class="s svelte-amfbfx" style="--pos-y: 0;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0%" aria-label="saturation channel" tabindex="0" style="--position: 0.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="v svelte-amfbfx" style="--pos-x: 100;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" aria-valuetext="100%" aria-label="brightness channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div></div>  <div class="h svelte-tsvobk"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="360" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0" aria-label="hue channel" tabindex="0" style="--position: 0.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="a svelte-tsvobk" style="--alphaless-color: #ffffff;"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1" aria-label="alpha channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="text-input svelte-qtukzs"><div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#ffffff" class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1" type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs" aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to  rgb</span></button></div>  </div> </span> </div> <div class="badge badge-ghost badge-lg font-bold">#ffffff</div></div> <div class="text-lg font-bold py-4" data-svelte-h="svelte-16h3dip">Card Title</div> <div class="flex flex-row items-center gap-4"><div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk"> <label class="svelte-15ns2n5"><div class="container svelte-15ns2n5"><input type="color" value="#374151" aria-haspopup="dialog" class="svelte-15ns2n5"> <div class="alpha svelte-15ns2n5"></div> <div class="color svelte-15ns2n5" style="background: #374151;"></div></div> </label>  <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">   <div class="picker svelte-amfbfx" style="--picker-color-bg: #0062ff;"><div class="picker-indicator svelte-i5mg2p is-dark" style="--pos-x: 100; --pos-y: 0;"></div> <div class="s svelte-amfbfx" style="--pos-y: 0;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%" aria-label="saturation channel" tabindex="0" style="--position: 0.3200;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="v svelte-amfbfx" style="--pos-x: 100;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%" aria-label="brightness channel" tabindex="0" style="--position: 0.3200;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div></div>  <div class="h svelte-tsvobk"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="360" aria-valuemin="0" aria-valuenow="217" aria-valuetext="217" aria-label="hue channel" tabindex="0" style="--position: 0.6028;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="a svelte-tsvobk" style="--alphaless-color: #374151;"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1" aria-label="alpha channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="text-input svelte-qtukzs"><div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#374151" class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1" type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs" aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to  rgb</span></button></div>  </div> </span> </div> <div class="badge badge-ghost badge-lg font-bold">#374151</div></div> <div class="text-lg font-bold py-4" data-svelte-h="svelte-1i9gfse">Card Content</div> <div class="flex flex-row items-center gap-4"><div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk"> <label class="svelte-15ns2n5"><div class="container svelte-15ns2n5"><input type="color" value="#374151" aria-haspopup="dialog" class="svelte-15ns2n5"> <div class="alpha svelte-15ns2n5"></div> <div class="color svelte-15ns2n5" style="background: #374151;"></div></div> </label>  <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">   <div class="picker svelte-amfbfx" style="--picker-color-bg: #0062ff;"><div class="picker-indicator svelte-i5mg2p is-dark" style="--pos-x: 100; --pos-y: 0;"></div> <div class="s svelte-amfbfx" style="--pos-y: 0;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%" aria-label="saturation channel" tabindex="0" style="--position: 0.3200;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="v svelte-amfbfx" style="--pos-x: 100;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%" aria-label="brightness channel" tabindex="0" style="--position: 0.3200;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div></div>  <div class="h svelte-tsvobk"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="360" aria-valuemin="0" aria-valuenow="217" aria-valuetext="217" aria-label="hue channel" tabindex="0" style="--position: 0.6028;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="a svelte-tsvobk" style="--alphaless-color: #374151;"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1" aria-label="alpha channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="text-input svelte-qtukzs"><div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#374151" class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1" type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs" aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to  rgb</span></button></div>  </div> </span> </div> <div class="badge badge-ghost badge-lg font-bold">#374151</div></div> <div class="text-lg font-bold py-4" data-svelte-h="svelte-17l0lpu">Button Text</div> <div class="flex flex-row items-center gap-4"><div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk"> <label class="svelte-15ns2n5"><div class="container svelte-15ns2n5"><input type="color" value="#ffffff" aria-haspopup="dialog" class="svelte-15ns2n5"> <div class="alpha svelte-15ns2n5"></div> <div class="color svelte-15ns2n5" style="background: #ffffff;"></div></div> </label>  <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">   <div class="picker svelte-amfbfx" style="--picker-color-bg: #ff0000;"><div class="picker-indicator svelte-i5mg2p" style="--pos-x: 100; --pos-y: 0;"></div> <div class="s svelte-amfbfx" style="--pos-y: 0;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0%" aria-label="saturation channel" tabindex="0" style="--position: 0.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="v svelte-amfbfx" style="--pos-x: 100;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" aria-valuetext="100%" aria-label="brightness channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div></div>  <div class="h svelte-tsvobk"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="360" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0" aria-label="hue channel" tabindex="0" style="--position: 0.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="a svelte-tsvobk" style="--alphaless-color: #ffffff;"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1" aria-label="alpha channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="text-input svelte-qtukzs"><div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#ffffff" class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1" type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs" aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to  rgb</span></button></div>  </div> </span> </div> <div class="badge badge-ghost badge-lg font-bold">#ffffff</div></div> <div class="text-lg font-bold py-4" data-svelte-h="svelte-1jsp737">Button Background</div> <div class="flex flex-row items-center gap-4"><div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk"> <label class="svelte-15ns2n5"><div class="container svelte-15ns2n5"><input type="color" value="#7e22ce" aria-haspopup="dialog" class="svelte-15ns2n5"> <div class="alpha svelte-15ns2n5"></div> <div class="color svelte-15ns2n5" style="background: #7e22ce;"></div></div> </label>  <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">   <div class="picker svelte-amfbfx" style="--picker-color-bg: #8800ff;"><div class="picker-indicator svelte-i5mg2p is-dark" style="--pos-x: 100; --pos-y: 0;"></div> <div class="s svelte-amfbfx" style="--pos-y: 0;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="83" aria-valuetext="83%" aria-label="saturation channel" tabindex="0" style="--position: 0.8300;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="v svelte-amfbfx" style="--pos-x: 100;"> <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="81" aria-valuetext="81%" aria-label="brightness channel" tabindex="0" style="--position: 0.8100;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div></div>  <div class="h svelte-tsvobk"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="360" aria-valuemin="0" aria-valuenow="272" aria-valuetext="272" aria-label="hue channel" tabindex="0" style="--position: 0.7556;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="a svelte-tsvobk" style="--alphaless-color: #7e22ce;"> <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical" aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1" aria-label="alpha channel" tabindex="0" style="--position: 1.0000;"><div class="track svelte-g2tgla"></div> <div class="thumb svelte-g2tgla"></div></div>  </div> <div class="text-input svelte-qtukzs"><div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#7e22ce" class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1" type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs" aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to  rgb</span></button></div>  </div> </span> </div> <div class="badge badge-ghost badge-lg font-bold">#7e22ce</div></div></div></div>  <div class="flex justify-end flex-col w-full"><div slot="toolbar" class="flex flex-col pt-8 gap-2"><button class="plausible-event-name=Card+Generator+Download+Code btn btn-active btn-primary btn-sm w-full text-white h-auto" data-svelte-h="svelte-7tjpmq">Export HTML + Tailwind</button> <button class="btn btn-neutral btn-sm w-full" data-svelte-h="svelte-1o18nmf">Reset / Clear</button></div></div></div>    <div class="flex order-1 lg:order-2 flex-col w-full lg:w-5/6 bg-gray-100 py-8 lg:py-14 justify-center items-center"><div slot="generator-frame"><div><div class="flex flex-col rounded-2xl w-96 bg-[#ffffff] shadow-xl" style="background-color: #ffffff;"><figure class="flex justify-center items-center rounded-2xl"><img src="https://tailwind-generator.b-cdn.net/images/card-generator/tailwind-card-generator-card-preview.png" alt="Card Preview" class="rounded-t-2xl"></figure> <div class="flex flex-col p-8"><div class="text-2xl font-bold   text-[#374151] pb-6" style="color: #374151;">Generator</div> <div class=" text-lg   text-[#374151]" style="color: #374151;">Leverage a graphical editor to create beautiful web components.</div> <div class="flex justify-end pt-6"><button class="bg-[#7e22ce] text-[#ffffff]  font-bold text-base  p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform" style="color: #ffffff; background-color: #7e22ce;">Try it out!</button></div></div></div></div></div></div>    <div class="flex order-3 flex-wrap m-auto lg:m-0 w-full lg:w-1/6 p-8 lg:p-4 border-2 overflow-y-auto max-h-full" style="max-height: 95.3vh;"><div class="flex flex-col w-full">   <div class="flex flex-col justify-between h-full"><div class="flex flex-col px-12 lg:px-0 gap-4"><div slot="action-panel"> <div class="text-lg font-bold py-4" data-svelte-h="svelte-tguub9">Title</div> <div class="flex flex-col pb-4"><div class="font-bold pb-2">Font Size:
-				<div class="badge badge-ghost">5</div></div> <input type="range" min="1" max="7" step="1" class="range range-sm" value="5"></div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
-			Bold</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
-			Uppercase</div> <div class="flex flex-wrap gap-4 pb-2 font-bold"><input type="text" class="input input-bordered w-full text-gray-500" spellcheck="false" value="Generator"></div>  <div class="divider"></div>  <div class="text-lg font-bold py-4" data-svelte-h="svelte-190vp6w">Content</div> <div class="flex flex-col pb-4"><div class="font-bold pb-2">Font Size:
-				<div class="badge badge-ghost">3</div></div> <input type="range" min="1" max="7" step="1" class="range range-sm" value="3"></div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
-			Bold</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
-			Uppercase</div> <div class="flex flex-wrap gap-4 pb-2 font-bold"><input type="text" class="input input-bordered w-full text-gray-500" spellcheck="false" value="Leverage a graphical editor to create beautiful web components."></div>  <div class="divider"></div>  <div class="text-lg font-bold py-4" data-svelte-h="svelte-1hswjw1">Button</div> <div class="flex flex-col pb-4"><div class="font-bold pb-2">Font Size:
-				<div class="badge badge-ghost">2</div></div> <input type="range" min="1" max="7" step="1" class="range range-sm" value="2"></div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
-			Bold</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
-			Uppercase</div> <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
-			Full Width</div> <div class="flex flex-wrap gap-4 pb-2 font-bold"><input type="text" class="input input-bordered w-full text-gray-500" spellcheck="false" value="Try it out!"></div></div></div></div></div></div></div>    <dialog class="modal"><div class="modal-box w-11/12 max-w-7xl"><div class="mockup-code"><pre class="text-success pl-2"><code></code></pre></div> <div class="modal-action"><form method="dialog"> <button class="btn btn-active btn-primary text-white" data-svelte-h="svelte-a322r1">Copy to Clipboard</button> <button class="btn" data-svelte-h="svelte-17cpapt">Close</button></form></div></div></dialog></div></div></div>  <div class="toastContainer svelte-osouoj"><ul class="_toastContainer svelte-1u812xz"> </ul></div> </div> 
-			
-			<script>
-				{
-					__sveltekit_8wnki8 = {
-						base: new URL("..", location).pathname.slice(0, -1)
-					};
+  <div style="display: contents">
+    <div class="min-h-screen flex flex-col">
+      <header>
+        <nav class="bg-white text-gray-700 border-gray-200 px-4 py-2.5 drop-shadow-xl">
+          <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"><a href="/"
+              class="flex items-center" data-svelte-h="svelte-83vdr3"><img src="/favicon.svg" class="mr-3 h-9"
+                alt="Tailwind Generator Logo"> <span
+                class="self-center text-xl font-semibold whitespace-nowrap">Tailwind
+                Generator</span></a>
+            <div class="hidden lg:flex w-auto justify-between items-center">
+              <ul class="flex font-bold flex-row space-x-2">
+                <li class="rounded hover:text-primary-700 p-0 text-gray-700"><a href="/"
+                    class="flex flex-wrap gap-2 py-2 pr-4 pl-3">
+                    <div data-svelte-h="svelte-2cg5a1">Home</div>
+                  </a></li>
+                <li class="hover:text-primary-700 p-0 text-gray-700"><a href="/generators"
+                    class="flex flex-wrap gap-2 py-2 pr-4 pl-3">
+                    <div data-svelte-h="svelte-1urvkl2">Tools &amp; Generator</div>
+                  </a></li>
+                <li class="hover:text-primary-700 p-0 text-gray-700"><a href="/faq"
+                    class="flex flex-wrap gap-2 py-2 pr-4 pl-3">
+                    <div data-svelte-h="svelte-6em6my">FAQ</div>
+                  </a></li>
+                <li class="hover:text-primary-700 p-0 text-gray-700"><a href="/blog"
+                    class="flex flex-wrap gap-2 py-2 pr-4 pl-3">
+                    <div data-svelte-h="svelte-1fe0v08">Blog</div>
+                  </a></li>
+              </ul>
+            </div>
+            <div class="hidden lg:flex items-center" data-svelte-h="svelte-1cfkofd"><a href="/generators"
+                class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">Get
+                started</a></div>
+            <div class="lg:hidden"><button class="btn-ghost btn-square text-primary-800"></button></div>
+          </div>
+        </nav>
+      </header>
+      <div class="hidden drop-shadow-3xl bg-slate-100">
+        <ul class="menu text-primary">
+          <div class="text-gray-400 text-sm pt-6 px-4" data-svelte-h="svelte-129xodg">Generator</div>
+          <li><a href="/generators">
+              Generator</a></li>
+          <div class="text-gray-400 text-sm pt-6 px-4" data-svelte-h="svelte-1v6o141">Pages</div>
+          <li><a href="/">
+              Home</a></li>
+          <li><a href="/faq">
+              FAQ</a></li>
+          <li><a href="/blog">
+              Blog</a></li>
+        </ul>
+      </div>
+      <div class="flex-1 flex bg-custom-gray">
+        <div class="flex flex-col w-full">
+          <div class="flex-col w-full pt-8 hidden" data-svelte-h="svelte-14xbxcf">
+            <h1 class="text-3xl md:text-5xl font-black text-center text-gray-700 tracking-tight">Tailwind Generator</h1>
+          </div>
+          <div class="flex-1 flex bg-white">
+            <div class="flex flex-wrap lg:flex-nowrap w-full bg-white text-gray-700">
+              <div
+                class="flex order-2 lg:order-1 flex-wrap m-auto lg:m-0 w-full lg:w-1/6 p-8 lg:p-4 border-2 overflow-y-auto max-h-full"
+                style="max-height: 95.3vh;">
+                <div class="flex flex-col w-full">
+                  <div slot="configurations">
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-k3pnxr">Layout</div>
+                    <div class="flex flex-col pb-4">
+                      <div class="font-bold pb-2">Width:
+                        <div class="badge badge-ghost">w-96</div>
+                      </div> <input type="range" min="5" max="17" step="1" class="range range-sm" value="9">
+                    </div>
+                    <div class="divider"></div>
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-gdhqk4">Settings</div>
+                    <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
+                      Rounded Corners</div>
+                    <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
+                      Use Image</div>
+                    <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox" checked>
+                      Use Footer</div>
+                    <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
+                      Center Text</div>
+                    <div class="divider"></div>
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-1kmk5q9">Card Background</div>
+                    <div class="flex flex-row items-center gap-4">
+                      <div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk">
+                          <label class="svelte-15ns2n5">
+                            <div class="container svelte-15ns2n5"><input type="color" value="#ffffff"
+                                aria-haspopup="dialog" class="svelte-15ns2n5">
+                              <div class="alpha svelte-15ns2n5"></div>
+                              <div class="color svelte-15ns2n5" style="background: #ffffff;"></div>
+                            </div>
+                          </label>
+                          <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">
+                            <div class="picker svelte-amfbfx" style="--picker-color-bg: #ff0000;">
+                              <div class="picker-indicator svelte-i5mg2p" style="--pos-x: 100; --pos-y: 0;"></div>
+                              <div class="s svelte-amfbfx" style="--pos-y: 0;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0%"
+                                  aria-label="saturation channel" tabindex="0" style="--position: 0.0000;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                              <div class="v svelte-amfbfx" style="--pos-x: 100;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" aria-valuetext="100%"
+                                  aria-label="brightness channel" tabindex="0" style="--position: 1.0000;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="h svelte-tsvobk">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="360" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0"
+                                aria-label="hue channel" tabindex="0" style="--position: 0.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="a svelte-tsvobk" style="--alphaless-color: #ffffff;">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1"
+                                aria-label="alpha channel" tabindex="0" style="--position: 1.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="text-input svelte-qtukzs">
+                              <div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#ffffff"
+                                  class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1"
+                                  type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button
+                                type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs"
+                                  aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to
+                                  rgb</span></button>
+                            </div>
+                          </div>
+                        </span> </div>
+                      <div class="badge badge-ghost badge-lg font-bold">#ffffff</div>
+                    </div>
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-16h3dip">Card Title</div>
+                    <div class="flex flex-row items-center gap-4">
+                      <div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk">
+                          <label class="svelte-15ns2n5">
+                            <div class="container svelte-15ns2n5"><input type="color" value="#374151"
+                                aria-haspopup="dialog" class="svelte-15ns2n5">
+                              <div class="alpha svelte-15ns2n5"></div>
+                              <div class="color svelte-15ns2n5" style="background: #374151;"></div>
+                            </div>
+                          </label>
+                          <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">
+                            <div class="picker svelte-amfbfx" style="--picker-color-bg: #0062ff;">
+                              <div class="picker-indicator svelte-i5mg2p is-dark" style="--pos-x: 100; --pos-y: 0;">
+                              </div>
+                              <div class="s svelte-amfbfx" style="--pos-y: 0;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%"
+                                  aria-label="saturation channel" tabindex="0" style="--position: 0.3200;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                              <div class="v svelte-amfbfx" style="--pos-x: 100;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%"
+                                  aria-label="brightness channel" tabindex="0" style="--position: 0.3200;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="h svelte-tsvobk">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="360" aria-valuemin="0" aria-valuenow="217" aria-valuetext="217"
+                                aria-label="hue channel" tabindex="0" style="--position: 0.6028;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="a svelte-tsvobk" style="--alphaless-color: #374151;">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1"
+                                aria-label="alpha channel" tabindex="0" style="--position: 1.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="text-input svelte-qtukzs">
+                              <div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#374151"
+                                  class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1"
+                                  type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button
+                                type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs"
+                                  aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to
+                                  rgb</span></button>
+                            </div>
+                          </div>
+                        </span> </div>
+                      <div class="badge badge-ghost badge-lg font-bold">#374151</div>
+                    </div>
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-1i9gfse">Card Content</div>
+                    <div class="flex flex-row items-center gap-4">
+                      <div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk">
+                          <label class="svelte-15ns2n5">
+                            <div class="container svelte-15ns2n5"><input type="color" value="#374151"
+                                aria-haspopup="dialog" class="svelte-15ns2n5">
+                              <div class="alpha svelte-15ns2n5"></div>
+                              <div class="color svelte-15ns2n5" style="background: #374151;"></div>
+                            </div>
+                          </label>
+                          <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">
+                            <div class="picker svelte-amfbfx" style="--picker-color-bg: #0062ff;">
+                              <div class="picker-indicator svelte-i5mg2p is-dark" style="--pos-x: 100; --pos-y: 0;">
+                              </div>
+                              <div class="s svelte-amfbfx" style="--pos-y: 0;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%"
+                                  aria-label="saturation channel" tabindex="0" style="--position: 0.3200;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                              <div class="v svelte-amfbfx" style="--pos-x: 100;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="32" aria-valuetext="32%"
+                                  aria-label="brightness channel" tabindex="0" style="--position: 0.3200;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="h svelte-tsvobk">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="360" aria-valuemin="0" aria-valuenow="217" aria-valuetext="217"
+                                aria-label="hue channel" tabindex="0" style="--position: 0.6028;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="a svelte-tsvobk" style="--alphaless-color: #374151;">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1"
+                                aria-label="alpha channel" tabindex="0" style="--position: 1.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="text-input svelte-qtukzs">
+                              <div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#374151"
+                                  class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1"
+                                  type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button
+                                type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs"
+                                  aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to
+                                  rgb</span></button>
+                            </div>
+                          </div>
+                        </span> </div>
+                      <div class="badge badge-ghost badge-lg font-bold">#374151</div>
+                    </div>
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-17l0lpu">Button Text</div>
+                    <div class="flex flex-row items-center gap-4">
+                      <div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk">
+                          <label class="svelte-15ns2n5">
+                            <div class="container svelte-15ns2n5"><input type="color" value="#ffffff"
+                                aria-haspopup="dialog" class="svelte-15ns2n5">
+                              <div class="alpha svelte-15ns2n5"></div>
+                              <div class="color svelte-15ns2n5" style="background: #ffffff;"></div>
+                            </div>
+                          </label>
+                          <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">
+                            <div class="picker svelte-amfbfx" style="--picker-color-bg: #ff0000;">
+                              <div class="picker-indicator svelte-i5mg2p" style="--pos-x: 100; --pos-y: 0;"></div>
+                              <div class="s svelte-amfbfx" style="--pos-y: 0;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0%"
+                                  aria-label="saturation channel" tabindex="0" style="--position: 0.0000;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                              <div class="v svelte-amfbfx" style="--pos-x: 100;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" aria-valuetext="100%"
+                                  aria-label="brightness channel" tabindex="0" style="--position: 1.0000;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="h svelte-tsvobk">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="360" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0"
+                                aria-label="hue channel" tabindex="0" style="--position: 0.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="a svelte-tsvobk" style="--alphaless-color: #ffffff;">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1"
+                                aria-label="alpha channel" tabindex="0" style="--position: 1.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="text-input svelte-qtukzs">
+                              <div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#ffffff"
+                                  class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1"
+                                  type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button
+                                type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs"
+                                  aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to
+                                  rgb</span></button>
+                            </div>
+                          </div>
+                        </span> </div>
+                      <div class="badge badge-ghost badge-lg font-bold">#ffffff</div>
+                    </div>
+                    <div class="text-lg font-bold py-4" data-svelte-h="svelte-1jsp737">Button Background</div>
+                    <div class="flex flex-row items-center gap-4">
+                      <div class="border-2 w-min rounded-full"> <span class="color-picker vertical svelte-tsvobk">
+                          <label class="svelte-15ns2n5">
+                            <div class="container svelte-15ns2n5"><input type="color" value="#7e22ce"
+                                aria-haspopup="dialog" class="svelte-15ns2n5">
+                              <div class="alpha svelte-15ns2n5"></div>
+                              <div class="color svelte-15ns2n5" style="background: #7e22ce;"></div>
+                            </div>
+                          </label>
+                          <div class="wrapper svelte-1h4o41o" role="dialog" aria-label="color picker">
+                            <div class="picker svelte-amfbfx" style="--picker-color-bg: #8800ff;">
+                              <div class="picker-indicator svelte-i5mg2p is-dark" style="--pos-x: 100; --pos-y: 0;">
+                              </div>
+                              <div class="s svelte-amfbfx" style="--pos-y: 0;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="horizontal"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="83" aria-valuetext="83%"
+                                  aria-label="saturation channel" tabindex="0" style="--position: 0.8300;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                              <div class="v svelte-amfbfx" style="--pos-x: 100;">
+                                <div class="slider svelte-g2tgla" role="slider" aria-orientation="vertical"
+                                  aria-valuemax="100" aria-valuemin="0" aria-valuenow="81" aria-valuetext="81%"
+                                  aria-label="brightness channel" tabindex="0" style="--position: 0.8100;">
+                                  <div class="track svelte-g2tgla"></div>
+                                  <div class="thumb svelte-g2tgla"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="h svelte-tsvobk">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="360" aria-valuemin="0" aria-valuenow="272" aria-valuetext="272"
+                                aria-label="hue channel" tabindex="0" style="--position: 0.7556;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="a svelte-tsvobk" style="--alphaless-color: #7e22ce;">
+                              <div class="slider svelte-g2tgla reverse" role="slider" aria-orientation="vertical"
+                                aria-valuemax="1" aria-valuemin="0" aria-valuenow="1" aria-valuetext="1"
+                                aria-label="alpha channel" tabindex="0" style="--position: 1.0000;">
+                                <div class="track svelte-g2tgla"></div>
+                                <div class="thumb svelte-g2tgla"></div>
+                              </div>
+                            </div>
+                            <div class="text-input svelte-qtukzs">
+                              <div class="input-container svelte-qtukzs"><input aria-label="hex color" value="#7e22ce"
+                                  class="svelte-qtukzs" style="flex: 3;"> <input aria-label="alpha channel" value="1"
+                                  type="number" min="0" max="1" step="0.01" class="svelte-qtukzs"></div> <button
+                                type="button" class="svelte-qtukzs"><span class="disappear svelte-qtukzs"
+                                  aria-hidden="true">hex</span> <span class="appear svelte-qtukzs">change to
+                                  rgb</span></button>
+                            </div>
+                          </div>
+                        </span> </div>
+                      <div class="badge badge-ghost badge-lg font-bold">#7e22ce</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex justify-end flex-col w-full">
+                  <div slot="toolbar" class="flex flex-col pt-8 gap-2"><button
+                      class="plausible-event-name=Card+Generator+Download+Code btn btn-active btn-primary btn-sm w-full text-white h-auto"
+                      data-svelte-h="svelte-7tjpmq">Export HTML + Tailwind</button> <button
+                      class="btn btn-neutral btn-sm w-full" data-svelte-h="svelte-1o18nmf">Reset / Clear</button></div>
+                </div>
+              </div>
+              <div
+                class="flex order-1 lg:order-2 flex-col w-full lg:w-5/6 bg-gray-100 py-8 lg:py-14 justify-center items-center">
+                <div slot="generator-frame">
+                  <div>
+                    <div class="flex flex-col rounded-2xl w-96 bg-[#ffffff] shadow-xl"
+                      style="background-color: #ffffff;">
+                      <figure class="flex justify-center items-center rounded-2xl"><img
+                          src="https://tailwind-generator.b-cdn.net/images/card-generator/tailwind-card-generator-card-preview.png"
+                          alt="Card Preview" class="rounded-t-2xl"></figure>
+                      <div class="flex flex-col p-8">
+                        <div class="text-2xl font-bold   text-[#374151] pb-6" style="color: #374151;">Generator</div>
+                        <div class=" text-lg   text-[#374151]" style="color: #374151;">Leverage a graphical editor to
+                          create beautiful web components.</div>
+                        <div class="flex justify-end pt-6"><button
+                            class="bg-[#7e22ce] text-[#ffffff]  font-bold text-base  p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform"
+                            style="color: #ffffff; background-color: #7e22ce;">Try it out!</button></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex order-3 flex-wrap m-auto lg:m-0 w-full lg:w-1/6 p-8 lg:p-4 border-2 overflow-y-auto max-h-full"
+                style="max-height: 95.3vh;">
+                <div class="flex flex-col w-full">
+                  <div class="flex flex-col justify-between h-full">
+                    <div class="flex flex-col px-12 lg:px-0 gap-4">
+                      <div slot="action-panel">
+                        <div class="text-lg font-bold py-4" data-svelte-h="svelte-tguub9">Title</div>
+                        <div class="flex flex-col pb-4">
+                          <div class="font-bold pb-2">Font Size:
+                            <div class="badge badge-ghost">5</div>
+                          </div> <input type="range" min="1" max="7" step="1" class="range range-sm" value="5">
+                        </div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox"
+                            checked>
+                          Bold</div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
+                          Uppercase</div>
+                        <div class="flex flex-wrap gap-4 pb-2 font-bold"><input type="text"
+                            class="input input-bordered w-full text-gray-500" spellcheck="false" value="Generator">
+                        </div>
+                        <div class="divider"></div>
+                        <div class="text-lg font-bold py-4" data-svelte-h="svelte-190vp6w">Content</div>
+                        <div class="flex flex-col pb-4">
+                          <div class="font-bold pb-2">Font Size:
+                            <div class="badge badge-ghost">3</div>
+                          </div> <input type="range" min="1" max="7" step="1" class="range range-sm" value="3">
+                        </div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
+                          Bold</div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
+                          Uppercase</div>
+                        <div class="flex flex-wrap gap-4 pb-2 font-bold"><input type="text"
+                            class="input input-bordered w-full text-gray-500" spellcheck="false"
+                            value="Leverage a graphical editor to create beautiful web components."></div>
+                        <div class="divider"></div>
+                        <div class="text-lg font-bold py-4" data-svelte-h="svelte-1hswjw1">Button</div>
+                        <div class="flex flex-col pb-4">
+                          <div class="font-bold pb-2">Font Size:
+                            <div class="badge badge-ghost">2</div>
+                          </div> <input type="range" min="1" max="7" step="1" class="range range-sm" value="2">
+                        </div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox"
+                            checked>
+                          Bold</div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
+                          Uppercase</div>
+                        <div class="flex flex-wrap gap-4 pb-4 font-bold"><input type="checkbox" class="checkbox">
+                          Full Width</div>
+                        <div class="flex flex-wrap gap-4 pb-2 font-bold"><input type="text"
+                            class="input input-bordered w-full text-gray-500" spellcheck="false" value="Try it out!">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <dialog class="modal">
+              <div class="modal-box w-11/12 max-w-7xl">
+                <div class="mockup-code">
+                  <pre class="text-success pl-2"><code></code></pre>
+                </div>
+                <div class="modal-action">
+                  <form method="dialog"> <button class="btn btn-active btn-primary text-white"
+                      data-svelte-h="svelte-a322r1">Copy to Clipboard</button> <button class="btn"
+                      data-svelte-h="svelte-17cpapt">Close</button></form>
+                </div>
+              </div>
+            </dialog>
+          </div>
+        </div>
+      </div>
+      <div class="toastContainer svelte-osouoj">
+        <ul class="_toastContainer svelte-1u812xz"> </ul>
+      </div>
+    </div>
 
-					const element = document.currentScript.parentElement;
+    <script>
+      {
+        __sveltekit_8wnki8 = {
+          base: new URL("..", location).pathname.slice(0, -1)
+        };
 
-					const data = [null,null,{"type":"data","data":{title:"Tailwind - Card Generator",description:"Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards.",ogtitle:"Tailwind - Card Generator",ogdescription:"Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards.",ogsitename:"Tailwind - Card Generator",ogurl:"tailwind-generator.com/card-generator",ogimage:"",ogtype:"website"},"uses":{}}];
+        const element = document.currentScript.parentElement;
 
-					Promise.all([
-						import("https://tailwind-generator.com/_app/immutable/entry/start.4CuU-iJL.js"),
-						import("https://tailwind-generator.com/_app/immutable/entry/app.DSQz0ujE.js")
-					]).then(([kit, app]) => {
-						kit.start(app, element, {
-							node_ids: [0, 2, 10],
-							data,
-							form: null,
-							error: null
-						});
-					});
-				}
-			</script>
-		</div>
+        const data = [null, null, { "type": "data", "data": { title: "Tailwind - Card Generator", description: "Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards.", ogtitle: "Tailwind - Card Generator", ogdescription: "Leverage a graphical editor to create, design and customize beautiful cards for Tailwind. Easily export the source code of your generated cards.", ogsitename: "Tailwind - Card Generator", ogurl: "tailwind-generator.com/card-generator", ogimage: "", ogtype: "website" }, "uses": {} }];
+
+        Promise.all([
+          import("https://tailwind-generator.com/_app/immutable/entry/start.4CuU-iJL.js"),
+          import("https://tailwind-generator.com/_app/immutable/entry/app.DSQz0ujE.js")
+        ]).then(([kit, app]) => {
+          kit.start(app, element, {
+            node_ids: [0, 2, 10],
+            data,
+            form: null,
+            error: null
+          });
+        });
+      }
+    </script>
+  </div>
 </body>
+
 </html>
 
 <style>
-    body {
-        font-family: 'Inter', sans-serif;
-    }
+  body {
+    font-family: 'Inter', sans-serif;
+  }
 </style>
