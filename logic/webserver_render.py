@@ -253,7 +253,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
   for (cache_key, payload_data) in path_data.get('cache', {}).items():
     # Format the cache key with the data
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
-    # LOG.debug(f'Get from cache_key: {cache_key}')
+    LOG.debug(f'Get from cache_key: {cache_key}')
 
     # payload[payload_key] = config.cache.Get(bundle_name, cache_key)
 
@@ -262,6 +262,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
       data_value = config.cache.Get(bundle_name, cache_key)
       payload[payload_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
 
+    
       # If this doesnt exist, try to get it directly
       if payload[payload_key] == None:
         LOG.error(f'Couldnt find cache key: Bundle: {bundle_name}  Key: {cache_key}')

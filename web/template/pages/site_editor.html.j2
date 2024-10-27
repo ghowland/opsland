@@ -5,7 +5,7 @@
   var WidgetOptions = {};
 
   function RenderWidget() {
-    var inputs = Array.from(document.getElementsByClassName("widget-input"));
+    var inputs = Array.from(document.getElementsByClassName("widget_input"));
 
     inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
 
@@ -31,11 +31,11 @@
   </button>
   
   <!-- Hidden ID Value -->  
-  <input id="widget-id" type="hidden" value="{{ request.widget }}" class="widget-input hidden">
+  <input id="widget_id" type="hidden" value="{{ request.widget }}" class="widget_input hidden">
     
   <form class="max-w-sm mx-auto">
-    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <label for="widget_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+    <select id="widget_type" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       <option value="card" selected>Card</option>
       <option value="table">Table</option>
       <option value="hero">Hero</option>
@@ -44,17 +44,17 @@
   </form>
 
 
-  <label for="widget-width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
-  <input id="widget-width" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <label for="widget_width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
+  <input id="widget_width" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-  <input id="widget-use-height" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-  <label for="widget-use-height" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use Height</label>
+  <input id="widget_use-height" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+  <label for="widget_use-height" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use Height</label>
 
-  <label for="widget-height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
-  <input id="widget-height" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <label for="widget_height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
+  <input id="widget_height" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-  <label for="widget-rounded" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rounded</label>
-  <input id="widget-rounded" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <label for="widget_rounded" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rounded</label>
+  <input id="widget_rounded" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
   
@@ -62,32 +62,23 @@
 <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
         <div class="flex items-center ps-3">
-            <input id="vue-checkbox" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+            <input id="vue-checkbox" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
             <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bold</label>
         </div>
     </li>
     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
         <div class="flex items-center ps-3">
-            <input id="react-checkbox" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+            <input id="react-checkbox" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
             <label for="react-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Uppercase</label>
         </div>
     </li>
     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
         <div class="flex items-center ps-3">
-            <input id="angular-checkbox" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+            <input id="angular-checkbox" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
             <label for="angular-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Width</label>
         </div>
     </li>
 </ul>
-
-<!-- Colors -->
-<label for="hs-color-input" class="block text-sm font-medium mb-2">Background Color</label>
-<input type="color" class="widget-input p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
-
-
-<label for="hs-color-input" class="block text-sm font-medium mb-2">Primary Color</label>
-<input type="color" class="widget-input p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
-
 
 <!-- Color Select with Slider Value -->
 <form class="max-w-sm mx-auto">
@@ -99,7 +90,7 @@
     <option value="blue">Blue</option>
   </select>
 </form>
-<input id="widget-width" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+<input id="color-1-value" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
 <!-- Color Select with Slider Value -->
@@ -112,23 +103,23 @@
     <option value="blue">Blue</option>
   </select>
 </form>
-<input id="widget-width" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+<input id="color-2-value" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
 <!-- Text -->
-<label for="widget-text-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+<label for="widget_text_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
 <div class="relative mb-6">
-  <input placeholder="Title..." type="text" id="widget-text-title" class="widget-input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ input.widget_text_title }}" placeholder="Title..." type="text" id="widget_text_title" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
-<label for="widget-text-content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+<label for="widget_text_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
 <div class="flex">
-  <input placeholder="Content..." type="text" id="widget-text-content" class="widget-input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ input.widget_text_content }}" placeholder="Content..." type="text" id="widget_text_content" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
-<label for="widget-text-button" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Button</label>
+<label for="widget_text_button" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Button</label>
 <div class="flex">
-  <input placeholder="Button..." type="text" id="widget-text-button" class="widget-input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ input.widget_text_button }}" placeholder="Button..." type="text" id="widget_text_button" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
 

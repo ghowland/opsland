@@ -203,11 +203,12 @@ class CacheManager():
     # If the cache_data has a `unique_key`
     if 'unique_key' in cache_info and cache_key == base_cache_key:
       unique_key = utility.FormatTextFromDictKeys(cache_info['unique_key'], value)
+
       if unique_key and '{' not in unique_key:
         # Suffix the unique key to the cache_key
         cache_key = f'''{cache_key}.{unique_key}'''
       else:
-        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Cache Info: {cache_info}''')
+        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Unique Key: {unique_key}  Cache Info: {cache_info}  Value: {value}''')
 
 
     with self.lock_bundles_each[bundle_name]:
