@@ -128,6 +128,10 @@ http:
       template: returns/api_login.html.j2
       execute: execute.api.login
 
+    api/site_editor:
+      template: returns/api_site_editor_widget.html.j2
+
+
     # CRUD: User
     api/site_user:
       execute: execute.api.site_user

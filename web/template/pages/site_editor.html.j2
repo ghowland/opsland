@@ -1,9 +1,34 @@
 {% include 'includes/page/page_start_minimal.html.j2' %}
 
+
+<script>
+  function RenderWidget() {
+    htmx.ajax('POST', '/api/site_editor', '#site_editor_widget')
+  }
+</script>
+
 <!-- Right Side -->
 
 <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidenav">
  <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+
+
+  <button type="button" onclick="RenderWidget()" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+    Render Widget
+  </button>
+  
+  
+  
+<form class="max-w-sm mx-auto">
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+  <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="card" selected>Card</option>
+    <option value="table">Table</option>
+    <option value="hero">Hero</option>
+    <option value="slideshow">Slideshow</option>
+  </select>
+</form>
+
 
   <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
   <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
@@ -153,21 +178,8 @@
 
 <div class="flex order-1 lg:order-2 flex-col w-full lg:w-5/6 bg-gray-100 py-8 lg:py-14 justify-center items-center">
   <div slot="generator-frame">
-    <div>
-
-      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-        </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Read more
-            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-            </svg>
-        </a>
-    </div>
-
+    <div id="site_editor_widget">
+      Press the "Render Widget" button to start.
     </div>
   </div>
 </div>
