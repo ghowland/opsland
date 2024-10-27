@@ -3,6 +3,9 @@
 """
 OpsLand: Full web, cache, threaded job execution using CLI programs to separate logic and server.
 
+** CRITICAL WARNING ** -- Everything is subject to change, to balance out of the best tradeoff for power and simplicity.
+  - Always focusing on OpsLand being a general purpose tool maxing on logic isolation.
+
 Requirements:
   pip3.12 install -r requirements.txt
 """
@@ -25,6 +28,10 @@ from logic.log import LOG
 
 from logic import webserver
 from logic import thread_manager
+
+
+# Version:  ** CRITICAL WARNING ** -- Everything is subject to change
+VERSION = '0.000001 pre-pre-beta'
 
 
 # Default listening port
@@ -79,8 +86,8 @@ def Main(config):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(
     prog='OpsLand',
-    description='A CLI-extensible web, cache and threaded job server.',
-    epilog='Do all the hard things easily.')
+    description='A CLI-extensible web, cache and threaded job server.  Configuration points to external logic',
+    epilog=f'Version: {VERSION}.  OpsLand is not yet OpsLand.')
 
   parser.add_argument('-d', '--debug', default=False, action='store_true', help='Debug logging')
   parser.add_argument('-p', '--port', default=DEFAULT_PORT, type=int, help='Listening port')

@@ -214,7 +214,7 @@ def GetAuthSession(request, config, bundle_name, bundle, headers):
     else:
       tokens_match = False
 
-    LOG.info(f'''Perform auth check: {cookie_data}  Cache Key: {format_cache_key}  User Auth: {user_auth_data}  Matched: {tokens_match}''')
+    # LOG.info(f'''Perform auth check: {cookie_data}  Cache Key: {format_cache_key}  User Auth: {user_auth_data}  Matched: {tokens_match}''')
 
     # If this is a valid user session, pack the session data
     if tokens_match:

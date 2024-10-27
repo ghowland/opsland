@@ -21,6 +21,9 @@ path:
   # Login static information.  Not using Okta 
   login_sessions: ~/.secure/opsland/logins.json
 
+  # If no directory is specified, use this one for `execute.` 
+  default_execute_dir: ~/work/opsland-example/
+
 
 # This is how we authenticate into this Bundle
 auth:
@@ -74,7 +77,7 @@ execute:
     # CRUD: User
     site_user:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/crud_user.json crud_user
-      dir: ~/work/opsland-example/
+      # dir: ~/work/opsland-example/
       input_path: /tmp/opsland/crud_user.json
       input:
         request:
@@ -87,7 +90,7 @@ execute:
     login:
       #TODO(geoff): Need to pass it as STDIN, or make totally unique files
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_login_{uuid}.json site_login
-      dir: ~/work/opsland-example/
+      # dir: ~/work/opsland-example/
       input_path: /tmp/opsland/site_login_{uuid}.json
       input:
         # Pass through our request data
@@ -101,6 +104,19 @@ execute:
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{username}"
 
+    # Site Editor: Creates and edits widgets
+    site_editor:
+      #TODO(geoff): Need to pass it as STDIN, or make totally unique files
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_editor_{uuid}.json site_editor
+      # dir: ~/work/opsland-example/
+      input_path: /tmp/opsland/site_editor_{uuid}.json
+      input:
+        # Pass through our request data
+        request:
+          record_id: ["widget-id"]
+
+      # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
+      unique_key: "{widget-id}"
 
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
 summary:
@@ -130,7 +146,7 @@ http:
 
     api/site_editor:
       template: returns/api_site_editor_widget.html.j2
-
+      execute: execute.api.site_editor
 
     # CRUD: User
     api/site_user:

@@ -29,7 +29,7 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
       # If we have formatting in our cache key
       before_cache_key = cache_key
       cache_key = utility.FormatTextFromDictDeep(cache_key, input_data)
-      LOG.info(f'Cache Key format: Before {before_cache_key}  After: {cache_key}')
+      # LOG.info(f'Cache Key format: Before {before_cache_key}  After: {cache_key}')
 
       cache_value = config.cache.Get(bundle_name, cache_key)
 
@@ -39,7 +39,7 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
     command_input_path = command['input_path'].replace('{uuid}', uuid)
     utility.SaveJson(command_input_path, input_data)
 
-    LOG.debug(f'''Command Input Path: {command_input_path}''')
+    # LOG.debug(f'''Command Input Path: {command_input_path}''')
 
   command_unique = command['command'].replace('{uuid}', uuid)
 

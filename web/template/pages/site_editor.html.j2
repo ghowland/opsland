@@ -2,8 +2,18 @@
 
 
 <script>
+  var WidgetOptions = {};
+
   function RenderWidget() {
-    htmx.ajax('POST', '/api/site_editor', '#site_editor_widget')
+    var inputs = Array.from(document.getElementsByClassName("widget-input"));
+
+    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
+
+    htmx.ajax('POST', '/api/site_editor', {'target': '#site_editor_widget', 'values': WidgetOptions})
+  }
+
+  function SetWidgetOption(name, value) {
+    WidgetOptions[name] = value;
   }
 </script>
 
@@ -12,36 +22,39 @@
 <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidenav">
  <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 
+  <p class="p-4">
+    Widget: {{ request.widget }}
+  </p>
 
   <button type="button" onclick="RenderWidget()" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
     Render Widget
   </button>
   
-  
-  
-<form class="max-w-sm mx-auto">
-  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-  <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <option value="card" selected>Card</option>
-    <option value="table">Table</option>
-    <option value="hero">Hero</option>
-    <option value="slideshow">Slideshow</option>
-  </select>
-</form>
+  <!-- Hidden ID Value -->  
+  <input id="widget-id" type="hidden" value="{{ request.widget }}" class="widget-input hidden">
+    
+  <form class="max-w-sm mx-auto">
+    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <option value="card" selected>Card</option>
+      <option value="table">Table</option>
+      <option value="hero">Hero</option>
+      <option value="slideshow">Slideshow</option>
+    </select>
+  </form>
 
 
-  <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
-  <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <label for="widget-width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
+  <input id="widget-width" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-  <input id="height-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-  <label for="height-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use Height</label>
+  <input id="widget-use-height" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+  <label for="widget-use-height" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use Height</label>
 
-  <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
-  <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <label for="widget-height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
+  <input id="widget-height" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-
-  <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rounded</label>
-  <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <label for="widget-rounded" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rounded</label>
+  <input id="widget-rounded" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
   
@@ -49,40 +62,73 @@
 <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
         <div class="flex items-center ps-3">
-            <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+            <input id="vue-checkbox" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
             <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bold</label>
         </div>
     </li>
     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
         <div class="flex items-center ps-3">
-            <input id="react-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+            <input id="react-checkbox" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
             <label for="react-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Uppercase</label>
         </div>
     </li>
     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
         <div class="flex items-center ps-3">
-            <input id="angular-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+            <input id="angular-checkbox" type="checkbox" value="" class="widget-input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
             <label for="angular-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Width</label>
         </div>
     </li>
 </ul>
 
+<!-- Colors -->
 <label for="hs-color-input" class="block text-sm font-medium mb-2">Background Color</label>
-<input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
+<input type="color" class="widget-input p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
 
 
 <label for="hs-color-input" class="block text-sm font-medium mb-2">Primary Color</label>
-<input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
+<input type="color" class="widget-input p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
 
-<label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+
+<!-- Color Select with Slider Value -->
+<form class="max-w-sm mx-auto">
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title Background</label>
+  <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="white" selected>White</option>
+    <option value="red">Red</option>
+    <option value="green">Green</option>
+    <option value="blue">Blue</option>
+  </select>
+</form>
+<input id="widget-width" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+
+<!-- Color Select with Slider Value -->
+<form class="max-w-sm mx-auto">
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title Color</label>
+  <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="white" selected>White</option>
+    <option value="red">Red</option>
+    <option value="green">Green</option>
+    <option value="blue">Blue</option>
+  </select>
+</form>
+<input id="widget-width" type="range" value="50" class="widget-input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+
+<!-- Text -->
+<label for="widget-text-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
 <div class="relative mb-6">
-  <input placeholder="Title..." type="text" id="website-admin" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input placeholder="Title..." type="text" id="widget-text-title" class="widget-input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
-
-<label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+<label for="widget-text-content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
 <div class="flex">
-  <input placeholder="Content..." type="text" id="website-admin" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input placeholder="Content..." type="text" id="widget-text-content" class="widget-input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+</div>
+
+<label for="widget-text-button" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Button</label>
+<div class="flex">
+  <input placeholder="Button..." type="text" id="widget-text-button" class="widget-input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
 
@@ -187,78 +233,87 @@
 
 
 <!-- Right Side -->
-
 <aside id="sidebar-tasks" class="flex fixed top-0 right-0 h-full divide-x divide-gray-200 dark:divide-gray-700 transition-transform -translate-x-full sm:translate-x-0 z-40" aria-label="Sidebar">
- <div class="overflow-y-auto py-4 px-3 w-64 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="overflow-y-auto py-4 px-3 w-64 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidenav">
+      <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+
+        <!-- Slide -->
+        <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default
+          range</label>
+        <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
-  
-<aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidenav">
-  <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <!-- Options -->
+        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Technology</h3>
+        <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="vue-checkbox" type="checkbox" value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vue JS</label>
+            </div>
+          </li>
+          <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="react-checkbox" type="checkbox" value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="react-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">React</label>
+            </div>
+          </li>
+          <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="angular-checkbox" type="checkbox" value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="angular-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Angular</label>
+            </div>
+          </li>
+          <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="laravel-checkbox" type="checkbox" value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="laravel-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laravel</label>
+            </div>
+          </li>
+        </ul>
 
-<!-- Slide -->
-<label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default range</label>
-<input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
- 
-
-   <!-- Options -->
- <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Technology</h3>
- <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-         <div class="flex items-center ps-3">
-             <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-             <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vue JS</label>
-         </div>
-     </li>
-     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-         <div class="flex items-center ps-3">
-             <input id="react-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-             <label for="react-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">React</label>
-         </div>
-     </li>
-     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-         <div class="flex items-center ps-3">
-             <input id="angular-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-             <label for="angular-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Angular</label>
-         </div>
-     </li>
-     <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-         <div class="flex items-center ps-3">
-             <input id="laravel-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-             <label for="laravel-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laravel</label>
-         </div>
-     </li>
- </ul>
- 
- <!-- Color -->
- <label for="hs-color-input" class="block text-sm font-medium mb-2">Color picker</label>
- <input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
+        <!-- Color -->
+        <label for="hs-color-input" class="block text-sm font-medium mb-2">Color picker</label>
+        <input type="color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color">
 
 
 
-<!-- Text -->
- <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
- <div class="relative mb-6">
-   <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-         <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-         <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
-     </svg>
-   </div>
-   <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com">
- </div>
- <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
- <div class="flex">
-   <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-         <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
-     </svg>
-   </span>
-   <input type="text" id="website-admin" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="elonmusk">
- </div>
- 
+        <!-- Text -->
+        <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+          Email</label>
+        <div class="relative mb-6">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+              <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
+              <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
+            </svg>
+          </div>
+          <input type="text" id="input-group-1"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="name@flowbite.com">
+        </div>
+        <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+            </svg>
+          </span>
+          <input type="text" id="website-admin"
+            class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="elonmusk">
+        </div>
 
 
+
+      </div>
+    </aside>
   </div>
 </aside>
 
