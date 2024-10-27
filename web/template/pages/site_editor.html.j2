@@ -3,11 +3,22 @@
 
 <script>
   var WidgetOptions = {};
+  var StartedFirst = false;
+
+  function RenderWidgetFirst() {
+    StartedFirst = true;
+    RenderWidget();
+  }
 
   function RenderWidget() {
-    var inputs = Array.from(document.getElementsByClassName("widget_input"));
+    // Dont let this get called until we have the values
+    if (!StartedFirst) return;
 
+    var inputs = Array.from(document.getElementsByClassName("widget_input"));
     inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
+
+    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
 
     htmx.ajax('POST', '/api/site_editor', {'target': '#site_editor_widget', 'values': WidgetOptions})
   }
@@ -15,7 +26,11 @@
   function SetWidgetOption(name, value) {
     WidgetOptions[name] = value;
   }
+
+  // Render the widget after we load
+  setTimeout(RenderWidgetFirst, 250);
 </script>
+
 
 <!-- Right Side -->
 
@@ -23,7 +38,7 @@
  <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 
   <p class="p-4">
-    Widget: {{ request.widget }}
+    Widget: {{ request.widget }} -- {{input.widget_use_height}}
   </p>
 
   <button type="button" onclick="RenderWidget()" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
@@ -35,7 +50,7 @@
     
   <form class="max-w-sm mx-auto">
     <label for="widget_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-    <select id="widget_type" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <select id="widget_type" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       <option value="card" selected>Card</option>
       <option value="table">Table</option>
       <option value="hero">Hero</option>
@@ -45,16 +60,16 @@
 
 
   <label for="widget_width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
-  <input id="widget_width" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <input value="{{ input.widget_width }}" id="widget_width" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-  <input id="widget_use-height" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+  <input {% if input.widget_use_height == 'true' %}checked="checked"{% endif %} id="widget_use_height" onchange="RenderWidget()" type="checkbox" value="" class="widget_checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
   <label for="widget_use-height" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use Height</label>
 
   <label for="widget_height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
-  <input id="widget_height" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <input value="{{ input.widget_height }}" id="widget_height" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
   <label for="widget_rounded" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rounded</label>
-  <input id="widget_rounded" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+  <input value="{{ input.widget_rounded }}" id="widget_rounded" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
   
@@ -82,44 +97,44 @@
 
 <!-- Color Select with Slider Value -->
 <form class="max-w-sm mx-auto">
-  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title Background</label>
-  <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <option value="white" selected>White</option>
-    <option value="red">Red</option>
-    <option value="green">Green</option>
-    <option value="blue">Blue</option>
+  <label for="color_title_background" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title Background</label>
+  <select id="color_title_background" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="gray" {% if input.color_title_background == 'gray' %}selected{% endif %}>White</option>
+    <option value="red" {% if input.color_title_background == 'red' %}selected{% endif %}>Red</option>
+    <option value="green" {% if input.color_title_background == 'green' %}selected{% endif %}>Green</option>
+    <option value="blue" {% if input.color_title_background == 'blue' %}selected{% endif %}>Blue</option>
   </select>
 </form>
-<input id="color-1-value" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+<input value="{{ input.color_title_background_value }}" id="color_title_background_value" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
 <!-- Color Select with Slider Value -->
 <form class="max-w-sm mx-auto">
-  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title Color</label>
-  <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <option value="white" selected>White</option>
-    <option value="red">Red</option>
-    <option value="green">Green</option>
-    <option value="blue">Blue</option>
+  <label for="color_title_text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title Color</label>
+  <select id="color_title_text" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="gray" {% if input.color_title_text == 'gray' %}selected{% endif %}>White</option>
+    <option value="red" {% if input.color_title_text == 'red' %}selected{% endif %}>Red</option>
+    <option value="green" {% if input.color_title_text == 'green' %}selected{% endif %}>Green</option>
+    <option value="blue" {% if input.color_title_text == 'blue' %}selected{% endif %}>Blue</option>
   </select>
 </form>
-<input id="color-2-value" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+<input value="{{ input.color_title_text_value }}" id="color_title_text_value" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
 
 <!-- Text -->
 <label for="widget_text_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
 <div class="relative mb-6">
-  <input value="{{ input.widget_text_title }}" placeholder="Title..." type="text" id="widget_text_title" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ input.widget_text_title }}" placeholder="Title..." onchange="RenderWidget()" type="text" id="widget_text_title" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
 <label for="widget_text_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
 <div class="flex">
-  <input value="{{ input.widget_text_content }}" placeholder="Content..." type="text" id="widget_text_content" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ input.widget_text_content }}" placeholder="Content..." onchange="RenderWidget()" type="text" id="widget_text_content" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
 <label for="widget_text_button" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Button</label>
 <div class="flex">
-  <input value="{{ input.widget_text_button }}" placeholder="Button..." type="text" id="widget_text_button" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ input.widget_text_button }}" placeholder="Button..." onchange="RenderWidget()" type="text" id="widget_text_button" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
 
