@@ -164,6 +164,14 @@ http:
         execute.api.site_editor.{widget}:
           input: [input]
 
+    # Paths
+    site_editor_dynamic:
+      template: pages/site_editor_dynamic.html.j2
+
+      cache:
+        execute.api.site_editor.{widget}:
+          input: [input]
+
     test:
       template: pages/generic_test.html.j2
 
