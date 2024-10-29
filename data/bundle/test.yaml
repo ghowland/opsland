@@ -118,6 +118,7 @@ execute:
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{widget_id}"
 
+
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
 summary:
   # Will be found in Cache with the prefix "summary.schedule.period.mtr", but with specific things being like: `summary.schedule.period.mtr.average` and then 
@@ -138,6 +139,7 @@ summary:
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
+  # POST
   post:
     # Login
     api/login:
@@ -155,6 +157,8 @@ http:
     modal/yes_no:
       template: returns/modal_yes_no.html.j2
 
+
+  # GET
   get:
     # Paths
     site_editor:
