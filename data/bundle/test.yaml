@@ -113,7 +113,7 @@ execute:
       input:
         # Pass through our request data
         request:
-          record_id: ["widget_id"]
+          record_id: [widget]
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{widget_id}"
