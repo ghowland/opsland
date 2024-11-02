@@ -1,7 +1,24 @@
-<br><b>Router:</b>
 
+<!--
 <br><b>Input:</b> {{ input }}<br>
 <br><b>ID:</b> {{ widget_id }}<br>
 <br><b>Type:</b> {{ widget_type }}<br>
-<br><b>Widget:</b> {{ widget_data }}<br>
+-->
+<!-- <br><b>Widget:</b> {{ cur_data }}<br> -->
 
+<h3 class="text-xl text-gray-900 mt-3">{{ cur_data.label }}</h3>
+
+{% if cur_data.import_data %}
+
+  {% set cur_data = cur_data.import_data %}
+  {% include 'component/site_editor/widget_router.html.j2' %}
+
+{% elif cur_data.list_data %}
+
+  <br>Has list data: {{ cur_data.import_data }}<br>
+
+{% else %}
+
+  <br>Has type data: {{ cur_data }}<br>
+
+{% endif %}

@@ -159,7 +159,7 @@ http:
       execute: execute.api.site_editor
 
     api/site_editor_dynamic:
-      template: returns/api_site_editor_dymanic.html.j2
+      template: returns/api_site_editor_widget.html.j2
       execute: execute.api.site_editor_dynamic
 
     # CRUD: User
