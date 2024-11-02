@@ -48,13 +48,14 @@
   <!-- Hidden ID Value -->  
   <input id="widget_id" type="hidden" value="{{ request.widget }}" class="widget_input hidden">
 
-  
+
   <!-- Widget Router: Will render all of the widget data elements recursively -->
   {% include 'component/site_editor/widget_router.html.j2' %}
 
 
   <!-- Widget Type: Select -->
   {% include 'component/site_editor/widget_type_select.html.j2' %}
+
 
   <label for="widget_width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
   <input value="{{ input.widget_width }}" id="widget_width" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">

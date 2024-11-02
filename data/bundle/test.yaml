@@ -187,6 +187,9 @@ http:
       cache:
         execute.api.site_editor_dynamic.{widget}:
           input: [input]
+          widget_data: [widget_data]
+          widget_id: [widget_id]
+          widget_type: [widget_type]
 
     test:
       template: pages/generic_test.html.j2

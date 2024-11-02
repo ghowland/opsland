@@ -391,7 +391,7 @@ def FormatTextFromDictDeep(text, data):
   """Replace text from a dictionary using {key.name} formatting"""
   deep_replaces = re.findall('{(.*?)}', text)
 
-  LOG.info(f'Format deep: {data}')
+  # LOG.info(f'Format deep: {data}')
 
   for deep_replace in deep_replaces:
     try:
