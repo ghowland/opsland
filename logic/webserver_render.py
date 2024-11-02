@@ -159,7 +159,7 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
   return payload
 
 
-def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
+def ExecuteStoredCommand(config, bundle_name, bundle, execute_name, update_data):
   """Execute a command from the Bundle Spec"""
   parts = execute_name.split('.')
 
@@ -168,7 +168,7 @@ def ExecuteStoredCommand(config, bundle_name, execute_name, update_data):
   # LOG.info(f'Exec Stored Command: {execute_name}   Data: {execute_data}')
 
   # Execute the command
-  result = execute_command.ExecuteCommand(config, execute_data, bundle_name, execute_name, update_data=update_data)
+  result = execute_command.ExecuteCommand(config, execute_data, bundle_name, bundle, execute_name, update_data=update_data)
 
   # LOG.info(f'Exec Stored Command: {execute_name}   Result: {result}')
 
@@ -272,7 +272,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
 
   # Check if we want to execute a command directly (API)
   if 'execute' in path_data:
-    exec_result = ExecuteStoredCommand(config, bundle_name, path_data['execute'], payload)
+    exec_result = ExecuteStoredCommand(config, bundle_name, bundle, path_data['execute'], payload)
     if exec_result:
       payload[path_data['execute']] = exec_result
       # LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')

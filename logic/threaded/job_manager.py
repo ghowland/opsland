@@ -3,12 +3,11 @@ Job Manager: Watch our Job specifications for changes and hot reload them
 """
 
 
-import json
-
 from logic.log import LOG
 
 from logic import thread_base
 from logic import execute_command
+from logic import thread_manager
 
 
 class JobManager(thread_base.ThreadBase):
@@ -30,9 +29,12 @@ class JobManager(thread_base.ThreadBase):
     if 'data' not in task:
       LOG.error(f'Cant execute this task, skipping: {task}')
       return
+    
+    # Get the bundle
+    bundle = thread_manager.BUNDLE_MANAGER.GetBundles()[task['bundle']]
 
     # Execute this command.  We wrap it here so we can call this from mutliple paths and all are handled the same
-    execute_command.ExecuteCommand(self._config, task['data'], task['bundle'], task['key'])
+    execute_command.ExecuteCommand(self._config, task['data'], task['bundle'], bundle, task['key'])
 
 
 

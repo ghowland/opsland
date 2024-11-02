@@ -28,12 +28,13 @@ class MissingCachePath(Exception):
   """We are missing the class path"""
 
 
-def ExecuteCommand(execute_script, input='', debug=False):
-  """Run a command and return tuple: status (int), output (string), error (string)"""
+def ExecuteCommand(execute_script, input='', debug=False, set_cwd=None):
+  """Run a command and return tuple: status (int), output (string), error (string).  `set_cwd` will set the CWD if not None"""
   if debug: LOG.debug(f'Execute Command: {execute_script}')
 
+  # Execute the script
   args = shlex.split(execute_script)
-  pipe = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+  pipe = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=set_cwd)
   output, error = pipe.communicate(input)
   status = pipe.returncode
 

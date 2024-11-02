@@ -20,7 +20,7 @@
     var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
     checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
 
-    htmx.ajax('POST', '/api/site_editor', {'target': '#site_editor_widget', 'values': WidgetOptions})
+    htmx.ajax('POST', '/api/site_editor_dynamic', {'target': '#site_editor_widget', 'values': WidgetOptions})
   }
 
   function SetWidgetOption(name, value) {
@@ -47,6 +47,10 @@
   
   <!-- Hidden ID Value -->  
   <input id="widget_id" type="hidden" value="{{ request.widget }}" class="widget_input hidden">
+
+  
+  <!-- Widget Router: Will render all of the widget data elements recursively -->
+  {% include 'component/site_editor/widget_router.html.j2' %}
 
 
   <!-- Widget Type: Select -->

@@ -5,13 +5,14 @@ Execute Command: One module to handle the most important thing we do, genericall
 
 import json
 import time
+import os
 
 from logic import utility
 
 from logic.log import LOG
 
 
-def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None):
+def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_data=None):
   """Execute a command"""
   # Ensure we have unique input paths
   uuid = utility.GetUUID()
@@ -45,7 +46,15 @@ def ExecuteCommand(config, command, bundle_name, set_cache_key, update_data=None
 
   LOG.debug(f'''Execute Command Actual: {command_unique}''')
 
-  (status, output, error) = utility.ExecuteCommand(command_unique)
+  # Set the CWD for the command
+  running_cwd = config.directory_origin
+  running_cwd = bundle['path']['default_execute_dir']
+  if 'dir' in command:
+    running_cwd = command['dir']
+  
+  # Execute the command
+  (status, output, error) = utility.ExecuteCommand(command_unique, set_cwd=running_cwd)
+
 
   if status == 0:
     # LOG.debug(f'Output: {output}')
