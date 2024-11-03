@@ -245,6 +245,69 @@ http:
     test13:
       template: pages/generic_test_flowbite12.html.j2
 
+    site00:
+      template: pages/generic_site_00.html.j2
+
+    site01:
+      template: pages/generic_site_01.html.j2
+
+    site02:
+      template: pages/generic_site_02.html.j2
+
+    site03:
+      template: pages/generic_site_03.html.j2
+
+    site04:
+      template: pages/generic_site_04.html.j2
+
+    site05:
+      template: pages/generic_site_05.html.j2
+
+    site06:
+      template: pages/generic_site_06.html.j2
+
+    site07:
+      template: pages/generic_site_07.html.j2
+
+    site08:
+      template: pages/generic_site_08.html.j2
+
+    site09:
+      template: pages/generic_site_09.html.j2
+
+    site10:
+      template: pages/generic_site_10.html.j2
+
+    site11:
+      template: pages/generic_site_11.html.j2
+
+    site12:
+      template: pages/generic_site_12.html.j2
+
+    site13:
+      template: pages/generic_site_13.html.j2
+
+    site14:
+      template: pages/generic_site_14.html.j2
+
+    site15:
+      template: pages/generic_site_15.html.j2
+
+    site16:
+      template: pages/generic_site_16.html.j2
+
+    site17:
+      template: pages/generic_site_17.html.j2
+
+    site18:
+      template: pages/generic_site_18.html.j2
+
+    site19:
+      template: pages/generic_site_19.html.j2
+
+    site20:
+      template: pages/generic_site_20.html.j2
+
     opsland/status:
       template: returns/opsland_status.html.j2
 
