@@ -57,74 +57,8 @@
   {% include 'component/site_editor/widget_router.html.j2' %}
   {% endfor %}
 
-
-  <label for="widget_width" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Width</label>
-  <input value="{{ input.widget_width }}" id="widget_width" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-  <input {% if input.widget_use_height == 'true' %}checked="checked"{% endif %} id="widget_use_height" onchange="RenderWidget()" type="checkbox" value="" class="widget_checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-  <label for="widget_use-height" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use Height</label>
-
-  <label for="widget_height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
-  <input value="{{ input.widget_height }}" id="widget_height" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-  <label for="widget_rounded" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rounded</label>
-  <input value="{{ input.widget_rounded }}" id="widget_rounded" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-
-  
-<h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Options</h3>
-<ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-        <div class="flex items-center ps-3">
-            <input id="vue-checkbox" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-            <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bold</label>
-        </div>
-    </li>
-    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-        <div class="flex items-center ps-3">
-            <input id="react-checkbox" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-            <label for="react-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Uppercase</label>
-        </div>
-    </li>
-    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-        <div class="flex items-center ps-3">
-            <input id="angular-checkbox" type="checkbox" value="" class="widget_input w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-            <label for="angular-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Width</label>
-        </div>
-    </li>
-</ul>
-
-<!-- Color Select with Slider Value -->
-{% set field = "color_background" %}
-{% set title = "Title Background" %}
-{% set color = input.color_background %}
-{% set color_value = input.color_background_value %}
-{% include 'component/site_editor/color_combo.html.j2' %}
-
-
-<!-- Title Text: -->
-{% set field = "color_title" %}
-{% set title = "Title Color" %}
-{% set color = input.color_title %}
-{% set color_value = input.color_title_value %}
-{% include 'component/site_editor/color_combo.html.j2' %}
-
-
-<!-- Text -->
-{% set field = "widget_title" %}
-{% set body = "Title Color" %}
-{% set value = input.widget_title %}
-{% include 'component/site_editor/text.html.j2' %}
-
-<label for="widget_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
-<div class="flex">
-  <input value="{{ input.widget_text_content }}" placeholder="Content..." onchange="RenderWidget()" type="text" id="widget_text_content" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-</div>
-
-<label for="widget_button" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Button</label>
-<div class="flex">
-  <input value="{{ input.widget_text_button }}" placeholder="Button..." onchange="RenderWidget()" type="text" id="widget_text_button" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-</div>
+  <br><br><br>
+  <br><br><br>
 
 
 <!-- Right Bottom Icons -->
