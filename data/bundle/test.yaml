@@ -155,12 +155,26 @@ http:
       execute: execute.api.login
 
     api/site_editor:
-      template: returns/api_site_editor_widget.html.j2
+      template: returns/api_site_editor_widget_target.html.j2
       execute: execute.api.site_editor
 
+    # Widget Reformat
     api/site_editor_dynamic:
-      template: returns/api_site_editor_widget.html.j2
+      template: returns/api_site_editor_widget_target.html.j2
       execute: execute.api.site_editor_dynamic
+
+    # Reload the Sidebar
+    api/site_editor_sidebar:
+      template: returns/api_site_sidebar_edit_widget.html.j2
+      execute: execute.api.site_editor_dynamic
+      
+      cache:
+        execute.api.site_editor_dynamic.{widget_id}:
+          input: [input]
+          output: [output]
+          widget_data: [widget_data]
+          widget_id: [widget_id]
+          widget_type: [widget_type]
 
     # CRUD: User
     api/site_user:
