@@ -187,6 +187,7 @@ http:
       cache:
         execute.api.site_editor_dynamic.{widget}:
           input: [input]
+          output: [output]
           widget_data: [widget_data]
           widget_id: [widget_id]
           widget_type: [widget_type]

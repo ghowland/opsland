@@ -1,4 +1,4 @@
 <label for="{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{cur_data.label}}</label>
 <div class="flex">
-  <input value="{{ input.widget_text_content }}" placeholder="Text..." onchange="RenderWidget()" type="text" id="{{cur_data.key_full}}" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input value="{{ output[cur_data.key_full] }}" placeholder="Text..." onchange="RenderWidget()" type="text" id="{{cur_data.key_full}}" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>

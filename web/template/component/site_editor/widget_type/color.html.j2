@@ -1,7 +1,8 @@
 <!-- Color: -->
 {% set field = cur_data.key_full %}
 {% set title = cur_data.label %}
-{% set color = 'input.color_title' %}
-{% set color_value = 'input.color_title_value' %}
+{% set color = input[cur_data.key_full] %}
+{% set color_value_key = cur_data.key_full + '_value' %}
+{% set color_value = input[color_value_key] %}
 {% include 'component/site_editor/color_combo.html.j2' %}
 
