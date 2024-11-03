@@ -1,13 +1,15 @@
+{% set wdata = execute_api_site_editor_dynamic.output %}
+{% set wid = execute_api_site_editor_dynamic.widget_id %}
 
-<div class="max-w-sm p-6 border border-gray-200 shadow {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.color_background'] }} {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.width'] }} {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.height'] }} {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.rounded'] }}">
+<div class="max-w-sm p-6 border border-gray-200 shadow {{wdata[wid+'.color_background']}} {{wdata[wid+'.width']}} {{wdata[wid+'.height']}} {{wdata[wid+'.rounded']}}">
   <a href="#">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.title.color_text'] }} {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.title.bold'] }}">{{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.title.text'] }}</h5>
+      <h5 class="mb-2 text-2xl font-bold tracking-tight {{wdata[wid+'.title.color_text']}} {{wdata[wid+'.title.bold']}}">{{wdata[wid+'.title.text']}}</h5>
   </a>
-  <p class="mb-3 {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.body.color_text'] }} {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.body.bold'] }}">{{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.body.text'] }}</p>
-  <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:bg-blue-700 dark:focus:ring-blue-800 {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.button.color_background'] }} {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.button.title.color_text'] }}">
-    {{ execute_api_site_editor_dynamic.output[execute_api_site_editor_dynamic.widget_id + '.button.title.text'] }}
-      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-      </svg>
+  <p class="mb-3 {{wdata[wid+'.body.color_text']}} {{wdata[wid+'.body.bold']}}">{{wdata[wid+'.body.text']}}</p>
+  <a href="#" class="inline-flex items-center px-3 py-2 text-sm text-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 {{wdata[wid+'.button.rounded']}} {{wdata[wid+'.button.color_background']}} {{wdata[wid+'.button.title.color_text']}} {{wdata[wid+'.button.title.bold']}}">
+    {{wdata[wid+'.button.title.text']}}
+    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+    </svg>
   </a>
 </div>
