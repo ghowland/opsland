@@ -1,5 +1,5 @@
 <!-- Color: -->
-{% set field = cur_data.key_full %}
+{% set field = widget_id + '.' + cur_data.key_full %}
 {% set title = cur_data.label %}
 {% set color = input[cur_data.key_full] %}
 {% set color_value_key = cur_data.key_full + '_value' %}
