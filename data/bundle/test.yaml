@@ -206,6 +206,9 @@ http:
           widget_id: [widget_id]
           widget_type: [widget_type]
 
+    try00:
+      template: pages/site_try_00.html.j2
+
     test:
       template: pages/generic_test.html.j2
 
