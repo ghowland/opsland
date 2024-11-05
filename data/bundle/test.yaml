@@ -209,6 +209,14 @@ http:
     try00:
       template: pages/site_try_00.html.j2
 
+      cache:
+        execute.api.site_editor_dynamic.{widget}:
+          input: [input]
+          output: [output]
+          widget_data: [widget_data]
+          widget_id: [widget_id]
+          widget_type: [widget_type]
+          
     test:
       template: pages/generic_test.html.j2
 
