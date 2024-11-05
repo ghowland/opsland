@@ -1,58 +1,19 @@
 {% include 'includes/page/page_start_minimal.html.j2' %}
 
-<script>
-  var WidgetOptions = {};
-  var StartedFirst = false;
-
-  function RenderWidgetFirst() {
-    StartedFirst = true;
-    RenderWidget();
-  }
-
-  function RenderWidget() {
-    // Dont let this get called until we have the values
-    if (!StartedFirst) {
-      // RenderWidgetFirst();
-      return;
-    }
-
-    var inputs = Array.from(document.getElementsByClassName("widget_input"));
-    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
-
-    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
-    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
-
-    htmx.ajax('POST', '/api/site_editor_dynamic', {'target': '#site_editor_widget', 'values': WidgetOptions})
-    htmx.ajax('POST', '/api/site_editor_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
-  }
-
-  function SetWidgetOption(name, value) {
-    WidgetOptions[name] = value;
-  }
-
-  // Render the widget after we load
-  setTimeout(RenderWidgetFirst, 250);
-</script>
-
-
+<!-- Content Sections -->
 {% include 'returns/api_site_editor_widget_page_image_header.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_header_links.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_image_bar.html.j2' %}
-
 {% include 'returns/api_site_editor_widget_page_features.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_title_separator.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_title_article_lead.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_cta.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_footer_contact_links.html.j2' %}
 
-
-
-
+<!-- Edit Mode -->
 {% include 'returns/api_site_editor_widget_page_edit_speeddial.html.j2' %}
 {% include 'returns/api_site_editor_widget_page_edit_sidebar.html.j2' %}
 
 <div id="site_editor_widget"></div>
-
-
 
 {% include 'includes/page/page_end_minimal.html.j2' %}

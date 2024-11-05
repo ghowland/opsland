@@ -27,3 +27,39 @@
   
     </div>
 </div>
+
+
+<script>
+  var WidgetOptions = {};
+  var StartedFirst = false;
+
+  function RenderWidgetFirst() {
+    StartedFirst = true;
+    RenderWidget();
+  }
+
+  function RenderWidget() {
+    // Dont let this get called until we have the values
+    if (!StartedFirst) {
+      // RenderWidgetFirst();
+      return;
+    }
+
+    var inputs = Array.from(document.getElementsByClassName("widget_input"));
+    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
+
+    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
+
+    htmx.ajax('POST', '/api/site_editor_dynamic', {'target': '#site_editor_widget', 'values': WidgetOptions})
+    htmx.ajax('POST', '/api/site_editor_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+  }
+
+  function SetWidgetOption(name, value) {
+    WidgetOptions[name] = value;
+  }
+
+  // Render the widget after we load
+  setTimeout(RenderWidgetFirst, 250);
+</script>
+
