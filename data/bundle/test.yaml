@@ -194,6 +194,10 @@ http:
     api/site_user:
       execute: execute.api.site_user
 
+    # Site Page Data
+    api/site_page:
+      execute: execute.api.site_page
+
     modal/yes_no:
       template: returns/modal_yes_no.html.j2
 
@@ -232,7 +236,7 @@ http:
           widget_type: [widget_type]
 
         execute.api.site_page.{uri}:
-          page: []
+          site_page: []
           
     test:
       template: pages/generic_test.html.j2
