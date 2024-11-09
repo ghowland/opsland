@@ -2,7 +2,8 @@
 
 <!-- Content Sections -->
 {% for page_widget in page_widgets %}
-{% include page_widget %}
+{% set cur_data = {'type': page_widget} %}
+{% include 'component/site_editor/widget_router.html.j2' %}
 {% endfor %}
 
 <!-- Edit Mode -->

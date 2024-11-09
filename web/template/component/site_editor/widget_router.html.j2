@@ -2,7 +2,7 @@
 <!--
 <br><b>Input:</b> {{ input }}<br>
 <br><b>ID:</b> {{ widget_id }}<br>
-<br><b>Type:</b> {{ widget_type }}<br>
+<br><b>Type:</b> {{ cur_data.type}}<br>
 -->
 <!-- <br><b>Widget:</b> {{ cur_data }}<br> -->
 
@@ -26,23 +26,49 @@
 
 {% else %}
 
-  {% if cur_data.type == 'int' %}
+  {% if cur_data.type== 'int' %}
     {% include 'component/site_editor/widget_type/int.html.j2' %}
     
-  {% elif cur_data.type == 'color' %}
+  {% elif cur_data.type== 'color' %}
     {% include 'component/site_editor/widget_type/color.html.j2' %}
 
-  {% elif cur_data.type == 'color_background' %}
+  {% elif cur_data.type== 'color_background' %}
     {% include 'component/site_editor/widget_type/color.html.j2' %}
 
-  {% elif cur_data.type == 'icon' %}
+  {% elif cur_data.type== 'icon' %}
     {% include 'component/site_editor/widget_type/icon.html.j2' %}
 
-  {% elif cur_data.type == 'text' %}
+  {% elif cur_data.type== 'text' %}
     {% include 'component/site_editor/widget_type/text.html.j2' %}
 
-  {% elif cur_data.type == 'checkbox' %}
+  {% elif cur_data.type== 'checkbox' %}
     {% include 'component/site_editor/widget_type/checkbox.html.j2' %}
+
+
+  {% elif cur_data.type== 'page_header_image' %}
+    {% include 'returns/api_site_editor_widget_page_image_header.html.j2' %}
+
+  {% elif cur_data.type== 'page_header_links' %}
+    {% include 'returns/api_site_editor_widget_page_header_links.html.j2' %}
+
+  {% elif cur_data.type== 'page_image_bar' %}
+    {% include 'returns/api_site_editor_widget_page_image_bar.html.j2' %}
+
+  {% elif cur_data.type== 'page_features' %}
+    {% include 'returns/api_site_editor_widget_page_features.html.j2' %}
+
+  {% elif cur_data.type== 'page_title_separator' %}
+    {% include 'returns/api_site_editor_widget_page_title_separator.html.j2' %}
+
+  {% elif cur_data.type== 'page_article_lead' %}
+    {% include 'returns/api_site_editor_widget_page_title_article_lead.html.j2' %}
+
+  {% elif cur_data.type== 'page_cta' %}
+    {% include 'returns/api_site_editor_widget_page_cta.html.j2' %}
+
+  {% elif cur_data.type== 'page_footer_contact_links' %}
+    {% include 'returns/api_site_editor_widget_page_footer_contact_links.html.j2' %}
+
 
   {% else %}
     Unknown Type: {{cur_data.type}}
