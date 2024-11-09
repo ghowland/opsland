@@ -65,6 +65,9 @@ def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request,
 
   payload['page_nav'] = bundle['nav']
 
+  # Get the URI from this request, dont include leading slash to match our bundle config
+  payload['uri'] = request.url.path[1:]
+
   # Start trying to get the `page_group`, if it doesnt exist, get the page.  This is used to set the Nav Bar highlight so you know what section you are in
   payload['page'] = path_data.get('page_group', path_data.get('page', 'Unknown Page'))
 
