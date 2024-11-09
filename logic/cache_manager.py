@@ -71,6 +71,14 @@ class CacheManager():
         with self.lock_bundles_each[bundle_name]:
           # Set all the `summary_fields` into this bundle cache data
           self.bundles[bundle_name].update(summary_fields)
+    
+    # Load the static content
+    if 'static' in bundle_data:
+      for item_key, item_path in bundle_data['static'].items():
+        static_key = f'static.{item_key}'
+        cache_value = utility.LoadYaml(item_path)
+        LOG.info(f'Static set: {static_key}  Value: {cache_value}')
+        self.Set(bundle_name, static_key, cache_value, set_all_data=True, save=True)
 
 
   def GetBundleAndCacheInfo(self, bundle_name, name):
@@ -119,6 +127,11 @@ class CacheManager():
           prefix_cache_key = part_cache_key.split('.', 1)[0]
           if 'execute' in bundle_info and 'api' in bundle_info['execute'] and prefix_cache_key in bundle_info['execute']['api']:
             return (bundle_info['execute']['api'][prefix_cache_key], f'execute.api.{prefix_cache_key}')
+
+    # Static
+    elif part_cache_key.startswith('static.'):
+      part_cache_key = part_cache_key.replace('static.', '', 1)
+      return (bundle_info['static'][part_cache_key], cache_key)
 
     return (None, None)
 
@@ -212,8 +225,12 @@ class CacheManager():
 
 
     with self.lock_bundles_each[bundle_name]:
+      # If this is static data, just set it
+      if cache_key.startswith('static.'):
+        bundle[cache_key] = value
+        
       # If Single value storage.  This is the default if nothing is specified
-      if cache_info.get('store', 'single') == 'single':
+      elif cache_info.get('store', 'single') == 'single':
         bundle[cache_key] = value
         # LOG.debug(f'Set Cache: {cache_key}')
       

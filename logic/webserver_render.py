@@ -258,8 +258,6 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
     LOG.debug(f'Get from cache_key: {cache_key}')
 
-    # payload[payload_key] = config.cache.Get(bundle_name, cache_key)
-
     # Process each of our items
     for (payload_key, data_key_list) in payload_data.items():
       data_value = config.cache.Get(bundle_name, cache_key)
@@ -279,7 +277,7 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     if exec_result:
       payload[path_data['execute']] = exec_result
       # LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
-
+      
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
