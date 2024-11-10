@@ -44,27 +44,27 @@ auth:
           title: [title]
 
 
-# Running commands while waiting on shell commands is no good, so everything should be done in a deferred manner.  Scheduled or as a Job execution.  Same thing ultimately
-schedule:
-  period:
-    mtr:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
-      period: 15s
-      # store: single
-      store: queue
-      max: 20
+# # Running commands while waiting on shell commands is no good, so everything should be done in a deferred manner.  Scheduled or as a Job execution.  Same thing ultimately
+# schedule:
+#   period:
+#     mtr:
+#       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py go
+#       period: 15s
+#       # store: single
+#       store: queue
+#       max: 20
 
-    deep:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py deep
-      period: 15s
+#     deep:
+#       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py deep
+#       period: 15s
 
-    2x:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/input_2x.json 2x
-      period: 15s
-      input_path: /tmp/opsland/input_2x.json
-      input:
-        schedule.period.mtr:
-          mtr: [-1, mtr, -1]
+#     2x:
+#       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/input_2x.json 2x
+#       period: 15s
+#       input_path: /tmp/opsland/input_2x.json
+#       input:
+#         schedule.period.mtr:
+#           mtr: [-1, mtr, -1]
 
 
 # These commands will be executed at specific times, such as during an HTTP request
@@ -147,22 +147,22 @@ static:
   site_page.try01: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml
 
 
-# Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
-summary:
-  # Will be found in Cache with the prefix "summary.schedule.period.mtr", but with specific things being like: `summary.schedule.period.mtr.average` and then 
-  #   their summary being: `summary.schedule.period.mtr.average.max` for the max value
-  schedule.period.mtr:
-    # Final values will be coerced to float values.  Creates: min, max, last, average, mean, stddev, timeseries
-    type: float
+# # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
+# summary:
+#   # Will be found in Cache with the prefix "summary.schedule.period.mtr", but with specific things being like: `summary.schedule.period.mtr.average` and then 
+#   #   their summary being: `summary.schedule.period.mtr.average.max` for the max value
+#   schedule.period.mtr:
+#     # Final values will be coerced to float values.  Creates: min, max, last, average, mean, stddev, timeseries
+#     type: float
 
-    # If group_by exists, we will make N results.  1 per each group found, this will append an additional string, so you need to know how to reference this
-    fields:
-      hop_count: [hop_count]
-      average: [mtr_last, average]
-      last: [mtr_last, last]
-      best: [mtr_last, best]
-      worst: [mtr_last, worst]
-      loss: [mtr_last, loss]
+#     # If group_by exists, we will make N results.  1 per each group found, this will append an additional string, so you need to know how to reference this
+#     fields:
+#       hop_count: [hop_count]
+#       average: [mtr_last, average]
+#       last: [mtr_last, last]
+#       best: [mtr_last, best]
+#       worst: [mtr_last, worst]
+#       loss: [mtr_last, loss]
 
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
@@ -200,12 +200,17 @@ http:
     api/site_user:
       execute: execute.api.site_user
 
+    #TODO: Make built in easy functions for modals and stuff that render server-side and the page doesnt need to know about them at all...  Tool box full of these...  Calendar, time range, etc
+    modal/yes_no:
+      template: returns/modal_yes_no.html.j2
+
     # Site Page Data
     api/site_page:
       execute: execute.api.site_page
 
-    modal/yes_no:
-      template: returns/modal_yes_no.html.j2
+    # Site Page Re-render full page
+    api/site_page_render_full:
+      execute: execute.api.site_page_render_full
 
 
   # GET
@@ -251,14 +256,14 @@ http:
       template: pages/site_try_01.html.j2
 
       cache:
-        execute.api.site_editor_dynamic.{widget}:
+        execute.api.site_page.{uri}:
           input: [input]
-          output: [output]
-          widget_data: [widget_data]
-          widget_id: [widget_id]
-          widget_type: [widget_type]
-      
-        static.site_page.try01:
+          # output: [output]
+          # widget_data: [widget_data]
+          # widget_id: [widget_id]
+          # widget_type: [widget_type]
+
+        static.site_page.try00:
           page_widgets: [widgets]
           
 
@@ -503,8 +508,8 @@ http:
       template: pages/site_user.html.j2
 
       cache:
-        schedule.period.deep:
-          deep: []
+        # schedule.period.deep:
+        #   deep: []
         # In this way, selectors can be added right into the key to get from the cache.  This means we expect this data
         execute.api.site_user.{user}:
           user: []

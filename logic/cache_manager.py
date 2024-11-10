@@ -62,7 +62,11 @@ class CacheManager():
 
       cache_value = local_cache.GetData(path)
 
-      self.Set(bundle_name, path_key, cache_value, set_all_data=True, save=True)
+      try:
+        self.Set(bundle_name, path_key, cache_value, set_all_data=True, save=True)
+      except Exception as e:
+        # Ignore errors, because this means we dont have the configuration to match a glob, which is not a problem
+        LOG.info(f'Cache file found, but no config exists to set it to: {path_key}')
 
     # Load the Summary files
     cache_glob = bundle_data['path']['summary'].replace('{key}', '*')
@@ -155,6 +159,8 @@ class CacheManager():
       part_cache_key = part_cache_key.replace('static.', '', 1)
       if part_cache_key in bundle_info['static']:
         return (bundle_info['static'][part_cache_key], cache_key)
+      else:
+        LOG.error(f'''Couldnt find cache key in the bundle: Key: "{cache_key}"  Bundle: {bundle_info['name']}''')
 
     return (None, None)
 
@@ -232,8 +238,10 @@ class CacheManager():
     (bundle_info, cache_info, base_cache_key) = self.GetBundleAndCacheInfo(bundle_name, cache_key)
 
     # Fail if we cant get this
-    if not bundle_info or not cache_info:
-      raise Exception(f'Failed to get Bundle or Cache Info: Bundle: {bundle_info}   Cache: {cache_info}:  Cache Key: {cache_key}')
+    if not bundle_info:
+      raise Exception(f'''Failed to get Bundle Info:  Cache Key: {cache_key}  Bundle: {bundle_info}   Cache: {cache_info}''')
+    elif not cache_info:
+      raise Exception(f'''Failed to get Cache Info:  Cache Key: {cache_key}  Bundle: {bundle_info['name']}   Cache: {cache_info}''')
 
 
     # If the cache_data has a `unique_key`

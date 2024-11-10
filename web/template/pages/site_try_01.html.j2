@@ -1,16 +1,15 @@
 {% include 'includes/page/page_start_minimal.html.j2' %}
 
 <!-- Content Sections -->
-{% for page_widget in page_widgets %}
-{% set cur_data = {'type': page_widget} %}
-{% include 'component/site_editor/widget_router.html.j2' %}
-{% endfor %}
+<div id="site_page_full">
+  {% include 'component/site_page_full.html.j2' %}
+</div>
 
 <!-- Edit Mode -->
 {% include 'returns/api_site_editor_widget_page_edit_speeddial.html.j2' %}
 {% include 'returns/api_site_page_edit_sidebar.html.j2' %}
 
-{{site_page}}
+{{uri}}
 
 <div id="site_editor_widget"></div>
 
