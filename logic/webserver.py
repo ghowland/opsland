@@ -151,9 +151,9 @@ async def Web_GET(request: Request, full_path: str):
   data = dict(request.query_params._dict)
   headers = dict(request.headers)
 
-  # LOG.debug(f'GET: {full_path}  Args: {data}')#  Headers: {headers}')
+  LOG.debug(f'GET: {full_path}  Args: {data}')#  Headers: {headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_headers=headers, request_data=data)
+  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, request_headers=headers, request_data=data)
 
 
 # POST
@@ -168,7 +168,7 @@ async def Web_POST(request: Request, full_path: str):
 
   # LOG.debug(f'POST: {full_path}  Data: {request_data}')#  Headers: {request_headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, bundle_name, bundle, path_data, request_data=request_data, request_headers=request_headers)
+  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, request_data=request_data, request_headers=request_headers)
 
 
 # PUT

@@ -77,6 +77,10 @@ def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_d
     #TODO(geoff): What authenticated user changed this record?
     pass
 
+  # Convert any forward slashes to dots, so we dont create new directories
+  set_cache_key = set_cache_key.replace('/', '.')
+
+  # Set the cache
   config.cache.Set(bundle_name, set_cache_key, payload)
 
   # # Remove the temp file

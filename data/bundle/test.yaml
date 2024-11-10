@@ -270,15 +270,22 @@ http:
       template: pages/site_try_01.html.j2
 
       cache:
+        # Each page gets it's own set of data
         execute.api.site_page.{uri}:
-          input: [input]
-          # output: [output]
-          # widget_data: [widget_data]
-          # widget_id: [widget_id]
-          # widget_type: [widget_type]
+          # List of our widget_ids (UUID)
+          widgets: [widgets]
 
-        # static.site_page.try00:
-        #   page_widgets: [widgets]
+          # All the widget output as data, ready for Final Templating as one flat dict pool
+          widget_output: [widget_output]
+
+          # widget_id (UUID) of single widget we will be editing in edit_widget_spec
+          edit_widget: [edit_widget]
+
+          # Single set of data for Edit Templating as a single widget
+          edit_widget_spec: [edit_widget_spec]
+
+          # All the data we use as individeal inputs, needed to populate values of the edit_widget_spec
+          widget_input: [widget_input]
           
 
     test:

@@ -239,7 +239,7 @@ def GetAuthSession(request, config, bundle_name, bundle, headers):
   return session
 
 
-def RenderPathData(request, config, bundle_name, bundle, path_data, request_headers=None, request_data=None):
+def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request_headers=None, request_data=None):
   """Render the Path Data"""
   # Our starting payload
   payload = {'request': {}, 'header': {}, 'session': {}}
@@ -249,7 +249,13 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
     payload['session'] = GetAuthSession(request, config, bundle_name, bundle, request_headers)
 
   # If we have request args, assign them into the payload
-  if request_data: payload['request'] = request_data
+  if request_data:
+    payload['request'] = request_data
+    request_data['uri'] = uri
+  else:
+    # Set the URI
+    request_data = {'uri': uri}
+  
   # if request_headers: payload['header'] = request_headers
 
   # Put any cache into our payload
