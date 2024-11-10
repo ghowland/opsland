@@ -62,7 +62,13 @@ def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_d
   else:
     LOG.debug(f'Status: {status}  Error: {error}')
 
-  payload = json.loads(output)
+  # If we got any output, parse it
+  if output:
+    payload = json.loads(output)
+  # Else, we didnt, so just give an empty string
+  else:
+    LOG.info(f'No output available.  Returning empty string: {output}  Command: {command_unique}')
+    payload = {}
 
   if type(payload) == dict:
     # All records get the time recorded.  We dont track creation time here, make a custom field if you want that.  But all records get a time field, as that is useful for many reasons

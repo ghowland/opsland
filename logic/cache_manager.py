@@ -100,8 +100,9 @@ class CacheManager():
       mtime = utility.GetPathModifiedTime(static_data['path'])
       if mtime and mtime > static_data['time'] and mtime + STATIC_MTIME_DELAY < time.time():
         cache_value = utility.LoadYaml(static_data['path'])
-        LOG.info(f'Static set: {static_key}  Value: {cache_value}')
         self.Set(static_data['bundle_name'], static_key, cache_value, set_all_data=True, save=True)
+
+        # LOG.info(f'Static set: {static_key}  Value: {cache_value}')
 
         # Update the time we last cached to the mtime, so we dont keep recaching
         static_data['time'] = mtime

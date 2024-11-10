@@ -140,6 +140,20 @@ execute:
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
 
+    # Edits a single widget or gives command (add/remove child) for a selected widget, or add/removes a widget or changes it's order
+    site_page_edit:
+      #TODO(geoff): Need to pass it as STDIN, or make totally unique files
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_page_edit_{uuid}.json site_page_edit
+      # dir: ~/work/opsland-example/
+      input_path: /tmp/opsland/site_page_edit_{uuid}.json
+      input:
+        # Pass through our request data
+        request:
+          record_id: [uri]
+
+      # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
+      unique_key: "{uri}"
+
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
@@ -205,12 +219,12 @@ http:
       template: returns/modal_yes_no.html.j2
 
     # Site Page Data
-    api/site_page:
-      execute: execute.api.site_page
+    api/site_page_sidebar:
+      execute: execute.api.site_page_edit
 
     # Site Page Re-render full page
     api/site_page_render_full:
-      execute: execute.api.site_page_render_full
+      execute: execute.api.site_page
 
 
   # GET
@@ -263,8 +277,8 @@ http:
           # widget_id: [widget_id]
           # widget_type: [widget_type]
 
-        static.site_page.try00:
-          page_widgets: [widgets]
+        # static.site_page.try00:
+        #   page_widgets: [widgets]
           
 
     test:
