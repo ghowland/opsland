@@ -10,7 +10,6 @@ from logic.log import LOG
 
 from logic import thread_base
 from logic import utility
-from logic import thread_manager
 
 
 class BundleManager(thread_base.ThreadBase):
