@@ -1,8 +1,9 @@
 {% include 'includes/page/page_start_minimal.html.j2' %}
 
-{% set input = edit_widget_spec %}
+{% set input = site_page.widget_output %}
+{% set output = site_page.widget_output %}
 
-{{input}}
+{{site_page}}
 
 <!-- Content Sections -->
 <div id="site_page_full">
@@ -12,9 +13,5 @@
 <!-- Edit Mode -->
 {% include 'returns/api_site_editor_widget_page_edit_speeddial.html.j2' %}
 {% include 'returns/api_site_page_edit_sidebar.html.j2' %}
-
-{{uri}}
-
-<div id="site_editor_widget"></div>
 
 {% include 'includes/page/page_end_minimal.html.j2' %}

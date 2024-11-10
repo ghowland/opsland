@@ -267,7 +267,14 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
     # Process each of our items
     for (payload_key, data_key_list) in payload_data.items():
       data_value = config.cache.Get(bundle_name, cache_key)
-      payload[payload_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
+
+      # If we have a key_list, dive down it and extract our data
+      if data_key_list:
+        payload[payload_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
+      # Else, no keys to traverse, so take all the data
+      else:
+        LOG.info(f'Setting full key: {payload_key}')
+        payload[payload_key] = data_value
 
     
       # If this doesnt exist, try to get it directly

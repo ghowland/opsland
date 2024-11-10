@@ -272,6 +272,8 @@ http:
       cache:
         # Each page gets it's own set of data
         execute.api.site_page.{uri}:
+          site_page: []
+
           # List of our widget_ids (UUID)
           widgets: [widgets]
 

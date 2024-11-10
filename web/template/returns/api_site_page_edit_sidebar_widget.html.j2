@@ -4,7 +4,8 @@
 
 
   <!-- Widget Router: Will render all of the widget data elements recursively -->
-  {% for cur_data in widget_data %}
-  {% include 'component/site_editor/widget_router.html.j2' %}
+  {% for cur_data in edit_widget_spec %}
+    {% set widget_id = edit_widget %}
+    {% include 'component/site_editor/widget_router.html.j2' %}
   {% endfor %}
 

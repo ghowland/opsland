@@ -1,5 +1,5 @@
-{% set wdata = execute_api_site_editor_dynamic.output %}
-{% set wid = execute_api_site_editor_dynamic.widget_id %}
+{% set wdata = input %}
+{% set wid = cur_widget_id %}
 
 <div class="max-w-sm p-6 border border-gray-200 shadow {{wdata[wid+'.color_background']}} {{wdata[wid+'.width']}} {{wdata[wid+'.height']}} {{wdata[wid+'.rounded']}}">
   <a href="#">
