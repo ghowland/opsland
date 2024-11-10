@@ -9,6 +9,7 @@ This can be backed with DBs or other persistent storage (file system), or run ju
 import threading
 import statistics
 import re
+import time
 
 from logic.log import LOG
 
@@ -19,6 +20,9 @@ from logic import local_cache
 
 # Default max queue size
 DEFAULT_MAX_QUEUE_SIZE = 1000
+
+# Wait before we reload a file to avoid "tearing" if it is being saved as we are reloading it
+STATIC_MTIME_DELAY = 1
 
 
 class CacheManager():
@@ -81,16 +85,16 @@ class CacheManager():
         static_key = f'static.{item_key}'
         self.static_imports[static_key] = {'path': item_path, 'time': 0, 'bundle_name': bundle_name}
     
-    # Load our static imports
+    # Load our static imports.  We also call this regularly from bundle_manger.ExecuteTask
     self.LoadStaticImports()
 
 
   def LoadStaticImports(self):
     """Load all our static imports, tests for mtime, so it wont reload them if not needed"""
     for static_key, static_data in self.static_imports.items():
-      # Load this file if it's newer than the previous mtime we loaded
+      # Load this file if it's newer than the previous mtime we loaded, and also wait a delay from current time.time() to avoid "tearing" on recent saves
       mtime = utility.GetPathModifiedTime(static_data['path'])
-      if mtime and mtime > static_data['time']:
+      if mtime and mtime > static_data['time'] and mtime + STATIC_MTIME_DELAY < time.time():
         cache_value = utility.LoadYaml(static_data['path'])
         LOG.info(f'Static set: {static_key}  Value: {cache_value}')
         self.Set(static_data['bundle_name'], static_key, cache_value, set_all_data=True, save=True)
