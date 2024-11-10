@@ -268,8 +268,6 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
       if payload[payload_key] == None:
         LOG.error(f'Couldnt find cache key: Bundle: {bundle_name}  Key: {cache_key}')
 
-  # import pprint
-  # pprint.pprint(payload, indent=2)
 
   # Check if we want to execute a command directly (API)
   if 'execute' in path_data:
@@ -278,6 +276,9 @@ def RenderPathData(request, config, bundle_name, bundle, path_data, request_head
       payload[path_data['execute']] = exec_result
       # LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
       
+
+  import pprint
+  pprint.pprint(payload, indent=2)
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:

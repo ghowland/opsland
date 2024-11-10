@@ -54,7 +54,7 @@ class BundleManager(thread_base.ThreadBase):
       
       # If this file is newer, try to reload it
       if stat_result.st_ctime > self.timestamps[bundle_path]:
-        self.LoadBundle(bundle_path)
+        self.LoadBundle(bundle_path, load_cache=True)
       
       # Load any new static content
       self._config.cache.LoadStaticImports()

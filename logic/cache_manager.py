@@ -99,6 +99,9 @@ class CacheManager():
         LOG.info(f'Static set: {static_key}  Value: {cache_value}')
         self.Set(static_data['bundle_name'], static_key, cache_value, set_all_data=True, save=True)
 
+        # Update the time we last cached to the mtime, so we dont keep recaching
+        static_data['time'] = mtime
+
 
   def GetBundleAndCacheInfo(self, bundle_name, name):
     """Returns a tuple of (bundle_info, cache_info)"""
@@ -150,7 +153,8 @@ class CacheManager():
     # Static
     elif part_cache_key.startswith('static.'):
       part_cache_key = part_cache_key.replace('static.', '', 1)
-      return (bundle_info['static'][part_cache_key], cache_key)
+      if part_cache_key in bundle_info['static']:
+        return (bundle_info['static'][part_cache_key], cache_key)
 
     return (None, None)
 

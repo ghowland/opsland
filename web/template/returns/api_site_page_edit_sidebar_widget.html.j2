@@ -1,0 +1,10 @@
+
+  <!-- Widget Type: Select -->
+  {% include 'component/site_editor/widget_type_select.html.j2' %}
+
+
+  <!-- Widget Router: Will render all of the widget data elements recursively -->
+  {% for cur_data in widget_data %}
+  {% include 'component/site_editor/widget_router.html.j2' %}
+  {% endfor %}
+

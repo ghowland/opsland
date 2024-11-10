@@ -144,6 +144,7 @@ execute:
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
   site_page.try00: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml
+  site_page.try01: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml
 
 
 # Every time we write data, we have the opportunity to summarize data that is not single (ex: queue)
@@ -188,7 +189,7 @@ http:
       execute: execute.api.site_editor_dynamic
       
       cache:
-        execute.api.site_editor_dynamic.{widget_id}:
+        execute.api.site_page.{uri}:
           input: [input]
           output: [output]
           widget_data: [widget_data]
@@ -245,7 +246,22 @@ http:
       
         static.site_page.try00:
           page_widgets: [widgets]
+
+    try01:
+      template: pages/site_try_01.html.j2
+
+      cache:
+        execute.api.site_editor_dynamic.{widget}:
+          input: [input]
+          output: [output]
+          widget_data: [widget_data]
+          widget_id: [widget_id]
+          widget_type: [widget_type]
+      
+        static.site_page.try01:
+          page_widgets: [widgets]
           
+
     test:
       template: pages/generic_test.html.j2
 
