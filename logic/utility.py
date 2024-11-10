@@ -41,6 +41,15 @@ def ExecuteCommand(execute_script, input='', debug=False, set_cwd=None):
   return (status, output, error)
 
 
+def GetPathModifiedTime(path):
+  """Gets the mtime for a path, or None if the file doesnt exist"""
+  if os.path.isfile(path):
+    stat = os.stat(path)
+    return stat.st_mtime
+  else:
+    return None
+
+
 def Glob(glob_path):
   path = os.path.expanduser(glob_path)
 

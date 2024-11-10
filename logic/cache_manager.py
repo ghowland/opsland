@@ -37,6 +37,9 @@ class CacheManager():
     # Every bundles cache is a Silo, and we need locks for all of them
     self.lock_bundles_each = {}
 
+    # Keep a list of our static imports, so we can check them for reloads
+    self.static_imports = {}
+
 
   def LoadInitialBundleCache(self, bundle_name, bundles):
     """As we load bundles for the first time, load any cached data they had as well"""
@@ -76,9 +79,21 @@ class CacheManager():
     if 'static' in bundle_data:
       for item_key, item_path in bundle_data['static'].items():
         static_key = f'static.{item_key}'
-        cache_value = utility.LoadYaml(item_path)
+        self.static_imports[static_key] = {'path': item_path, 'time': 0, 'bundle_name': bundle_name}
+    
+    # Load our static imports
+    self.LoadStaticImports()
+
+
+  def LoadStaticImports(self):
+    """Load all our static imports, tests for mtime, so it wont reload them if not needed"""
+    for static_key, static_data in self.static_imports.items():
+      # Load this file if it's newer than the previous mtime we loaded
+      mtime = utility.GetPathModifiedTime(static_data['path'])
+      if mtime and mtime > static_data['time']:
+        cache_value = utility.LoadYaml(static_data['path'])
         LOG.info(f'Static set: {static_key}  Value: {cache_value}')
-        self.Set(bundle_name, static_key, cache_value, set_all_data=True, save=True)
+        self.Set(static_data['bundle_name'], static_key, cache_value, set_all_data=True, save=True)
 
 
   def GetBundleAndCacheInfo(self, bundle_name, name):
