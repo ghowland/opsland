@@ -76,34 +76,37 @@
     }
 
     // Set a command
-    if (command != undefined) WidgetOptions['__command'] = command
-    else WidgetOptions['__command'] = 'none'
+    if (command != undefined) SetWidgetOption('__command', command)
+    else SetWidgetOption('__command', 'none')
 
+    // Scrape before our API request
+    ScrapeData()
+
+    // Rerender the sidebar first, because we need to load new data for editing, or we get duplicated values as we switch
+    htmx.ajax('POST', '/api/site_page_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+
+    // Have to scrape it again, because we just updated it
+    ScrapeData()
+
+    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+    SetWidgetOption('__command', 'none')
+    htmx.ajax('POST', '/api/site_page_render_full', {'target': '#site_page_full', 'values': WidgetOptions})
+  }
+
+  function ScrapeData()
+  {
+    // Get all the inputs and checkboxes
     var inputs = Array.from(document.getElementsByClassName("widget_input"));
     inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
 
     var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
     checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
-
-    htmx.ajax('POST', '/api/site_page_render_full', {'target': '#site_page_full', 'values': WidgetOptions})
-    htmx.ajax('POST', '/api/site_page_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
-    // htmx.ajax('POST', '/api/site_page_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions}).then(() => {
-    //   alert('Got some!');
-    // })
   }
 
   function SetWidgetOption(name, value) {
     WidgetOptions[name] = value;
   }
 
-  // function HandleEditWidgetResponse(val)
-  // {
-  //   // alert('Response handled: ' + val.innerHTML);
-  //   // var el = document.getElementById('widget_editor_dynamic')
-  //   // el.innerHTML = val.innerHTML;
-  // }
-
   // Render the widget after we load
   setTimeout(RenderWidgetFirst, 250);
 </script>
-
