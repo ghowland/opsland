@@ -4,6 +4,7 @@ Render the Webserver Requests: Keep rendering and serving logic separated for re
 
 
 import json
+import pprint
 
 from fastapi import Response
 from fastapi.responses import HTMLResponse
@@ -262,7 +263,7 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
   for (cache_key, payload_data) in path_data.get('cache', {}).items():
     # Format the cache key with the data
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
-    LOG.debug(f'Get from cache_key: {cache_key}')
+    # LOG.debug(f'Get from cache_key: {cache_key}')
 
     # Process each of our items
     for (payload_key, data_key_list) in payload_data.items():
@@ -273,7 +274,7 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
         payload[payload_key] = utility.GetDataByDictKeyList(data_value, data_key_list)
       # Else, no keys to traverse, so take all the data
       else:
-        LOG.info(f'Setting full key: {payload_key}')
+        # LOG.info(f'Setting full key: {payload_key}')
         payload[payload_key] = data_value
 
     
@@ -290,8 +291,7 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
       # LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
       
 
-  import pprint
-  pprint.pprint(payload, indent=2)
+  print(f'''Payload: {pprint.pformat(payload, indent=2)}''')
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
@@ -302,6 +302,9 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
     payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
 
     payload = EnsureBaseDotToUnderscore(payload)
+
+    # Put all of payload into payload, because Jinja doesnt have a better way to insect all the vars
+    payload['_context'] = payload
 
     return webserver.TEMPLATES.TemplateResponse(name=template, context=payload, request=request)
 

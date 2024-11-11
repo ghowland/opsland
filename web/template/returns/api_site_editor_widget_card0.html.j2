@@ -1,4 +1,4 @@
-{% set wdata = input %}
+{% set wdata = site_page.widget_output %}
 {% set wid = cur_widget_id %}
 
 <div class="max-w-sm p-6 border border-gray-200 shadow {{wdata[wid+'.color_background']}} {{wdata[wid+'.width']}} {{wdata[wid+'.height']}} {{wdata[wid+'.rounded']}}">

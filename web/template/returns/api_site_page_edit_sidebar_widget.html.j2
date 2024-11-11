@@ -1,4 +1,11 @@
 
+{% if not site_page %}
+  {% set site_page = _context['execute.api.site_page'] %}
+  Not site page
+{% else%}
+  Got some!
+{% endif %}
+
   <!-- Widget Type: Select -->
   {% include 'component/site_editor/widget_type_select.html.j2' %}
 
@@ -9,3 +16,5 @@
     {% include 'component/site_editor/widget_router.html.j2' %}
   {% endfor %}
 
+{{site_page}}
+{{_context}}

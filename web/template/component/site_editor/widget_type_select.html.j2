@@ -1,3 +1,10 @@
+{% if not site_page %}
+  {% set site_page = _context['execute.api.site_page'] %}
+{% endif %}
+
+{% set input = site_page.widget_output %}
+
+
 <!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
 <form class="max-w-sm mx-auto">
   <label for="widget_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Widget Type</label>
@@ -22,3 +29,4 @@
     <option value="page_footer_contact_links" {% if input.widget_type == 'page_footer_contact_links' %}selected{% endif %}>Page Footer Contact Links</option>
   </select>
 </form>
+
