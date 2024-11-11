@@ -30,12 +30,19 @@ def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_d
       # If we have formatting in our cache key
       before_cache_key = cache_key
       cache_key = utility.FormatTextFromDictDeep(cache_key, input_data)
-      # LOG.info(f'Cache Key format: Before {before_cache_key}  After: {cache_key}')
 
       cache_value = config.cache.Get(bundle_name, cache_key)
 
+      LOG.info(f'''Cache Key format: Before {before_cache_key}  After: {cache_key}  Value: {cache_value}  Input: {command['input']}  Output Spec: {output_spec}  Input Data: {input_data}''')
+
       for spec_key, field_list in output_spec.items():
-        input_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
+        # If we got valid cache data
+        if cache_value != None:
+          LOG.info(f'Get Spec Key: {spec_key}  Field List: {field_list}')
+          input_data[spec_key] = utility.GetDataByDictKeyList(cache_value, field_list)
+        else:
+          LOG.error(f'Failed to Get Spec Key: {spec_key}  Field List: {field_list}  -- Setting to None')
+          input_data[spec_key] = None
     
     command_input_path = command['input_path'].replace('{uuid}', uuid)
     utility.SaveJson(command_input_path, input_data)

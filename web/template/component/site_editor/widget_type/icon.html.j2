@@ -1,10 +1,11 @@
-{% set input = site_page.widget_output %}
+{% set widget_id = site_page.edit_widget %}
+{% set input = site_page.widget_input %}
 {% set output = site_page.widget_output %}
 
 <!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
 <form class="max-w-sm mx-auto">
-  <label for="{{widget_id}}.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Icon</label>
-  <select id="{{widget_id}}.{{cur_data.key_full}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <label for="__edit.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Icon</label>
+  <select id="__edit.{{cur_data.key_full}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
     <option value="user" {% if output[widget_id + '.' + cur_data.key_full] == 'user' %}selected{% endif %}>User</option>
     <option value="profile-card" {% if output[widget_id + '.' + cur_data.key_full] == 'profile-card' %}selected{% endif %}>Profile Card</option>
     <option value="address-book" {% if output[widget_id + '.' + cur_data.key_full] == 'address-book' %}selected{% endif %}>Address Book</option>

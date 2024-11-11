@@ -360,7 +360,7 @@ def GetDataByDictKeyList(source_data, key_list=None, missing_value=None):
     return source_data[key_list]
   
   if type(key_list) in (list, tuple, dict):
-    try:
+    # try:
       cur_data = source_data
       for key in key_list:
         # LOG.debug(f'Cur Key: {key}  Data: {cur_data}')
@@ -368,9 +368,9 @@ def GetDataByDictKeyList(source_data, key_list=None, missing_value=None):
       
       return cur_data
     
-    except Exception as e:
-      LOG.error(f'Failed to traverse key list: {key_list} in source_data: {source_data}  Failure: {e}')
-      return missing_value
+    # except Exception as e:
+    #   LOG.error(f'Failed to traverse key list: {key_list} in source_data: {source_data}  Failure: {e}')
+    #   return missing_value
   
   else:
     LOG.error(f'Couldnt find key_list: {key_list} in source_data: {source_data}')
