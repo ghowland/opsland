@@ -1,11 +1,14 @@
+{% set wdata = site_page.widget_output %}
+{% set wid = cur_widget_id %}
+
 <section class="bg-gray-200 ">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
       <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-            First Person Sword and Shield
+          <h2 class="mb-4 {{wdata[wid+'.title.color_text']}} {{wdata[wid+'.title.bold']}} {{wdata[wid+'.title.option_uppercase']}} {{wdata[wid+'.title.text_size']}}">
+            {{wdata[wid+'.title.text']}}
           </h2>
-          <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
-            A dedicated melee action game
+          <p class="mb-16 {{wdata[wid+'.subtitle.color_text']}} {{wdata[wid+'.subtitle.bold']}} {{wdata[wid+'.subtitle.option_uppercase']}} {{wdata[wid+'.subtitle.text_size']}}">
+            {{wdata[wid+'.subtitle.text']}}
           </p>
       </div> 
   </div>
