@@ -211,6 +211,7 @@ http:
 
     # Site Page Re-render full page
     api/site_page_render_full:
+      template: component/site_page_full.html.j2
       execute: execute.api.site_page
 
 

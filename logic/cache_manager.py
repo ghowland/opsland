@@ -10,6 +10,7 @@ import threading
 import statistics
 import re
 import time
+import pprint
 
 from logic.log import LOG
 
@@ -253,7 +254,7 @@ class CacheManager():
         # Suffix the unique key to the cache_key
         cache_key = f'''{cache_key}.{unique_key}'''
       else:
-        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Unique Key: {unique_key}  Cache Info: {cache_info}  Value: {value}''')
+        raise Exception(f'''Unique Key didnt format properly, failing: {bundle_name}  Key: {cache_key}  Unique Key: {unique_key}\nCache Info: {pprint.pformat(cache_info)}\nValue: {pprint.pformat(value)}''')
 
 
     with self.lock_bundles_each[bundle_name]:
