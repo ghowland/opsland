@@ -1,18 +1,13 @@
 
-<!--
-<br><b>Input:</b> {{ input }}<br>
-<br><b>ID:</b> {{ widget_id }}<br>
-<br><b>Type:</b> {{ cur_data.widget_type}}<br>
--->
 <!-- <br><b>Widget:</b> {{ cur_data }}<br> -->
-
+{% if cur_data %}
 {% if cur_data.import_data %}
 
   <h3 class="text-xl text-gray-900 mt-3">{{ cur_data.label }}</h3>
 
   {% set top_data = cur_data %}
   {% for cur_data in cur_data.import_data %}
-    {% include 'component/site_editor/widget_router.html.j2' %}
+    {% include 'component/site_editor/widget_router_full.html.j2' %}
   {% endfor %}
   {% set cur_data = top_data %}
 
@@ -77,4 +72,5 @@
     Unknown Type: {{cur_data.widget_type}}
   {% endif %}
 
+{% endif %}
 {% endif %}
