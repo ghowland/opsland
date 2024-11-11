@@ -1,0 +1,16 @@
+{% if not site_page %}
+  {% set site_page = _context['execute.api.site_page'] %}
+{% endif %}
+
+{% set input = site_page.input %}
+
+<!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
+<form class="max-w-sm mx-auto">
+  <label for="__edit.widget_selected" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edit Widget</label>
+  <select id="__edit.widget_selected" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    {% for widget in site_page.widgets %}
+      <option value="{{widget}}" {% if input['__edit.widget_selected'] == '{{widget}}' %}selected{% endif %}>{{widget}}</option>
+    {% endfor %}
+  </select>
+</form>
+
