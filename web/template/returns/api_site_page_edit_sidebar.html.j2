@@ -52,7 +52,7 @@
     checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
 
     htmx.ajax('POST', '/api/site_page_render_full', {'target': '#site_page_full', 'values': WidgetOptions})
-    htmx.ajax('POST', '/api/site_page_sidebar', {'handler': HandleEditWidgetResponse, 'values': WidgetOptions, 'target': '#widget_editor_dynamic'})
+    // htmx.ajax('POST', '/api/site_page_sidebar', {'handler': HandleEditWidgetResponse, 'values': WidgetOptions, 'target': '#widget_editor_dynamic'})
     // htmx.ajax('POST', '/api/site_page_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions}).then(() => {
     //   alert('Got some!');
     // })
