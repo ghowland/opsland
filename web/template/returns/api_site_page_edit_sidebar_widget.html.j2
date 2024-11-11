@@ -1,20 +1,18 @@
-
 {% if not site_page %}
   {% set site_page = _context['execute.api.site_page'] %}
-  Not site page
+  {% set edit_widget_spec = site_page.edit_widget_spec %}
 {% else%}
-  Got some!
 {% endif %}
 
-  <!-- Widget Type: Select -->
-  {% include 'component/site_editor/widget_type_select.html.j2' %}
+
+<!-- Widget Type: Select -->
+{% include 'component/site_editor/widget_type_select.html.j2' %}
 
 
-  <!-- Widget Router: Will render all of the widget data elements recursively -->
-  {% for cur_data in edit_widget_spec %}
-    {% set widget_id = edit_widget %}
-    {% include 'component/site_editor/widget_router.html.j2' %}
-  {% endfor %}
+<!-- Widget Router: Will render all of the widget data elements recursively -->
+{% for cur_data in edit_widget_spec %}
+  {% set widget_id = edit_widget %}
+  {% include 'component/site_editor/widget_router.html.j2' %}
+{% endfor %}
 
 {{site_page}}
-{{_context}}

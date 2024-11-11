@@ -206,7 +206,7 @@ http:
 
     # Site Page Data
     api/site_page_sidebar:
-      template: returns/api_site_sidebar_edit_widget.html.j2
+      template: returns/api_site_page_edit_sidebar_widget.html.j2
       execute: execute.api.site_page
 
     # Site Page Re-render full page
