@@ -1,4 +1,4 @@
 {% for cur_widget_id in site_page.widgets %}
-  {% set cur_data = site_page.widget_input[cur_widget_id] %}
+  {% set cur_widget_type = site_page.widget_input[cur_widget_id + '.widget_type'] %}
   {% include 'component/site_editor/widget_router_full.html.j2' %}
 {% endfor %}  
