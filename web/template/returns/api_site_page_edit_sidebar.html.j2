@@ -10,13 +10,13 @@
    </button>
 
 
-    <p class="p-4">
+    <!-- <p class="p-4">
       Widget: {{ request.widget }}
-    </p>
+    </p> -->
   
-    <button type="button" onclick="RenderWidget()" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+    <!-- <button type="button" onclick="RenderWidget()" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
       Render Widget
-    </button>
+    </button> -->
     
     <!-- Hidden ID Value -->  
     <input id="widget_id" type="hidden" value="{{ request.widget }}" class="widget_input hidden">
@@ -62,12 +62,12 @@
     WidgetOptions[name] = value;
   }
 
-  function HandleEditWidgetResponse(val)
-  {
-    // alert('Response handled: ' + val.innerHTML);
-    // var el = document.getElementById('widget_editor_dynamic')
-    // el.innerHTML = val.innerHTML;
-  }
+  // function HandleEditWidgetResponse(val)
+  // {
+  //   // alert('Response handled: ' + val.innerHTML);
+  //   // var el = document.getElementById('widget_editor_dynamic')
+  //   // el.innerHTML = val.innerHTML;
+  // }
 
   // Render the widget after we load
   setTimeout(RenderWidgetFirst, 250);

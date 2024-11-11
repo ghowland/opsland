@@ -137,6 +137,9 @@ execute:
         request:
           record_id: [uri]
 
+        execute.api.site_page.{request.site_page_uri}:
+          stored: []
+
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
 

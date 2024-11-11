@@ -289,9 +289,9 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
     if exec_result:
       payload[path_data['execute']] = exec_result
       # LOG.info(f'''Execute Stored Command: {path_data['execute']}  Result: {exec_result}''')
-      
-
-  print(f'''Payload: {pprint.pformat(payload, indent=2)}''')
+  
+  
+  LOG.debug(f'''Payload: {pprint.pformat(payload, indent=2)}''')
 
   # If we have a template, then run it through Jinja
   if 'template' in path_data:
