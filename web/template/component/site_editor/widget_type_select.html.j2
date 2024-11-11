@@ -2,31 +2,30 @@
   {% set site_page = _context['execute.api.site_page'] %}
 {% endif %}
 
-{% set input = site_page.widget_output %}
-
+{% set input = site_page.input %}
 
 <!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
 <form class="max-w-sm mx-auto">
-  <label for="widget_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Widget Type</label>
-  <select id="widget_type" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <option value="card0" {% if input.widget_type == 'card0' %}selected{% endif %}>Card</option>
-    <option value="table0" {% if input.widget_type == 'table0' %}selected{% endif %}>Table</option>
-    <option value="hero0" {% if input.widget_type == 'hero0' %}selected{% endif %}>Hero 0</option>
-    <option value="hero1" {% if input.widget_type == 'hero1' %}selected{% endif %}>Hero 1</option>
-    <option value="hero2" {% if input.widget_type == 'hero2' %}selected{% endif %}>Hero 2</option>
-    <option value="slideshow0" {% if input.widget_type == 'slideshow0' %}selected{% endif %}>Slideshow</option>
-    <option value="team0" {% if input.widget_type == 'team0' %}selected{% endif %}>Team Squares</option>
-    <option value="cta0" {% if input.widget_type == 'cta0' %}selected{% endif %}>CTA Links</option>
-    <option value="category0" {% if input.widget_type == 'category0' %}selected{% endif %}>Category Links</option>
+  <label for="__edit.widget_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Widget Type</label>
+  <select id="__edit.widget_type" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="card0" {% if input['__edit.widget_type'] == 'card0' %}selected{% endif %}>Card</option>
+    <option value="table0" {% if input['__edit.widget_type'] == 'table0' %}selected{% endif %}>Table</option>
+    <option value="hero0" {% if input['__edit.widget_type'] == 'hero0' %}selected{% endif %}>Hero 0</option>
+    <option value="hero1" {% if input['__edit.widget_type'] == 'hero1' %}selected{% endif %}>Hero 1</option>
+    <option value="hero2" {% if input['__edit.widget_type'] == 'hero2' %}selected{% endif %}>Hero 2</option>
+    <option value="slideshow0" {% if input['__edit.widget_type'] == 'slideshow0' %}selected{% endif %}>Slideshow</option>
+    <option value="team0" {% if input['__edit.widget_type'] == 'team0' %}selected{% endif %}>Team Squares</option>
+    <option value="cta0" {% if input['__edit.widget_type'] == 'cta0' %}selected{% endif %}>CTA Links</option>
+    <option value="category0" {% if input['__edit.widget_type'] == 'category0' %}selected{% endif %}>Category Links</option>
 
-    <option value="page_header_image" {% if input.widget_type == 'page_header_image' %}selected{% endif %}>Page Header Image</option>
-    <option value="page_header_links" {% if input.widget_type == 'page_header_links' %}selected{% endif %}>Page Header Links</option>
-    <option value="page_image_bar" {% if input.widget_type == 'page_image_bar' %}selected{% endif %}>Page Image Bar</option>
-    <option value="page_features" {% if input.widget_type == 'page_features' %}selected{% endif %}>Page Features</option>
-    <option value="page_title_separator" {% if input.widget_type == 'page_title_separator' %}selected{% endif %}>Page Title Separator</option>
-    <option value="page_article_lead" {% if input.widget_type == 'page_article_lead' %}selected{% endif %}>Page Article Lead</option>
-    <option value="page_cta" {% if input.widget_type == 'page_cta' %}selected{% endif %}>Page CTA</option>
-    <option value="page_footer_contact_links" {% if input.widget_type == 'page_footer_contact_links' %}selected{% endif %}>Page Footer Contact Links</option>
+    <option value="page_header_image" {% if input['__edit.widget_type'] == 'page_header_image' %}selected{% endif %}>Page Header Image</option>
+    <option value="page_header_links" {% if input['__edit.widget_type'] == 'page_header_links' %}selected{% endif %}>Page Header Links</option>
+    <option value="page_image_bar" {% if input['__edit.widget_type'] == 'page_image_bar' %}selected{% endif %}>Page Image Bar</option>
+    <option value="page_features" {% if input['__edit.widget_type'] == 'page_features' %}selected{% endif %}>Page Features</option>
+    <option value="page_title_separator" {% if input['__edit.widget_type'] == 'page_title_separator' %}selected{% endif %}>Page Title Separator</option>
+    <option value="page_article_lead" {% if input['__edit.widget_type'] == 'page_article_lead' %}selected{% endif %}>Page Article Lead</option>
+    <option value="page_cta" {% if input['__edit.widget_type'] == 'page_cta' %}selected{% endif %}>Page CTA</option>
+    <option value="page_footer_contact_links" {% if input['__edit.widget_type'] == 'page_footer_contact_links' %}selected{% endif %}>Page Footer Contact Links</option>
   </select>
 </form>
 
