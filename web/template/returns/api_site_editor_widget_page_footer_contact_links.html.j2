@@ -1,6 +1,7 @@
+{% set wdata = site_page.widget_output %}
+{% set wid = cur_widget_id %}
 
-
-<footer class="bg-white antialiased dark:bg-gray-800">
+<footer class="antialiased {{wdata[wid+'.color_background']}}">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <div class="border-b border-gray-100 py-6 dark:border-gray-700 sm:py-16 md:py-8">
       <div class="grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2 md:gap-y-8 lg:grid-cols-4">

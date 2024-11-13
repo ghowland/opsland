@@ -1,7 +1,7 @@
 {% set wdata = site_page.widget_output %}
 {% set wid = cur_widget_id %}
 
-<section class="bg-blue-400 ">
+<section class="{{wdata[wid+'.color_background']}}">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
       <div class="mx-auto text-center mb-8 lg:mb-16">
           <h2 class="text-4xl font-extrabold text-gray-50 dark:text-white">

@@ -1,7 +1,7 @@
 {% set wdata = site_page.widget_output %}
 {% set wid = cur_widget_id %}
 
-<section class="bg-[url('https://howland.games/images/bladegod_banner_1600_484.png')] bg-no-repeat bg-cover bg-center bg-gray-400 bg-blend-multiply">
+<section class="bg-[url('https://howland.games/images/bladegod_banner_1600_484.png')] bg-no-repeat bg-cover bg-center bg-blend-multiply {{wdata[wid+'.color_background']}}">
   <div class="relative py-8 px-4 mx-auto max-w-screen-xl text-white lg:py-16 xl:px-0 z-1">
       <div class="mb-6 max-w-screen-md lg:mb-0">
           <h1 class="mb-4 {{wdata[wid+'.title.color_text']}} {{wdata[wid+'.title.bold']}} {{wdata[wid+'.title.option_uppercase']}} {{wdata[wid+'.title.text_size']}}">{{wdata[wid+'.title.text']}}</h1>

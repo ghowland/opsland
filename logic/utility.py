@@ -409,7 +409,7 @@ def FormatTextFromDictDeep(text, data):
       cur_value = data
       parts_remain = parts
       while parts_remain:
-        LOG.info(f'Parts Remain: {parts_remain}  Cur Value: {cur_value}')
+        # LOG.info(f'Parts Remain: {parts_remain}  Cur Value: {cur_value}')
         try:
           index = int(parts_remain[0])
           cur_value = cur_value[index]
