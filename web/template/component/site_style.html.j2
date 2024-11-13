@@ -1,0 +1,50 @@
+{% if not site_page %}
+  {% set site_page = _context['execute.api.site_page'] %}
+{% endif %}
+
+
+<h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Site Style</h1>
+<p class="text-center mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+  Specify the themes available.
+</p>
+
+
+<div class="px-24">
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-lg font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+      <li class="me-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#content-1" type="button" role="tab" aria-controls="content-1" aria-selected="false">Page</button>
+      </li>
+      <li class="me-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#content-2" type="button" role="tab" aria-controls="content-2" aria-selected="false">Text</button>
+      </li>
+      <li class="me-2" role="presentation">
+          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#content-3" type="button" role="tab" aria-controls="content-3" aria-selected="false">Section</button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#content-4" type="button" role="tab" aria-controls="content-4" aria-selected="false">Container</button>
+      </li>
+      <li role="presentation">
+        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#content-5" type="button" role="tab" aria-controls="content-5" aria-selected="false">Custom Sets</button>
+      </li>
+    </ul>
+  </div>
+
+  <div id="default-tab-content">
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="content-1" role="tabpanel" aria-labelledby="content-1-tab">
+      {% include 'component/site_style/style_page.html.j2' %}
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="content-2" role="tabpanel" aria-labelledby="content-2-tab">
+      {% include 'component/site_style/style_text.html.j2' %}
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="content-3" role="tabpanel" aria-labelledby="content-3-tab">
+      {% include 'component/site_style/style_section.html.j2' %}
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="content-4" role="tabpanel" aria-labelledby="content-4-tab">
+      {% include 'component/site_style/style_container.html.j2' %}
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="content-5" role="tabpanel" aria-labelledby="content-5-tab">
+      {% include 'component/site_style/style_custom_sets.html.j2' %}
+    </div>
+  </div>  
+</div>
