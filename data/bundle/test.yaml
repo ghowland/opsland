@@ -279,9 +279,12 @@ http:
 
           # All the data we use as individeal inputs, needed to populate values of the edit_widget_spec
           widget_input: [widget_input]
-    
+
+    # Style stuff    
     site_style:
       template: pages/site_style.html.j2
+
+
 
     test:
       template: pages/generic_test.html.j2
