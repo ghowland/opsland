@@ -1,0 +1,21 @@
+{% set widget_id = 'no.' %}
+{% set input = {} %}
+{% set output = {} %}
+{% set cur_data = {'key_full': 'Yeah', 'label': 'Got some!'} %}
+
+<!-- Color -->
+<form class="max-w-sm mx-auto">
+  <label for="__edit.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ cur_data.label }}</label>
+  <select id="__edit.{{cur_data.key_full}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="gray" {% if input[widget_id + '.' + cur_data.key_full] == 'gray' %}selected{% endif %}>Gray</option>
+    <option value="red" {% if input[widget_id + '.' + cur_data.key_full] == 'red' %}selected{% endif %}>Red</option>
+    <option value="yellow" {% if input[widget_id + '.' + cur_data.key_full] == 'yellow' %}selected{% endif %}>Yellow</option>
+    <option value="green" {% if input[widget_id + '.' + cur_data.key_full] == 'green' %}selected{% endif %}>Green</option>
+    <option value="blue" {% if input[widget_id + '.' + cur_data.key_full] == 'blue' %}selected{% endif %}>Blue</option>
+    <option value="indigo" {% if input[widget_id + '.' + cur_data.key_full] == 'indigo' %}selected{% endif %}>Indigo</option>
+    <option value="purple" {% if input[widget_id + '.' + cur_data.key_full] == 'purple' %}selected{% endif %}>Purple</option>
+    <option value="pink" {% if input[widget_id + '.' + cur_data.key_full] == 'pink' %}selected{% endif %}>Pink</option>
+  </select>
+</form>
+<input value="{{ input[widget_id + '.' + cur_data.key_full + '_value'] }}" id="__edit.{{cur_data.key_full}}_value" onchange="RenderWidget()" type="range" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+

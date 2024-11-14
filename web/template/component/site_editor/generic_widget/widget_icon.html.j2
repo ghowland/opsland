@@ -1,0 +1,37 @@
+{% set widget_id = 'no.' %}
+{% set input = {} %}
+{% set output = {} %}
+{% set cur_data = {'key_full': 'Yeah', 'label': 'Got some!'} %}
+
+<!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
+<form class="max-w-sm mx-auto">
+  <label for="__edit.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Icon</label>
+  <select id="__edit.{{cur_data.key_full}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="user" {% if output[widget_id + '.' + cur_data.key_full] == 'user' %}selected{% endif %}>User</option>
+    <option value="profile-card" {% if output[widget_id + '.' + cur_data.key_full] == 'profile-card' %}selected{% endif %}>Profile Card</option>
+    <option value="address-book" {% if output[widget_id + '.' + cur_data.key_full] == 'address-book' %}selected{% endif %}>Address Book</option>
+    <option value="user-add" {% if output[widget_id + '.' + cur_data.key_full] == 'user-add' %}selected{% endif %}>User Add</option>
+    <option value="user-circle" {% if output[widget_id + '.' + cur_data.key_full] == 'user-circle' %}selected{% endif %}>User Circle</option>
+    <option value="user-edit" {% if output[widget_id + '.' + cur_data.key_full] == 'user-edit' %}selected{% endif %}>User Edit</option>
+    <option value="user-remove" {% if output[widget_id + '.' + cur_data.key_full] == 'user-remove' %}selected{% endif %}>User Remove</option>
+    <option value="user-settings" {% if output[widget_id + '.' + cur_data.key_full] == 'user-settings' %}selected{% endif %}>User Settings</option>
+    <option value="users" {% if output[widget_id + '.' + cur_data.key_full] == 'users' %}selected{% endif %}>Users</option>
+    <option value="users-group" {% if output[widget_id + '.' + cur_data.key_full] == 'users-group' %}selected{% endif %}>Users Group</option>
+
+    <option value="badge-check" {% if output[widget_id + '.' + cur_data.key_full] == 'badge-check' %}selected{% endif %}>Badge Check</option>
+    <option value="ban" {% if output[widget_id + '.' + cur_data.key_full] == 'ban' %}selected{% endif %}>Ban</option>
+    <option value="bars" {% if output[widget_id + '.' + cur_data.key_full] == 'bars' %}selected{% endif %}>Bars</option>
+    <option value="battery" {% if output[widget_id + '.' + cur_data.key_full] == 'battery' %}selected{% endif %}>Battery</option>
+    <option value="bell" {% if output[widget_id + '.' + cur_data.key_full] == 'bell' %}selected{% endif %}>Bell</option>
+    <option value="bell-active" {% if output[widget_id + '.' + cur_data.key_full] == 'bell-active' %}selected{% endif %}>Bell Active</option>
+    <option value="bell-active-alt" {% if output[widget_id + '.' + cur_data.key_full] == 'bell-active-alt' %}selected{% endif %}>Bell Acitve Alt</option>
+    <option value="bell-ring" {% if output[widget_id + '.' + cur_data.key_full] == 'bell-ring' %}selected{% endif %}>Bell Ring</option>
+
+    <option value="book-open" {% if output[widget_id + '.' + cur_data.key_full] == 'book-open' %}selected{% endif %}>Book Open</option>
+    <option value="bookmark" {% if output[widget_id + '.' + cur_data.key_full] == 'bookmark' %}selected{% endif %}>Bookmark</option>
+    <option value="brain" {% if output[widget_id + '.' + cur_data.key_full] == 'brain' %}selected{% endif %}>Brain</option>
+    <option value="briefcase" {% if output[widget_id + '.' + cur_data.key_full] == 'briefcase' %}selected{% endif %}>Briefcase</option>
+    <option value="bug" {% if output[widget_id + '.' + cur_data.key_full] == 'bug' %}selected{% endif %}>Bug</option>
+  </select>
+</form>
+
