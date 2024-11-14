@@ -1,7 +1,6 @@
 {% set widget_id = 'no.' %}
 {% set input = {} %}
 {% set output = {} %}
-{% set cur_data = {'key_full': 'Yeah', 'label': 'Got some!'} %}
 
 <label for="__edit.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{cur_data.label}}</label>
 <input value="{{ input[widget_id + '.' + cur_data.key_full] }}" id="__edit.{{cur_data.key_full}}" onchange="RenderWidget()" type="range" value="50" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
