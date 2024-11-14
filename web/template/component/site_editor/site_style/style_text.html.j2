@@ -1,1 +1,26 @@
 <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Text</h2>
+
+
+{% set cur_data = {'key_full': 'xyz.color', 'label': 'Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-color', 'label': 'Border Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Size'} %}
+{% include 'component/site_editor/generic_widget/widget_int.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Bold'} %}
+{% include 'component/site_editor/generic_widget/widget_int.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Spacing'} %}
+{% include 'component/site_editor/generic_widget/widget_int.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Underline'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Upper'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Italics'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
