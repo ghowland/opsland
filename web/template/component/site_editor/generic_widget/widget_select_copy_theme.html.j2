@@ -1,0 +1,15 @@
+{% set widget_id = 'no.' %}
+{% set input = {} %}
+{% set output = {} %}
+{% set cur_data = {'key_full': 'Yeah', 'label': 'Got some!'} %}
+
+
+<div class="max-w-sm mx-auto">
+  <button onclick="alert('Copy to Theme ' + document.getElementById('__edit.widget_theme').value + ' From Theme ' + document.getElementById('__copy.widget_theme')).value" type="button" class="py-2.5 px-5 m-3 text-sm font-medium text-gray-900 focus:outline-none bg-blue-500 rounded-lg border border-gray-200 hover:bg-blue-700 hover:text-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100">
+    Copy Theme Values
+  </button>
+</div>
+
+  {% set copy_widget = True %}
+{% include 'component/site_editor/generic_widget/widget_select_theme.html.j2' %}
+  {% set copy_widget = False %}
