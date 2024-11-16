@@ -142,6 +142,10 @@ execute:
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
+    
+    # Loads the static Site Page Content
+    site_page_content:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_content
 
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
@@ -220,6 +224,10 @@ http:
 
   # GET
   get:
+    # Load and cache the Site Page Content
+    get/site_page_content:
+      execute: execute.api.site_page_content
+
     # Paths
     site_editor:
       template: pages/site_editor.html.j2
