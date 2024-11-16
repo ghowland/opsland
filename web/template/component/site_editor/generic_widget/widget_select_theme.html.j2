@@ -9,38 +9,39 @@
   <select id="__edit.widget_theme" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
     <option value="card0" {% if input['__edit.widget_type'] == 'card0' %}selected{% endif %}>Default</option>
     <option value="alternate" {% if input['__edit.widget_type'] == 'alternate' %}selected{% endif %}>Alternate</option>
-    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Special</option>
+    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Big</option>
+    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Small</option>
     <option value="highlight" {% if input['__edit.widget_type'] == 'highlight' %}selected{% endif %}>Highlight</option>
     <option value="disabled" {% if input['__edit.widget_type'] == 'disabled' %}selected{% endif %}>Disabled</option>
     <option value="warning" {% if input['__edit.widget_type'] == 'warning' %}selected{% endif %}>Warning</option>
     <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Attract</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Hero</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Promotion</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Premium</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Boost</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Spotlight</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Callout</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Exclusive</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Engage</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Iconic</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Launch</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Vivid</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>VIP</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Curated</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Impact</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Limited</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Conversion</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Security</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Problem</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Error</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Critical Failure</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Verification Required</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Access Denied</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Data Breach Alert</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Blocked</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Update Required</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Maintenance Mode</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Recover Account</option>
+    <option value="hero" {% if input['__edit.widget_type'] == 'hero' %}selected{% endif %}>Hero</option>
+    <option value="promotion" {% if input['__edit.widget_type'] == 'promotion' %}selected{% endif %}>Promotion</option>
+    <option value="premium" {% if input['__edit.widget_type'] == 'premium' %}selected{% endif %}>Premium</option>
+    <option value="boost" {% if input['__edit.widget_type'] == 'boost' %}selected{% endif %}>Boost</option>
+    <option value="spotlight" {% if input['__edit.widget_type'] == 'spotlight' %}selected{% endif %}>Spotlight</option>
+    <option value="callout" {% if input['__edit.widget_type'] == 'callout' %}selected{% endif %}>Callout</option>
+    <option value="exclusive" {% if input['__edit.widget_type'] == 'exclusive' %}selected{% endif %}>Exclusive</option>
+    <option value="engage" {% if input['__edit.widget_type'] == 'engage' %}selected{% endif %}>Engage</option>
+    <option value="iconic" {% if input['__edit.widget_type'] == 'iconic' %}selected{% endif %}>Iconic</option>
+    <option value="launch" {% if input['__edit.widget_type'] == 'launch' %}selected{% endif %}>Launch</option>
+    <option value="vivid" {% if input['__edit.widget_type'] == 'vivid' %}selected{% endif %}>Vivid</option>
+    <option value="vip" {% if input['__edit.widget_type'] == 'vip' %}selected{% endif %}>VIP</option>
+    <option value="curated" {% if input['__edit.widget_type'] == 'curated' %}selected{% endif %}>Curated</option>
+    <option value="impact" {% if input['__edit.widget_type'] == 'impact' %}selected{% endif %}>Impact</option>
+    <option value="limited" {% if input['__edit.widget_type'] == 'limited' %}selected{% endif %}>Limited</option>
+    <option value="conversion" {% if input['__edit.widget_type'] == 'conversion' %}selected{% endif %}>Conversion</option>
+    <option value="security" {% if input['__edit.widget_type'] == 'security' %}selected{% endif %}>Security</option>
+    <option value="problem" {% if input['__edit.widget_type'] == 'problem' %}selected{% endif %}>Problem</option>
+    <option value="error" {% if input['__edit.widget_type'] == 'error' %}selected{% endif %}>Error</option>
+    <option value="critical_failure" {% if input['__edit.widget_type'] == 'critical_failure' %}selected{% endif %}>Critical Failure</option>
+    <option value="verification_required" {% if input['__edit.widget_type'] == 'verification_required' %}selected{% endif %}>Verification Required</option>
+    <option value="access_denied" {% if input['__edit.widget_type'] == 'access_denied' %}selected{% endif %}>Access Denied</option>
+    <option value="data_breach_alert" {% if input['__edit.widget_type'] == 'data_breach_alert' %}selected{% endif %}>Data Breach Alert</option>
+    <option value="blocked" {% if input['__edit.widget_type'] == 'blocked' %}selected{% endif %}>Blocked</option>
+    <option value="update_required" {% if input['__edit.widget_type'] == 'update_required' %}selected{% endif %}>Update Required</option>
+    <option value="maintenance_mode" {% if input['__edit.widget_type'] == 'maintenance_mode' %}selected{% endif %}>Maintenance Mode</option>
+    <option value="recover_account" {% if input['__edit.widget_type'] == 'recover_account' %}selected{% endif %}>Recover Account</option>
     <option value="custom_00" {% if input['__edit.widget_type'] == 'custom_00' %}selected{% endif %}>Custom 00</option>
     <option value="custom_01" {% if input['__edit.widget_type'] == 'custom_01' %}selected{% endif %}>Custom 01</option>
     <option value="custom_02" {% if input['__edit.widget_type'] == 'custom_02' %}selected{% endif %}>Custom 02</option>
