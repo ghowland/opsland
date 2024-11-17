@@ -1,4 +1,4 @@
-
+<!-- 
 {{site_page}}
 <br>
 <br>
@@ -10,7 +10,7 @@
 {{page_content}}
 <br>
 <br>
-<br>
+<br> -->
 
 {% for render_data in site_page.render %}
   {% for render_widget, widget_data_name in render_data.items() %}
@@ -20,12 +20,12 @@
   
 
   {% set cur_data = widget_data.data %}
-
+<!-- 
   {{render_widget}} -> {{widget_data_name}}<br>
   Data: {{widget_data}}<br>
-  HTML Data: {{html_data}}<br>
+  HTML Data: {{html_data}}<br> -->
 
-  {% include html_data.page %}
+  {% include 'component/site_render/page_render_widget.html.j2' %}
 
   {% endfor %}
 {% endfor %}

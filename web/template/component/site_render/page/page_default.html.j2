@@ -1,5 +1,11 @@
 {% include 'includes/page/page_start_minimal.html.j2' %}
 
-{{default}}
+{% set content_pool = {} %}
+
+{% for render_target, render_target_data in widget_data.include.items() %}
+  {{render_target}} -> {{render_target_data}}<br>
+{% endfor %}
+
+{{ content_pool.default }}
 
 {% include 'includes/page/page_end_minimal.html.j2' %}
