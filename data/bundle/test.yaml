@@ -154,6 +154,10 @@ execute:
     # Loads the static Site Page Content
     site_page_example_render:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_example_render
+    
+    # Loads the Map from Widget to HTML Jinja
+    site_page_map_widget_html:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_map_widget_html
 
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
@@ -239,6 +243,8 @@ http:
       execute: execute.api.site_page_tags
     get/site_page_example_render:
       execute: execute.api.site_page_example_render
+    get/site_page_map_widget_html:
+      execute: execute.api.site_page_map_widget_html
 
     # Paths
     site_editor:
