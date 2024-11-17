@@ -1,0 +1,103 @@
+
+<!-- drawer component -->
+<div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
+
+
+  <h5 id="drawer-navigation-label" class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">Menu</h5>
+   <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
+       <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+       <span class="sr-only">Close menu</span>
+   </button>
+
+    <div class="my-4">
+      <button type="button" onclick="RenderWidget('add')" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-[20px] h-[20px] text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+        </svg>
+        <span class="sr-only">New Widget</span>
+      </button>
+
+      <button type="button" onclick="RenderWidget('remove')" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-[20px] h-[20px] text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+        <span class="sr-only">Delete Widget</span>
+      </button>
+
+      <button type="button" onclick="RenderWidget('raise')" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-[20px] h-[20px] text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+        </svg>
+        <span class="sr-only">Widget Raise</span>
+      </button>
+
+      <button type="button" onclick="RenderWidget('lower')" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-[20px] h-[20px] text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+        </svg>
+        <span class="sr-only">Widget Lower</span>
+      </button>
+    </div>
+
+    <!-- Hidden ID Value -->  
+    <input id="widget_id" type="hidden" value="{{ request.widget }}" class="widget_input hidden">
+  
+    <div id="widget_editor_dynamic">
+  
+    {% include 'component/site_editor/widget_page_edit_sidebar_widget.html.j2' %}
+  
+    </div>
+</div>
+
+
+<script>
+  var WidgetOptions = {'site_page_uri': '{{uri}}'};
+  var StartedFirst = false;
+
+  function RenderWidgetFirst() {
+    StartedFirst = true;
+    // RenderWidget();
+  }
+
+  function RenderWidget(command) {
+    // Dont let this get called until we have the values
+    if (!StartedFirst) {
+      // RenderWidgetFirst();
+      return;
+    }
+
+    // Set a command
+    if (command != undefined) SetWidgetOption('__command', command)
+    else SetWidgetOption('__command', 'set')
+
+    // Scrape before our API request
+    ScrapeData()
+
+    // Rerender the sidebar first, because we need to load new data for editing, or we get duplicated values as we switch
+    htmx.ajax('POST', '/api/site_page_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+
+    // Have to scrape it again, because we just updated it
+    ScrapeData()
+
+    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+    SetWidgetOption('__command', 'none')
+    htmx.ajax('POST', '/api/site_page_render_full', {'target': '#site_page_full', 'values': WidgetOptions})
+  }
+
+  function ScrapeData()
+  {
+    // Get all the inputs and checkboxes
+    var inputs = Array.from(document.getElementsByClassName("widget_input"));
+    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
+
+    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
+  }
+
+  function SetWidgetOption(name, value) {
+    WidgetOptions[name] = value;
+  }
+
+  // Render the widget after we load
+  setTimeout(RenderWidgetFirst, 250);
+</script>
