@@ -146,6 +146,14 @@ execute:
     # Loads the static Site Page Content
     site_page_content:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_content
+    
+    # Loads the static Site Page Content
+    site_page_tags:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_tags
+    
+    # Loads the static Site Page Content
+    site_page_example_render:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_example_render
 
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
@@ -227,6 +235,10 @@ http:
     # Load and cache the Site Page Content
     get/site_page_content:
       execute: execute.api.site_page_content
+    get/site_page_tags:
+      execute: execute.api.site_page_tags
+    get/site_page_example_render:
+      execute: execute.api.site_page_example_render
 
     # Paths
     site_editor:
