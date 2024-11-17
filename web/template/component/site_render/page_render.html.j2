@@ -1,0 +1,35 @@
+
+{{site_page}}
+<br>
+<br>
+<br>
+{{page_map_widget_html}}
+<br>
+<br>
+<br>
+{{page_content}}
+<br>
+<br>
+<br>
+
+{% for render_data in site_page.render %}
+  {% for render_widget, widget_data_name in render_data.items() %}
+
+  {% set widget_data = site_page.widgets[widget_data_name] %}
+  {% set html_data = page_map_widget_html[render_widget] %}
+  
+
+  {% set cur_data = widget_data.data %}
+
+  {{render_widget}} -> {{widget_data_name}}<br>
+  Data: {{widget_data}}<br>
+  HTML Data: {{html_data}}<br>
+
+  {% include html_data.page %}
+
+  {% endfor %}
+{% endfor %}
+
+<br>
+<br>
+
