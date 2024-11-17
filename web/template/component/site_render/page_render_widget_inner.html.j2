@@ -1,0 +1,15 @@
+{% for widget_ref, data_ref in widget_items.items() %}
+
+<!-- widget_ref: {{widget_ref}}<br><br>
+data_ref: {{data_ref}}<br><br> -->
+
+{% set widget_data = site_page.widgets[widget_data_name] %}
+{% set cur_data = widget_data.data %}
+
+{% set html_data = page_map_widget_html[widget_ref] %}
+<!-- html_data: {{html_data}}<br><br> -->
+
+{% include 'component/site_render/page_render_widget.html.j2' %}
+
+{% endfor %}
+
