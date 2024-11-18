@@ -1,30 +1,10 @@
-<!-- 
-site_page: {{site_page}}
-<br>
-<br>
-<br>
-page_map_widget_html: {{page_map_widget_html}}
-<br>
-<br>
-<br>
-page_content: {{page_content}}
-<br>
-<br>
-<br> -->
 
 {% for render_data in site_page.render %}
-  {% for render_widget, widget_data_name in render_data.items() %}
+  {% for render_ref, widget_ref in render_data.items() %}
 
-    {% set html_data = page_map_widget_html[render_widget] %}
-    
-
-    {% set widget_data = site_page.widgets[widget_data_name] %}
+    {% set html_data = page_map_widget_html[render_ref] %}
+    {% set widget_data = site_page.widgets[widget_ref] %}
     {% set cur_data = widget_data.data %}
-
-    <!-- 
-    {{render_widget}} -> {{widget_data_name}}<br>
-    Data: {{widget_data}}<br>
-    HTML Data: {{html_data}}<br> -->
 
     {% include 'component/site_render/page_render_widget.html.j2' %}
 
