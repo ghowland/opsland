@@ -1,12 +1,57 @@
+<br>
+<br>
+<br>
 {% set widget_data = site_page.widgets[widget_id] %}
-ID: {{widget_id}}<br>
-Ref: {{widget_render_ref}}<br>
+Widget ID: {{widget_id}}<br>
 <br>
 
+{% set widget_info = page_map_widget_html[widget_data.widget] %}
+Widget Info: {{widget_info}}<br>
+
+<br>
+Widget Data: {{widget_data}}<br>
+<br>
+Widget Data: Data Value: {{widget_data.data}}<br>
+
+{% if widget_data.data is defined %}
+  {% set cur_data = widget_data.data %}
+  {% else %}
+  {% set cur_data = {} %}
+{% endif %}
+
+Cur Data: {{cur_data}}<br>
+
+{% set html_data = widget_info %}
+
+
+{% include 'component/site_render/render_widget.html.j2' %} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% raw %}
-<!-- {% set cur_data = widget_data.data %}
+<!--
 
-{% set html_data = page_map_widget_html[widget_render_ref] %}
 
-{% include 'component/site_render/render_widget.html.j2' %} -->
+
+
+
+  {{page_content}}
+-->
 {% endraw %}
