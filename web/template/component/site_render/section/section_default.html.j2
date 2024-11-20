@@ -1,7 +1,7 @@
 <section class="{{cur_data['bg-color']}}">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
 
-{% for widget_items in widget_data.include.default %}
+{% for widget_id in widget_data.include.default %}
   {% include 'component/site_render/page_render_widget_inner.html.j2' %}
 {% endfor %}
 

@@ -1,11 +1,12 @@
-{% for widget_ref, data_ref in widget_items.items() %}
+{% set widget_data = site_page.widgets[widget_id] %}
+ID: {{widget_id}}<br>
+Ref: {{widget_render_ref}}<br>
+<br>
 
-  {% set widget_data = site_page.widgets[data_ref] %}
-  {% set cur_data = widget_data.data %}
+{% raw %}
+<!-- {% set cur_data = widget_data.data %}
 
-  {% set html_data = page_map_widget_html[widget_ref] %}
+{% set html_data = page_map_widget_html[widget_render_ref] %}
 
-  {% include 'component/site_render/page_render_widget.html.j2' %}
-
-{% endfor %}
-
+{% include 'component/site_render/render_widget.html.j2' %} -->
+{% endraw %}

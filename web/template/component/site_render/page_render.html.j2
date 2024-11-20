@@ -1,14 +1,13 @@
 
-{% for render_data in site_page.render %}
-  {% for render_ref, widget_ref in render_data.items() %}
+{% for render_ref in site_page.render %}
 
-    {% set html_data = page_map_widget_html[render_ref] %}
-    {% set widget_data = site_page.widgets[widget_ref] %}
-    {% set cur_data = widget_data.data %}
+  {% set widget_data = site_page.widgets[render_ref] %}
+  {% set cur_data = widget_data.data %}
 
-    {% include 'component/site_render/page_render_widget.html.j2' %}
+  {% set html_data = page_map_widget_html[widget_data.widget] %}
 
-  {% endfor %}
+  {% include 'component/site_render/render_widget.html.j2' %}
+
 {% endfor %}
 
 <br>
