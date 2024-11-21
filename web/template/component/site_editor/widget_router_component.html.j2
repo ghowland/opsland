@@ -4,7 +4,7 @@
 <b>widget_spec:</b> {{ widget_spec }}<br>
 <br> 
 -->
-<h1 class="text-xl font-bold leading-tight tracking-tight text-blue-700 mt-6">{{widget_id}}</h1>
+<h1 id="{{widget_id}}" class="text-xl font-bold leading-tight tracking-tight text-blue-700 mt-6">{{widget_id}}</h1>
 {% if widget_spec and widget_spec.data %}
   {% for edit_item in widget_spec.data %}
     {% for edit_key, edit_type in edit_item.items() %}
@@ -16,3 +16,17 @@
 {% else %}
   {{widget_id}} has no data.<br>
 {% endif %}
+
+
+Parent: <br>
+Includes: <br>
+  {% for include_target, include_widget_ids in widget_data.include.items() %}
+    <ul>
+      {{include_target}}:
+      {% for include_widget_id in include_widget_ids %}
+      <li>
+        <a href="#{{include_widget_id}}">{{include_widget_id}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+{% endfor %}
