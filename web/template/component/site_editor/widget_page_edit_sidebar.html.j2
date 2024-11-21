@@ -73,14 +73,14 @@
     ScrapeData()
 
     // Rerender the sidebar first, because we need to load new data for editing, or we get duplicated values as we switch
-    htmx.ajax('POST', '/api/site_editor_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+    htmx.ajax('POST', '/api/space_editor_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
 
-    // Have to scrape it again, because we just updated it
-    ScrapeData()
+    // // Have to scrape it again, because we just updated it
+    // ScrapeData()
 
-    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
-    SetWidgetOption('__command', 'none')
-    htmx.ajax('POST', '/api/site_editor_render_full', {'target': '#page_render', 'values': WidgetOptions})
+    // // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+    // SetWidgetOption('__command', 'none')
+    // htmx.ajax('POST', '/api/space_editor_render', {'target': '#page_render', 'values': WidgetOptions})
   }
 
   function ScrapeData()

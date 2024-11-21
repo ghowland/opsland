@@ -364,7 +364,11 @@ def GetDataByDictKeyList(source_data, key_list=None, missing_value=None):
       cur_data = source_data
       for key in key_list:
         # LOG.debug(f'Cur Key: {key}  Data: {cur_data}')
-        cur_data = cur_data[key]
+        if cur_data:
+          cur_data = cur_data[key]
+        else:
+          LOG.error(f'Failed to traverse key list: {key_list} in source_data: {source_data}  Missing on key: {key}')
+          return missing_value
       
       return cur_data
     

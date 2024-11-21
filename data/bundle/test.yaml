@@ -144,21 +144,35 @@ execute:
       unique_key: "{uri}"
     
     # Loads the static Site Page Content
-    site_page_content:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_content
-    
-    # Loads the static Site Page Content
+    #TODO:RENAME: space_widget_tags
     site_page_tags:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_tags
+    
+    # Loads the Map from Widget to HTML Jinja
+    #TODO:RENAME: space_map_widget_html
+    site_page_map_widget_html:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_map_widget_html
+
+    # New: Spec: Page Content are things like: icon, button, text, section, page, etc.
+    #TODO:RENAME: space_widget_spec
+    site_page_content:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_content
     
     # Loads the static Site Page Content
     site_page_example_render:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_example_render
     
-    # Loads the Map from Widget to HTML Jinja
-    site_page_map_widget_html:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_map_widget_html
+    # Loads Page Data per page
+    space_page_data:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_page_data_{uuid}.json space_page_data
+      input_path: /tmp/opsland/space_page_data_{uuid}.json
+      input:
+        # Pass through our request data
+        request:
+          record_id: [uri]
 
+        execute.api.site_page.{request.site_page_uri}:
+          stored: []  
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
@@ -234,24 +248,30 @@ http:
       execute: execute.api.site_page
     
     # New: Re-render the Sidebar after a change
-    api/site_editor_sidebar:
+    api/space_editor_sidebar:
       template: component/site_editor/widget_page_edit_sidebar_widget.html.j2
-      execute: execute.api.site_page_content
+      execute: execute.api.space_page_data
 
       cache:
-        execute.api.site_page_content:
-          page_content: []
-        execute.api.site_page_example_render:
+        execute.api.space_page_data:
           site_page: []
           input: [input]
           output: [output]
+
+        # space_widget_spec
+        execute.api.site_page_content:
+          page_content: []
+
+        # space_map_widget_html
         execute.api.site_page_map_widget_html:
           page_map_widget_html: []
+
+        # space_widget_tags
         execute.api.site_page_tags:
           site_page_tags: []
 
     # New: Re-render the Full Page after a change
-    api/site_editor_render_full:
+    api/space_editor_render:
       template: component/site_render/page_render.html.j2
       execute: execute.api.site_page_content
 
