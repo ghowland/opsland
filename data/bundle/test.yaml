@@ -171,8 +171,11 @@ execute:
         request:
           record_id: [uri]
 
-        execute.api.site_page.{request.site_page_uri}:
+        execute.api.space_page_data.{request.site_page_uri}:
           stored: []  
+
+      # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
+      unique_key: "{uri}"
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
