@@ -1,5 +1,5 @@
-{% if not site_page %}
-  {% set site_page = _context['execute.api.site_page'] %}
+{% if _context['execute.api.space_page_data'] %}
+  {% set site_page = _context['execute.api.space_page_data'] %}
   {% set edit_widget_spec = site_page.edit_widget_spec %}
 {% else%}
 {% endif %}
