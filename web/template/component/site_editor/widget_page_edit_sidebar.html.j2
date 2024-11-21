@@ -43,10 +43,9 @@
     <input id="widget_id" type="hidden" value="{{ request.widget }}" class="widget_input hidden">
   
     <div id="widget_editor_dynamic">
-  
-    {% include 'component/site_editor/widget_page_edit_sidebar_widget.html.j2' %}
-  
+      {% include 'component/site_editor/widget_page_edit_sidebar_widget.html.j2' %}
     </div>
+
 </div>
 
 
@@ -74,14 +73,14 @@
     ScrapeData()
 
     // Rerender the sidebar first, because we need to load new data for editing, or we get duplicated values as we switch
-    htmx.ajax('POST', '/api/site_page_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+    htmx.ajax('POST', '/api/site_editor_sidebar', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
 
     // Have to scrape it again, because we just updated it
     ScrapeData()
 
     // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
     SetWidgetOption('__command', 'none')
-    htmx.ajax('POST', '/api/site_page_render_full', {'target': '#site_page_full', 'values': WidgetOptions})
+    htmx.ajax('POST', '/api/site_editor_render_full', {'target': '#page_render', 'values': WidgetOptions})
   }
 
   function ScrapeData()

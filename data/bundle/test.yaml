@@ -232,7 +232,40 @@ http:
     api/site_page_render_full:
       template: component/site_page_full.html.j2
       execute: execute.api.site_page
+    
+    # New: Re-render the Sidebar after a change
+    api/site_editor_sidebar:
+      template: component/site_editor/widget_page_edit_sidebar_widget.html.j2
+      execute: execute.api.site_page_content
 
+      cache:
+        execute.api.site_page_content:
+          page_content: []
+        execute.api.site_page_example_render:
+          site_page: []
+          input: [input]
+          output: [output]
+        execute.api.site_page_map_widget_html:
+          page_map_widget_html: []
+        execute.api.site_page_tags:
+          site_page_tags: []
+
+    # New: Re-render the Full Page after a change
+    api/site_editor_render_full:
+      template: component/site_render/page_render.html.j2
+      execute: execute.api.site_page_content
+
+      cache:
+        execute.api.site_page_content:
+          page_content: []
+        execute.api.site_page_example_render:
+          site_page: []
+          input: [input]
+          output: [output]
+        execute.api.site_page_map_widget_html:
+          page_map_widget_html: []
+        execute.api.site_page_tags:
+          site_page_tags: []
 
   # GET
   get:
