@@ -256,7 +256,7 @@ http:
       execute: execute.api.space_page_data
 
       cache:
-        execute.api.space_page_data:
+        execute.api.space_page_data.{site_page_uri}:
           site_page: []
           input: [input]
           output: [output]
@@ -269,9 +269,6 @@ http:
         execute.api.site_page_map_widget_html:
           page_map_widget_html: []
 
-        # space_widget_tags
-        execute.api.site_page_tags:
-          site_page_tags: []
 
     # New: Re-render the Full Page after a change
     api/space_editor_render:
@@ -279,16 +276,16 @@ http:
       execute: execute.api.site_page_content
 
       cache:
-        execute.api.site_page_content:
-          page_content: []
-        execute.api.site_page_example_render:
+        execute.api.space_page_data.{site_page_uri}:
           site_page: []
           input: [input]
           output: [output]
+
+        execute.api.site_page_content:
+          page_content: []
+        
         execute.api.site_page_map_widget_html:
           page_map_widget_html: []
-        execute.api.site_page_tags:
-          site_page_tags: []
 
   # GET
   get:
@@ -306,12 +303,12 @@ http:
     plan00:
       template: pages/site_page_render.html.j2
       cache:
-        execute.api.site_page_content:
-          page_content: []
-        execute.api.site_page_example_render:
+        execute.api.space_page_data.plan00:
           site_page: []
           input: [input]
           output: [output]
+        execute.api.site_page_content:
+          page_content: []
         execute.api.site_page_map_widget_html:
           page_map_widget_html: []
         execute.api.site_page_tags:
