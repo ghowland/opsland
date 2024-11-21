@@ -143,7 +143,7 @@ execute:
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
     
-    # Loads the static Site Page Content
+    # Loads the static Site Tags
     #TODO:RENAME: space_widget_tags
     site_page_tags:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_tags
