@@ -1,17 +1,10 @@
-<br>
-<br>
-<br>
 {% set widget_data = site_page.widgets[widget_id] %}
-Widget ID: {{widget_id}}<br>
-<br>
-
 {% set widget_info = page_map_widget_html[widget_data.widget] %}
-Widget Info: {{widget_info}}<br>
 
-<br>
+<!-- Widget ID: {{widget_id}}<br>
+Widget Info: {{widget_info}}<br>
 Widget Data: {{widget_data}}<br>
-<br>
-Widget Data: Data Value: {{widget_data.data}}<br>
+Widget Data: Data Value: {{widget_data.data}}<br> -->
 
 {% if widget_data.data is defined %}
   {% set cur_data = widget_data.data %}
@@ -19,7 +12,7 @@ Widget Data: Data Value: {{widget_data.data}}<br>
   {% set cur_data = {} %}
 {% endif %}
 
-Cur Data: {{cur_data}}<br>
+<!-- Cur Data: {{cur_data}}<br> -->
 
 {% set html_data = widget_info %}
 

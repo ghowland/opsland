@@ -1,3 +1,18 @@
+<!-- 
+<b>{{widget_id}}:</b> {{widget_data}}<br>
+<b>widget_data:</b> {{ widget_map }}<br>
+<b>widget_spec:</b> {{ widget_spec }}<br>
+<br> 
+-->
+<h1 class="text-xl font-bold leading-tight tracking-tight text-blue-700 mt-6">{{widget_id}}</h1>
+{% if widget_spec and widget_spec.data %}
+  {% for edit_item in widget_spec.data %}
+    {% for edit_key, edit_type in edit_item.items() %}
+      <!-- Edit: {{edit_item}}<br> -->
 
-{{widget_id}}: {{widget_data}}<br>
-<br>
+      {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}
+    {% endfor %}
+  {% endfor %}
+{% else %}
+  {{widget_id}} has no data.<br>
+{% endif %}
