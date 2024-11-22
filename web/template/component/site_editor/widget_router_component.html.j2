@@ -25,19 +25,39 @@
 <div class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
   {% for include_target, include_widget_ids in widget_data.include.items() %}
     <ul>
+
       <li>
-        <a href="#" class="block w-full px-4 py-2 text-white bg-blue-700 border-b border-gray-200 rounded-t-lg cursor-pointer dark:bg-gray-800 dark:border-gray-600">
-          {{include_target}}
-        </a>
+        <div class="inline-flex rounded-md shadow-sm">
+          <a href="#" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-50 bg-blue-600 border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+            {{include_target}}
+          </a>
+          <a href="#" class="rounded-e-lg px-4 py-2 text-sm font-medium text-gray-50 bg-blue-600 border border-gray-200 hover:bg-green-200 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+            +
+          </a>
+        </div>        
       </li>
+
       {% for include_widget_id in include_widget_ids %}
-      <li>
-        <a href="#{{include_widget_id}}" class="block w-full px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
+      <div class="inline-flex rounded-md shadow-sm">
+        <a href="#{{include_widget_id}}" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           {{include_widget_id}}
         </a>
-      </li>
+        <a href="#" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+          -
+        </a>
+        <a href="#" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+          +
+        </a>
+        <a href="#" class="rounded-e-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-red-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+          X
+        </a>
+      </div>      
+
       {% endfor %}
     </ul>
 {% endfor %}
 </div>
+
+
+
 
