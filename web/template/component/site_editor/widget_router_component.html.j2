@@ -37,6 +37,10 @@
         </div>        
       </li>
 
+      
+      {% set widget_include_option_list = site_page['include_options'][include_target][widget_id] %}
+      {% include 'component/site_editor/widget_include_select.html.j2' %}
+
       {% for include_widget_id in include_widget_ids %}
       <div class="inline-flex rounded-md shadow-sm">
         <a href="#{{include_widget_id}}" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-50 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
@@ -55,6 +59,7 @@
 
       {% endfor %}
     </ul>
+
 {% endfor %}
 </div>
 

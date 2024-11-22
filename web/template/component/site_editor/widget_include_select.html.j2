@@ -1,0 +1,9 @@
+<form class="max-w-sm mx-auto">
+  <label for="__control.add_widget.{{widget_id}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Add Widget</label>
+  <select id="__control.add_widget.{{widget_id}}" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    {% for include_option_item in widget_include_option_list %}
+      <option value="{{include_option_item}}">{{include_option_item}}</option>
+    {% endfor %}
+  </select>
+</form>
+
