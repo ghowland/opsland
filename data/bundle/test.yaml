@@ -143,24 +143,23 @@ execute:
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
     
-    # Loads the static Site Tags
-    #TODO:RENAME: space_widget_tags
-    site_page_tags:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_tags
-    
-    # Loads the Map from Widget to HTML Jinja
-    #TODO:RENAME: space_map_widget_html
-    site_page_map_widget_html:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_map_widget_html
-
-    # New: Spec: Page Content are things like: icon, button, text, section, page, etc.
-    #TODO:RENAME: space_widget_spec
-    site_page_content:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_content
-    
     # Loads the static Site Page Content
     site_page_example_render:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py site_page_example_render
+    
+    # Loads the static Site Tags
+    space_widget_tags:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_widget_tags
+    
+    # Loads the Map from Widget to HTML Jinja
+    #TODO:RENAME: space_map_widget_html
+    space_map_widget_html:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_map_widget_html
+
+    # New: Spec: Page Content are things like: icon, button, text, section, page, etc.
+    #TODO:RENAME: space_widget_spec
+    space_widget_spec:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_widget_spec
     
     # Loads Page Data per page
     space_page_data:
@@ -262,18 +261,18 @@ http:
           output: [output]
 
         # space_widget_spec
-        execute.api.site_page_content:
+        execute.api.space_widget_spec:
           page_content: []
 
         # space_map_widget_html
-        execute.api.site_page_map_widget_html:
+        execute.api.space_map_widget_html:
           page_map_widget_html: []
 
 
     # New: Re-render the Full Page after a change
     api/space_editor_render:
       template: component/site_render/page_render.html.j2
-      execute: execute.api.site_page_content
+      execute: execute.api.space_page_data
 
       cache:
         execute.api.space_page_data.{site_page_uri}:
@@ -281,23 +280,21 @@ http:
           input: [input]
           output: [output]
 
-        execute.api.site_page_content:
+        execute.api.space_widget_spec:
           page_content: []
         
-        execute.api.site_page_map_widget_html:
+        execute.api.space_map_widget_html:
           page_map_widget_html: []
 
   # GET
   get:
-    # Load and cache the Site Page Content
-    get/site_page_content:
-      execute: execute.api.site_page_content
-    get/site_page_tags:
-      execute: execute.api.site_page_tags
-    get/site_page_example_render:
-      execute: execute.api.site_page_example_render
-    get/site_page_map_widget_html:
-      execute: execute.api.site_page_map_widget_html
+    # Refresh these to update static content
+    get/space_widget_spec:
+      execute: execute.api.space_widget_spec
+    get/space_map_widget_html:
+      execute: execute.api.space_map_widget_html
+    get/space_widget_tags:
+      execute: execute.api.space_widget_tags
 
     # Dynamic version
     plan00:
@@ -307,11 +304,11 @@ http:
           site_page: []
           input: [input]
           output: [output]
-        execute.api.site_page_content:
+        execute.api.space_widget_spec:
           page_content: []
-        execute.api.site_page_map_widget_html:
+        execute.api.space_map_widget_html:
           page_map_widget_html: []
-        execute.api.site_page_tags:
+        execute.api.space_widget_tags:
           site_page_tags: []
 
     # Paths
