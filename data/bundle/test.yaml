@@ -171,7 +171,7 @@ execute:
           record_id: [uri]
 
         execute.api.space_page_data.{request.site_page_uri}:
-          stored: []  
+          last_version: []
 
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
