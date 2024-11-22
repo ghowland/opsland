@@ -250,8 +250,6 @@ class CacheManager():
     if 'unique_key' in cache_info and cache_key == base_cache_key:
       unique_key = utility.FormatTextFromDictKeys(cache_info['unique_key'], value)
 
-      LOG.info(f'About to try unique_key: {unique_key}  Cache key: {cache_key}  Value: {value}')
-
       if unique_key and '{' not in unique_key:
         # Suffix the unique key to the cache_key
         cache_key = f'''{cache_key}.{unique_key}'''
