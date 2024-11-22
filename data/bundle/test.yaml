@@ -264,7 +264,7 @@ http:
 
         # space_map_widget_html
         execute.api.space_map_widget_html:
-          page_map_widget_html: []
+          map_widget_html: []
 
 
     # New: Re-render the Full Page after a change
@@ -280,7 +280,7 @@ http:
           widget_specs: []
         
         execute.api.space_map_widget_html:
-          page_map_widget_html: []
+          map_widget_html: []
 
   # GET
   get:
@@ -301,7 +301,7 @@ http:
         execute.api.space_widget_spec:
           widget_specs: []
         execute.api.space_map_widget_html:
-          page_map_widget_html: []
+          map_widget_html: []
         execute.api.space_widget_tags:
           site_page_tags: []
 

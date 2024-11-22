@@ -4,7 +4,7 @@
   {% set widget_data = site_page.widgets[render_ref] %}
   {% set cur_data = widget_data.data %}
 
-  {% set html_data = page_map_widget_html[widget_data.widget] %}
+  {% set html_data = map_widget_html[widget_data.widget] %}
 
   {% include 'component/site_render/render_widget.html.j2' %}
 
