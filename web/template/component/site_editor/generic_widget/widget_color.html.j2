@@ -16,5 +16,9 @@
     <option value="pink" {% if input[widget_id + '.' + cur_data.key_full] == 'pink' %}selected{% endif %}>Pink</option>
   </select>
 </form>
-<input value="{{ input[widget_id + '.' + cur_data.key_full + '_value'] }}" id="__edit.{{cur_data.key_full}}_value" onchange="RenderWidget()" type="range" class="widget_input w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+{% set label = cur_data.label + ' Value' %}
+{% set element_id = '__style.text.size' %}
+{% set select_data = [{'relative': 'Use Relative'}, {'50': '50'}, {'100': '100'}, {'200': '200'}, {'300': '300'}, {'400': '400'}, {'500': '500'}, {'600': '600'}, {'700': '700'}, {'800': '800'}, {'900': '900'}] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 

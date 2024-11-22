@@ -1,0 +1,13 @@
+
+<!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
+<form class="max-w-sm mx-auto">
+  <label for="{{element_id}}" class="mb-2 text-sm font-medium text-gray-900">{{label}}</label>
+  <select id="{{element_id}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    {% for label_pair in select_data %}
+      {% for select_value, select_label in label_pair.items() %}
+        <option value="{{select_value}}" {% if cur_value == '{{select_value}}' %}selected{% endif %}>{{select_label}}</option>
+      {% endfor %}
+    {% endfor %}
+  </select>
+</form>
+
