@@ -369,7 +369,15 @@ http:
     site_style:
       template: pages/site_style.html.j2
 
-
+      cache:
+        execute.api.space_page_data.plan00:
+          site_page: []
+        execute.api.space_widget_spec:
+          widget_specs: []
+        execute.api.space_map_widget_html:
+          map_widget_html: []
+        execute.api.space_widget_tags:
+          site_page_tags: []
 
     test:
       template: pages/generic_test.html.j2
