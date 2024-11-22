@@ -262,7 +262,7 @@ http:
 
         # space_widget_spec
         execute.api.space_widget_spec:
-          page_content: []
+          widget_specs: []
 
         # space_map_widget_html
         execute.api.space_map_widget_html:
@@ -281,7 +281,7 @@ http:
           output: [output]
 
         execute.api.space_widget_spec:
-          page_content: []
+          widget_specs: []
         
         execute.api.space_map_widget_html:
           page_map_widget_html: []
@@ -305,7 +305,7 @@ http:
           input: [input]
           output: [output]
         execute.api.space_widget_spec:
-          page_content: []
+          widget_specs: []
         execute.api.space_map_widget_html:
           page_map_widget_html: []
         execute.api.space_widget_tags:
