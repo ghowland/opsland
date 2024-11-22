@@ -257,8 +257,6 @@ http:
       cache:
         execute.api.space_page_data.{site_page_uri}:
           site_page: []
-          input: [input]
-          output: [output]
 
         # space_widget_spec
         execute.api.space_widget_spec:
@@ -277,8 +275,6 @@ http:
       cache:
         execute.api.space_page_data.{site_page_uri}:
           site_page: []
-          input: [input]
-          output: [output]
 
         execute.api.space_widget_spec:
           widget_specs: []
@@ -302,8 +298,6 @@ http:
       cache:
         execute.api.space_page_data.plan00:
           site_page: []
-          input: [input]
-          output: [output]
         execute.api.space_widget_spec:
           widget_specs: []
         execute.api.space_map_widget_html:
