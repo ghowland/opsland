@@ -51,7 +51,7 @@ def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_d
 
   command_unique = command['command'].replace('{uuid}', uuid)
 
-  LOG.debug(f'''Execute Command Actual: {command_unique}''')
+  LOG.info(f'''Execute Command Actual: {command_unique}''')
 
   # Set the CWD for the command
   running_cwd = config.directory_origin
