@@ -42,13 +42,13 @@
         <a href="#{{include_widget_id}}" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-50 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           {{include_widget_id}}
         </a>
-        <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('lower')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-yellow-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+        <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_target', '{{include_target}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('raise')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-yellow-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           -
         </a>
-        <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('raise')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-blue-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+        <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_target', '{{include_target}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('lower')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-blue-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           +
         </a>
-        <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('delete')" class="rounded-e-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-red-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+        <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_target', '{{include_target}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('delete')" class="rounded-e-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-red-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           X
         </a>
       </div>      
