@@ -1,6 +1,32 @@
 <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Container</h2>
 
 
+{% set label = 'Padding' %}
+{% set element_id = '__style.container.padding' %}
+{% set select_data = [{'relative': 'Use Relative'}, {'p-0': '0 em'}, {'p-2': '2 em'}, {'p-4': '4 em'}, {'p-6': '6 em'}, {'p-8': '8 em'}, {'p-12': '12 em'}, {'p-16': '16 em'}, {'p-24': '24 em'}, {'p-32': '32 em'}] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Padding Relative'} %}
+{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
+
+{% set label = 'Margin' %}
+{% set element_id = '__style.container.margin' %}
+{% set select_data = [{'relative': 'Use Relative'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Margin Relative'} %}
+{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
+
+{% set label = 'Rounded' %}
+{% set element_id = '__style.container.rounded' %}
+{% set select_data = [{'relative': 'Use Relative'}, {'rounded-none': 'Square Corners'}, {'rounded-sm': 'Rounded Small'}, {'rounded': 'Rounded'}, {'rounded-md': 'Rounded Medium'}, {'rounded-lg': 'Rounded Large'}, {'rounded-xl': 'Rounded XL'}, {'rounded-2xl': 'Rounded 2XL'}, {'rounded-full': 'Rounded Full'}] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Rounded Relative'} %}
+{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
+
+
+
 {% set cur_data = {'key_full': 'xyz.bg-color', 'label': 'Background Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
 
@@ -8,22 +34,29 @@
 {% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
 
 {% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Border Width'} %}
-{% include 'component/site_editor/generic_widget/widget_int.html.j2' %}
+{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
 
 
-{% set label = 'Padding' %}
-{% set element_id = '__style.container.padding' %}
-{% set select_data = [{'relative': 'Use Relative'}, {'p-0': '0 em'}, {'p-2': '2 em'}, {'p-4': '4 em'}, {'p-6': '6 em'}, {'p-8': '8 em'}, {'p-12': '12 em'}, {'p-16': '16 em'}, {'p-24': '24 em'}, {'p-32': '32 em'}] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Use Hover Color'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
-{% set label = 'Margin' %}
-{% set element_id = '__style.container.margin' %}
-{% set select_data = [{'relative': 'Use Relative'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+{% set cur_data = {'key_full': 'xyz.bg-color', 'label': 'Hover Background Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
 
+{% set cur_data = {'key_full': 'xyz.border-color', 'label': 'Hover Border Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
 
-{% set label = 'Rounded' %}
-{% set element_id = '__style.container.rounded' %}
-{% set select_data = [{'relative': 'Use Relative'}, {'rounded-none': 'Square Corners'}, {'rounded-sm': 'Rounded Small'}, {'rounded': 'Rounded'}, {'rounded-md': 'Rounded Medium'}, {'rounded-lg': 'Rounded Large'}, {'rounded-xl': 'Rounded XL'}, {'rounded-2xl': 'Rounded 2XL'}, {'rounded-full': 'Rounded Full'}] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Hover Border Width'} %}
+{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
 
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Use Focus Color'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.bg-color', 'label': 'Focus Background Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-color', 'label': 'Focus Border Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Focus Border Width'} %}
+{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}

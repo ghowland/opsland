@@ -1,12 +1,6 @@
 <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Text</h2>
 
 
-{% set cur_data = {'key_full': 'xyz.color', 'label': 'Color'} %}
-{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
-
-{% set cur_data = {'key_full': 'xyz.border-color', 'label': 'Border Color'} %}
-{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
-
 {% set label = 'Size' %}
 {% set element_id = '__style.text.size' %}
 {% set select_data = [{'relative': 'Use Relative'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
@@ -33,3 +27,19 @@
 
 {% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Italics'} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+
+{% set cur_data = {'key_full': 'xyz.color', 'label': 'Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'User Hover Color'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.bg-color', 'label': 'Hover Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Use Focus Color'} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+{% set cur_data = {'key_full': 'xyz.bg-color', 'label': 'Focus Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color.html.j2' %}
