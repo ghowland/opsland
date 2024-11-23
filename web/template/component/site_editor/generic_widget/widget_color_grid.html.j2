@@ -8,6 +8,8 @@
 </button>
 
 
+<input type="hidden" id="{{wid}}" value="" class="widget_input">
+
 {% set colors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose'] %}
 {% set color_values = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] %}
 
@@ -24,7 +26,7 @@
         {% set inverse_color_value = 100 %}
       {% endif %}
         
-      <div class="h-5 bg-{{color}}-{{color_value}} hover:border-{{color}}-{{inverse_color_value}} text-center text-xs text-{{color}}-{{inverse_color_value}} hover:border-4 hover:outline-none" onclick="SetBackgroundColor('{{wid}}_color_label', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}'); document.getElementById('{{wid}}_color_map').classList.toggle('hidden'); return true;" onmousemove="SetHover('{{wid}}_hover_target', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}')">
+      <div class="h-5 bg-{{color}}-{{color_value}} hover:border-{{color}}-{{inverse_color_value}} text-center text-xs text-{{color}}-{{inverse_color_value}} hover:border-4 hover:outline-none" onclick="SetBackgroundColor('{{wid}}', '{{wid}}_color_label', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}'); document.getElementById('{{wid}}_color_map').classList.toggle('hidden'); return true;" onmousemove="SetHover('{{wid}}_hover_target', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}')">
         {{color}}-{{color_value}}
       </div>
       {% endfor %}
@@ -33,11 +35,37 @@
 </div>
 
 
-
-
 <script>
   var colors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose']
 
+  function SetBackgroundColor(input_element_id, element_id, bg_color, text_inverse_color) {
+    // alert(shout)
+    var el = document.getElementById(element_id)
+
+    ElementStripClassByPrefix(el, 'bg-')
+
+    // text-*
+    var remove_list = GetArrayWithPrefixSuffix(colors, 'text-', '')
+    remove_list.forEach(item => {
+      ElementStripClassByPrefix(el, item)
+    })
+    el.classList.add(text_inverse_color)
+
+    // border-*
+    remove_list = GetArrayWithPrefixSuffix(colors, 'border-', '')
+    remove_list.forEach(item => {
+      ElementStripClassByPrefix(el, item)
+    })
+    el.classList.add(text_inverse_color)
+
+    el.classList.add('bg-' + bg_color);
+    el.innerText = bg_color;
+
+    input_el = document.getElementById(input_element_id)
+    input_el.value = bg_color;
+  }
+
+  
   function GetArrayWithPrefixSuffix(source, prefix, suffix) {
     var newArray = new Array()
 
@@ -63,30 +91,6 @@
       ElementStripClassByPrefix(el, item)
     })
     el.classList.add('bg-' + color)
-  }
-
-  function SetBackgroundColor(element_id, bg_color, text_inverse_color) {
-    // alert(shout)
-    var el = document.getElementById(element_id)
-
-    ElementStripClassByPrefix(el, 'bg-')
-
-    // text-*
-    var remove_list = GetArrayWithPrefixSuffix(colors, 'text-', '')
-    remove_list.forEach(item => {
-      ElementStripClassByPrefix(el, item)
-    })
-    el.classList.add(text_inverse_color)
-
-    // border-*
-    remove_list = GetArrayWithPrefixSuffix(colors, 'border-', '')
-    remove_list.forEach(item => {
-      ElementStripClassByPrefix(el, item)
-    })
-    el.classList.add(text_inverse_color)
-
-    el.classList.add('bg-' + bg_color);
-    el.innerText = bg_color;
   }
 
   // For this element `el` all the classList class names starting with this prefix will be removed, if they exist
