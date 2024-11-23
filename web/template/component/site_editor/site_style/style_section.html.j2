@@ -19,12 +19,10 @@
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 
-{% set cur_data = {'key_full': 'xyz.bg-color', 'label': 'Background Color'} %}
-{% set widget_id = '__style.section.bg_color' %}
+{% set cur_data = {'widget_id': '__style.section.bg_color', 'label': 'Background Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
-{% set cur_data = {'key_full': 'xyz.border-color', 'label': 'Border Color'} %}
-{% set widget_id = '__style.section.border_color' %}
+{% set cur_data = {'widget_id': '__style.section.border_color', 'label': 'Border Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
 {% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Border Width'} %}

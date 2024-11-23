@@ -8,3 +8,53 @@
 </div>
 
 {% include 'includes/page/page_end_minimal.html.j2' %}
+
+
+
+<script>
+  var WidgetOptions = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'};
+  var StartedFirst = false;
+
+  function RenderWidgetFirst() {
+    StartedFirst = true;
+    // RenderWidget();
+  }
+
+  function RenderWidget(command) {
+    // Dont let this get called until we have the values
+    if (!StartedFirst) {
+      // RenderWidgetFirst();
+      return;
+    }
+
+    // Set a command
+    if (command != undefined) SetWidgetOption('__command', command)
+    else SetWidgetOption('__command', 'set')
+
+    // Scrape before our API request
+    ScrapeData()
+
+    // Rerender the sidebar first, because we need to load new data for editing, or we get duplicated values as we switch
+    htmx.ajax('POST', '/api/space_style', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+
+    // Reload the iframe target
+    document.getElementById('view_page_render').contentWindow.location.reload();
+  }
+
+  function ScrapeData()
+  {
+    // Get all the inputs and checkboxes
+    var inputs = Array.from(document.getElementsByClassName("widget_input"));
+    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
+
+    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
+  }
+
+  function SetWidgetOption(name, value) {
+    WidgetOptions[name] = value;
+  }
+
+  // Render the widget after we load
+  setTimeout(RenderWidgetFirst, 250);
+</script>
