@@ -1,5 +1,6 @@
 <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Text</h2>
 
+<div class="columns-3 block">
 
 {% set label = 'Size' %}
 {% set element_id = '__style.text.size' %}
@@ -18,6 +19,9 @@
 {% set select_data = [{'parent': 'Use Parent'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+</div>
+
+<div class="columns-1 block">
 
 {% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Underline'} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
@@ -27,10 +31,12 @@
 
 {% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Italics'} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-
+</div>
 
 {% set cur_data = {'widget_id': '__style.text.color', 'label': 'Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+<div class="columns-1 block">
 
 {% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Use Parent Hover Color'} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
@@ -43,3 +49,5 @@
 
 {% set cur_data = {'widget_id': '__style.text.focus_color', 'label': 'Focus Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+</div>

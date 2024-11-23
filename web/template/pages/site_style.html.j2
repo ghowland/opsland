@@ -40,9 +40,67 @@
     // Reload the iframe target
     document.getElementById('view_page_render').contentWindow.location.reload();
 
-    // Try to init flowbite again to get Tabs and stuff to work
-    const tabs = FlowbiteInstances.getInstance('Tabs', 'default-tab');
-    tabs.show('content-1');
+    // TryFixFlowbiteDynamicLoad()
+  }
+
+  
+  function TryFixFlowbiteDynamicLoad() {
+    
+    // // Try to init flowbite again to get Tabs and stuff to work
+    // initFlowbite();
+    // // Try to init flowbite again to get Tabs and stuff to work
+    var tabs = FlowbiteInstances.getInstance('Tabs', 'default-tab');
+    // alert(JSON.stringify(tabs.getActiveTab()))
+
+    next_active_tab_id = tabs.getActiveTab().id
+    next_active_tab_id = next_active_tab_id.replace('#', '')
+
+    var tabsElement = document.getElementById('default-tab');
+
+    var tabElements = [
+    {
+        id: 'content-1',
+        triggerEl: document.querySelector('#content-1-tab'),
+        targetEl: document.querySelector('#content-1'),
+    },
+    {
+        id: 'content-2',
+        triggerEl: document.querySelector('#content-2-tab'),
+        targetEl: document.querySelector('#content-2'),
+    },
+    {
+        id: 'content-3',
+        triggerEl: document.querySelector('#content-3-tab'),
+        targetEl: document.querySelector('#content-3'),
+    },
+    {
+        id: 'content-4',
+        triggerEl: document.querySelector('#content-4-tab'),
+        targetEl: document.querySelector('#content-4'),
+    },
+    ];
+
+    var options = {
+      defaultTabId: next_active_tab_id,
+      // activeClasses:
+      //     'text-blue-600 hover:text-blue-600 border-blue-600',
+      // inactiveClasses:
+      //     'text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300',
+      onShow: () => {
+          console.log('tab is shown');
+      },
+    };
+
+    // instance options with default values
+    const instanceOptions = {
+      id: 'default-tab',
+      override: true
+    };
+
+
+    initFlowbite();
+    var tabs = new Tabs(tabsElement, tabElements, options, instanceOptions);
+
   }
 
   function ScrapeData()
