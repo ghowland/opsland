@@ -176,6 +176,14 @@ execute:
       # If this exists, we use it to save all our cache data to unique files.  They will also be loaded uniquely
       unique_key: "{uri}"
 
+    space_style:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_style_{uuid}.json space_style
+      input_path: /tmp/opsland/space_style_{uuid}.json
+      input:
+        # Pass through our request data
+        request:
+          record_id: [uri]
+
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
   site_page.try00: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml
@@ -281,6 +289,10 @@ http:
         
         execute.api.space_map_widget_html:
           map_widget_html: []
+
+    api/space_style:
+      template: component/site_style.html.j2
+      execute: execute.api.space_style
 
   # GET
   get:
