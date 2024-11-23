@@ -44,7 +44,7 @@ wid: {{wid}}<br> -->
 
   // If we got a style, then set the color
   if ('{{ cur_style[wid] }}' != '') {
-    SetBackgroundColor('{{wid}}', '{{wid}}_color_label', '{{cur_style[wid]}}', 'text-' + GetInverseColor('{{cur_style[wid]}}'));
+    SetBackgroundColor('{{wid}}', '{{wid}}_color_label', '{{cur_style[wid]}}', 'text-' + GetInverseColor('{{cur_style[wid]}}'), true);
     // alert('Got a color background: {{widg}}: ' + '{{ cur_style[wid] }}')
   }
 
@@ -58,7 +58,7 @@ wid: {{wid}}<br> -->
     return parts[0] + '-' + inverse_value
   }
 
-  function SetBackgroundColor(input_element_id, element_id, bg_color, text_inverse_color) {
+  function SetBackgroundColor(input_element_id, element_id, bg_color, text_inverse_color, first_time) {
     // alert(shout)
     var el = document.getElementById(element_id)
 
@@ -83,6 +83,8 @@ wid: {{wid}}<br> -->
 
     input_el = document.getElementById(input_element_id)
     input_el.value = bg_color;
+
+    if (!first_time) RenderWidget()
   }
 
   

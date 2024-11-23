@@ -1,10 +1,17 @@
 
+{% if not space_style %}
+  {% set space_style = _context['execute.api.space_style'] %}
+{% endif %}
+
+
 {% for render_ref in site_page.render %}
 
   {% set widget_data = site_page.widgets[render_ref] %}
   {% set cur_data = widget_data.data %}
 
   {% set html_data = map_widget_html[widget_data.widget] %}
+
+  {% set cur_style = space_style['default'] %}
 
   {% include 'component/site_render/render_widget.html.j2' %}
 

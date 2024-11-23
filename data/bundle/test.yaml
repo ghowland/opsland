@@ -327,6 +327,9 @@ http:
         execute.api.space_widget_tags:
           site_page_tags: []
 
+        execute.api.space_style:
+          space_style: []
+
     # Paths
     site_editor:
       template: pages/site_editor.html.j2
