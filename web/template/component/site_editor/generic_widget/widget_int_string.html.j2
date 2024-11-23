@@ -1,8 +1,5 @@
-{% set widget_id = 'no.' %}
-{% set input = {} %}
-{% set output = {} %}
 
-<label for="__edit.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900">{{cur_data.label}}</label>
+<label for="{{cur_data.widget_id}}" class="block mb-2 text-sm font-medium text-gray-900">{{cur_data.label}}</label>
 <div class="flex">
-  <input value="{{ output[widget_id + '.' + cur_data.key_full] }}" placeholder="Integer..." onchange="RenderWidget()" type="text" id="__edit.{{cur_data.key_full}}" class="widget_input rounded-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 text-sm border-gray-300 p-2.5">
+  <input value="{{ cur_data.value }}" placeholder="Integer..." onchange="RenderWidget()" type="text" id="{{cur_data.widget_id}}" class="widget_input rounded-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 text-sm border-gray-300 p-2.5">
 </div>

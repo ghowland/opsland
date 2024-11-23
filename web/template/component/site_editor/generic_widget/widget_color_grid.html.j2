@@ -1,17 +1,21 @@
 {% set wid = cur_data.widget_id %}
 
+
 <span>
   {{ cur_data.label }}:
 </span>
 <button id="{{wid}}_color_label" type="button" class="text-gray-50 bg-blue-700 m-3 border-2 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5" onclick="document.getElementById('{{wid}}_color_map').classList.toggle('hidden')">
-  {{ cur_data.label }}
+  {{ cur_style[wid] }}
 </button>
 
 
-<input type="hidden" id="{{wid}}" value="" class="widget_input">
+<input type="hidden" id="{{wid}}" value="{{ cur_style[wid] }}" class="widget_input">
 
 {% set colors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose'] %}
 {% set color_values = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] %}
+
+<!-- cur_style: {{cur_style}}<br>
+wid: {{wid}}<br> -->
 
 <div id="{{wid}}_color_map" class="hidden">
   <p>
@@ -37,6 +41,22 @@
 
 <script>
   var colors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose']
+
+  // If we got a style, then set the color
+  if ('{{ cur_style[wid] }}' != '') {
+    SetBackgroundColor('{{wid}}', '{{wid}}_color_label', '{{cur_style[wid]}}', 'text-' + GetInverseColor('{{cur_style[wid]}}'));
+    // alert('Got a color background: {{widg}}: ' + '{{ cur_style[wid] }}')
+  }
+
+  function GetInverseColor(color)
+  {
+    var parts = color.split('-')
+    value = parseInt(parts[1])
+    inverse_value = 900
+    if (value > 400) inverse_value = 50
+
+    return parts[0] + '-' + inverse_value
+  }
 
   function SetBackgroundColor(input_element_id, element_id, bg_color, text_inverse_color) {
     // alert(shout)

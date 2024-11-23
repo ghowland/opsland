@@ -392,6 +392,9 @@ http:
       template: pages/site_style.html.j2
 
       cache:
+        execute.api.space_style:
+          space_style: []
+
         execute.api.space_page_data.plan00:
           site_page: []
         execute.api.space_widget_spec:
