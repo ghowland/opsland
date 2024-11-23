@@ -35,10 +35,14 @@
     ScrapeData()
 
     // Rerender the sidebar first, because we need to load new data for editing, or we get duplicated values as we switch
-    htmx.ajax('POST', '/api/space_style', {'target': '#widget_editor_dynamic', 'values': WidgetOptions})
+    htmx.ajax('POST', '/api/space_style', {'target': '#site_style', 'values': WidgetOptions})
 
     // Reload the iframe target
     document.getElementById('view_page_render').contentWindow.location.reload();
+
+    // Try to init flowbite again to get Tabs and stuff to work
+    const tabs = FlowbiteInstances.getInstance('Tabs', 'default-tab');
+    tabs.show('content-1');
   }
 
   function ScrapeData()

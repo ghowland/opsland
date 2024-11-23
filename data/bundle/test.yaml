@@ -294,6 +294,16 @@ http:
       template: component/site_style.html.j2
       execute: execute.api.space_style
 
+      cache:
+        execute.api.space_page_data.plan00:
+          site_page: []
+        execute.api.space_widget_spec:
+          widget_specs: []
+        execute.api.space_map_widget_html:
+          map_widget_html: []
+        execute.api.space_widget_tags:
+          site_page_tags: []
+          
   # GET
   get:
     # Refresh these to update static content
