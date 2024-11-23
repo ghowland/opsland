@@ -3,12 +3,12 @@
 {% set output = {} %}
 {% set cur_data = {'key_full': 'Yeah', 'label': 'Got some!'} %}
 
-{% if not copy_widget %}
-  {% set element_id = '__edit.widget_theme' %}
-  {% set label = 'Selected Theme' %}
+{% if not is_style_parent %}
+  {% set element_id = '__edit.widget_style' %}
+  {% set label = 'Selected Style' %}
 {% else %}
-  {% set element_id = '__copy.widget_theme' %}
-  {% set label = 'Copy Values From Theme' %}
+  {% set element_id = '__edit.widget_style_parent' %}
+  {% set label = 'Parent Style' %}
 {% endif %}
 
 <!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
@@ -17,6 +17,9 @@
   <select id="{{element_id}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
     <option value="default" {% if input['__edit.widget_type'] == 'default' %}selected{% endif %}>Default</option>
     <option value="alternate" {% if input['__edit.widget_type'] == 'alternate' %}selected{% endif %}>Alternate</option>
+    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Headline</option>
+    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Section Head</option>
+    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Title</option>
     <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Big</option>
     <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Small</option>
     <option value="highlight" {% if input['__edit.widget_type'] == 'highlight' %}selected{% endif %}>Highlight</option>

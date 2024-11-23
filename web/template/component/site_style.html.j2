@@ -4,15 +4,17 @@
 
 
 
-<h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Site Style</h1>
+<h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Site Theme</h1>
 <p class="text-center mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-  Specify the themes available.
+  Specify the styles available.
 </p>
 
 
-{% include 'component/site_editor/generic_widget/widget_select_theme.html.j2' %}
+{% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
 
-{% include 'component/site_editor/generic_widget/widget_select_copy_theme.html.j2' %}
+{% set is_style_parent = True %}
+{% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
+{% set is_style_parent = False %}
 
 <div class="px-24">
   <div class="mb-4 border-b border-gray-200 dark:border-gray-700">

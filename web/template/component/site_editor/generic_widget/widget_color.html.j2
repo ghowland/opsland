@@ -2,10 +2,13 @@
 {% set input = {} %}
 {% set output = {} %}
 
+<div class="columns-2xs gap-8 content-center">
+
 <!-- Color -->
 <form class="max-w-sm mx-auto">
   <label for="__edit.{{cur_data.key_full}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ cur_data.label }}</label>
   <select id="__edit.{{cur_data.key_full}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="parent" {% if input[widget_id + '.' + cur_data.key_full] == 'parent' %}selected{% endif %}>Use Parent</option>
     <option value="gray" {% if input[widget_id + '.' + cur_data.key_full] == 'gray' %}selected{% endif %}>Gray</option>
     <option value="red" {% if input[widget_id + '.' + cur_data.key_full] == 'red' %}selected{% endif %}>Red</option>
     <option value="yellow" {% if input[widget_id + '.' + cur_data.key_full] == 'yellow' %}selected{% endif %}>Yellow</option>
@@ -19,6 +22,6 @@
 
 {% set label = cur_data.label + ' Value' %}
 {% set element_id = '__style.text.size' %}
-{% set select_data = [{'relative': 'Use Relative'}, {'50': '50'}, {'100': '100'}, {'200': '200'}, {'300': '300'}, {'400': '400'}, {'500': '500'}, {'600': '600'}, {'700': '700'}, {'800': '800'}, {'900': '900'}] %}
+{% set select_data = [{'parent': 'Use Parent'}, {'50': '50'}, {'100': '100'}, {'200': '200'}, {'300': '300'}, {'400': '400'}, {'500': '500'}, {'600': '600'}, {'700': '700'}, {'800': '800'}, {'900': '900'}] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
+</div>
