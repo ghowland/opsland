@@ -1,6 +1,21 @@
 {% set cur_data = {} %}
 
-{% include 'includes/page/page_start_minimal.html.j2' %}
+{% if not site_page %}
+  {% set site_page = _context['execute.api.site_page'] %}
+{% endif %}
+
+
+{% if not space_style %}
+  {% set space_style = _context['execute.api.space_style'] %}
+{% endif %}
+
+<!-- space_style:  {{space_style}} -->
+
+{% set cur_style = space_style[space_style['__current']] %}
+
+<!-- cur_style:  {{cur_style}} -->
+
+{% include 'includes/page/page_start_space.html.j2' %}
 
 <!-- Content Sections -->
 <div id="site_style">
