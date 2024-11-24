@@ -5,3 +5,27 @@
 <!-- Edit Mode -->
 {% include 'component/site_editor/widget_page_edit_speeddial.html.j2' %}
 {% include 'component/site_editor/widget_page_edit_sidebar.html.j2' %}
+
+
+
+<script>
+  function MouseDownEdit(evt, widget_id)
+  {
+    if (evt.button == 2) 
+    {
+      // alert('Right: ' + widget_id)
+
+      // Jump to the location
+      window.location.hash = widget_id
+
+      // Open the sidebar by simulating a click on the button
+      var button = document.getElementById('button_open_sidebar')
+      button.click();
+      
+      evt.stopPropagation()
+      evt.preventDefault()
+
+      return true;
+    }
+  }
+</script>

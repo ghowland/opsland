@@ -1,17 +1,22 @@
-<section class="bg-{{cur_style['__style.section.bg_color']}} 
-                border-{{cur_style['__style.section.border_color']}} 
-                border-{{cur_style['__style.section.border_width']}}
+<section class="
+  bg-{{cur_style['__style.section.bg_color']}} 
+  border-{{cur_style['__style.section.border_color']}} 
+  border-{{cur_style['__style.section.border_width']}}
 
-                {{cur_style['__style.section.padding']}}
-                {{cur_style['__style.section.margin']}}
-                {{cur_style['__style.container.rounded']}}
-        
-                ">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
+  {{cur_style['__style.section.padding']}}
+  {{cur_style['__style.section.margin']}}
+  {{cur_style['__style.container.rounded']}}
+
+  "
+  
+  onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
+>
+
+<div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
 
 {% for widget_id in widget_data.include.default %}
   {% include 'component/site_render/page_render_widget_inner.html.j2' %}
 {% endfor %}
 
-  </div>
+</div>
 </section>

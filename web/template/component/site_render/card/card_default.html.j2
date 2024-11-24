@@ -14,7 +14,10 @@
             hover:bg-{{cur_style['__style.container.hover_bg_color']}}
             hover:border-{{cur_style['__style.container.hover_border_color']}}
             hover:border-{{cur_style['__style.container.hover_border_width']}}
-            ">
+            "
+                
+            onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
+  >
 
     
 {% for widget_id in widget_data.include.default %}

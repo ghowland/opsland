@@ -11,6 +11,8 @@
   {% if cur_style['__style.text.upper'] == 'true' %}uppercase{%endif%}
   {% if cur_style['__style.text.underline'] == 'true' %}underline{%endif%}
   {% if cur_style['__style.text.italics'] == 'true' %}italic{%endif%}
-">  
+  "
+  onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
+>
   {{cur_data.text}}
 </p>
