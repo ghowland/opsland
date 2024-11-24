@@ -11,7 +11,7 @@
 
 <!-- space_style:  {{space_style}} -->
 
-{% set cur_style = space_style[space_style['__current']] %}
+{% set cur_style = space_style['actual'][space_style['__control.style']] %}
 
 <!-- cur_style:  {{cur_style}} -->
 

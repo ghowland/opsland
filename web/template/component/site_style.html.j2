@@ -9,7 +9,7 @@
 
 <!-- space_style:  {{space_style}} -->
 
-{% set cur_style = space_style[space_style['__current']] %}
+{% set cur_style = space_style['actual'][space_style['__control.style']] %}
 
 <!-- cur_style:  {{cur_style}} -->
 
@@ -26,45 +26,23 @@
   {% set cur_data = {'widget_id': '__control.style', 'label': 'Selected Style', 'value': space_style.__current} %}
   {% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
 
-  {% set cur_data = {'widget_id': '__style.style.parent', 'label': 'Parent Style', 'value': space_style[space_style.__current]['__style.style.parent']} %}
+  {% set cur_data = {'widget_id': '__style.style.parent', 'label': 'Parent Style', 'value': cur_style['__style.style.parent']} %}
   {% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
 </div>
 
-
-
-<!-- <div class="px-24">
-  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-    <ul class="flex flex-wrap -mb-px text-lg font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-      <li class="me-2" role="presentation">
-          <button class="inline-block p-4 border-b-2 rounded-t-lg" id="content-1-tab" data-tabs-target="#content-1" type="button" role="tab" aria-controls="content-1" aria-selected="false">Page</button>
-      </li>
-      <li class="me-2" role="presentation">
-          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="content-2-tab" data-tabs-target="#content-2" type="button" role="tab" aria-controls="content-2" aria-selected="false">Section</button>
-      </li>
-      <li class="me-2" role="presentation">
-          <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="content-3-tab" data-tabs-target="#content-3" type="button" role="tab" aria-controls="content-3" aria-selected="false">Container</button>
-      </li>
-      <li class="me-2" role="presentation">
-        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="content-4-tab" data-tabs-target="#content-4" type="button" role="tab" aria-controls="content-4" aria-selected="false">Text</button>
-      </li>
-    </ul>
-  </div> -->
-
-  <div id="default-tab-content">
-    <div class="p-4 rounded-lg bg-gray-200" id="content-1" role="tabpanel" aria-labelledby="content-1-tab">
-      {% include 'component/site_editor/site_style/style_page.html.j2' %}
-    </div>
-    <div class="p-4 rounded-lg bg-gray-100" id="content-2" role="tabpanel" aria-labelledby="content-2-tab">
-      {% include 'component/site_editor/site_style/style_section.html.j2' %}
-    </div>
-    <div class="p-4 rounded-lg bg-gray-200" id="content-3" role="tabpanel" aria-labelledby="content-3-tab">
-      {% include 'component/site_editor/site_style/style_container.html.j2' %}
-    </div>
-    <div class="p-4 rounded-lg bg-gray-100" id="content-4" role="tabpanel" aria-labelledby="content-4-tab">
-      {% include 'component/site_editor/site_style/style_text.html.j2' %}
-    </div>
-  </div>  
-<!-- </div> -->
+<div id="">
+  <div class="p-4 rounded-lg bg-gray-200" id="content-1" role="tabpanel" aria-labelledby="content-1-tab">
+    {% include 'component/site_editor/site_style/style_page.html.j2' %}
+  </div>
+  <div class="p-4 rounded-lg bg-gray-100" id="content-2" role="tabpanel" aria-labelledby="content-2-tab">
+    {% include 'component/site_editor/site_style/style_section.html.j2' %}
+  </div>
+  <div class="p-4 rounded-lg bg-gray-200" id="content-3" role="tabpanel" aria-labelledby="content-3-tab">
+    {% include 'component/site_editor/site_style/style_container.html.j2' %}
+  </div>
+  <div class="p-4 rounded-lg bg-gray-100" id="content-4" role="tabpanel" aria-labelledby="content-4-tab">
+    {% include 'component/site_editor/site_style/style_text.html.j2' %}
+  </div>
+</div>  
 
 <iframe id="view_page_render" src="/plan00" style="border:none;" title="Include a page so we can test" width="100%" height="1920px"></iframe>
-
