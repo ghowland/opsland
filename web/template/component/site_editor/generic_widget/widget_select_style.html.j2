@@ -5,11 +5,12 @@
   <select id="{{cur_data.widget_id}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
     <option value="default" {% if cur_data.value == 'default' %}selected{% endif %}>Default</option>
     <option value="alternate" {% if cur_data.value == 'alternate' %}selected{% endif %}>Alternate</option>
-    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Headline</option>
-    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Section Head</option>
-    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Title</option>
-    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Big</option>
-    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Small</option>
+    <option value="headline" {% if cur_data.value == 'headline' %}selected{% endif %}>Headline</option>
+    <option value="section_head" {% if cur_data.value == 'section_head' %}selected{% endif %}>Section Head</option>
+    <option value="title" {% if cur_data.value == 'title' %}selected{% endif %}>Title</option>
+    <option value="big" {% if cur_data.value == 'big' %}selected{% endif %}>Big</option>
+    <option value="small" {% if cur_data.value == 'small' %}selected{% endif %}>Small</option>
+    <option value="extra_small" {% if cur_data.value == 'extra_small' %}selected{% endif %}>Extra Small</option>
     <option value="highlight" {% if cur_data.value == 'highlight' %}selected{% endif %}>Highlight</option>
     <option value="disabled" {% if cur_data.value == 'disabled' %}selected{% endif %}>Disabled</option>
     <option value="warning" {% if cur_data.value == 'warning' %}selected{% endif %}>Warning</option>
