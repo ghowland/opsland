@@ -8,7 +8,8 @@ Widget Data: Data Value: {{widget_data.data}}<br> -->
 
 {% if widget_data.data is defined %}
   {% set cur_data = widget_data.data %}
-  {% else %}
+  {% set cur_style = space_style[cur_data.theme] | default(space_style['default']) %}
+{% else %}
   {% set cur_data = {} %}
 {% endif %}
 

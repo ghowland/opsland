@@ -11,6 +11,8 @@
 
   {% set html_data = map_widget_html[widget_data.widget] %}
 
+  {{widget_data.data.style}}
+
   {% set cur_style = space_style['default'] %}
 
   {% include 'component/site_render/render_widget.html.j2' %}

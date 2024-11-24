@@ -277,6 +277,9 @@ http:
         execute.api.space_map_widget_html:
           map_widget_html: []
 
+        execute.api.space_style:
+          space_style: []
+
 
     # New: Re-render the Full Page after a change
     api/space_editor_render:
@@ -292,6 +295,9 @@ http:
         
         execute.api.space_map_widget_html:
           map_widget_html: []
+
+        execute.api.space_style:
+          space_style: []
 
     api/space_style:
       template: component/site_style.html.j2
