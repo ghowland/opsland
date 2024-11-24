@@ -1,10 +1,14 @@
 
 
-<div class="max-w-sm p-6 rounded-lg shadow 
+<div class="max-w-sm shadow 
             bg-{{cur_style['__style.container.bg_color']}} 
             border-{{cur_style['__style.container.border_color']}} 
             border-{{cur_style['__style.container.border_width']}}
-            
+
+            {{cur_style['__style.container.padding']}}
+            {{cur_style['__style.container.margin']}}
+            {{cur_style['__style.container.rounded']}}
+
             hover:bg-{{cur_style['__style.container.hover_bg_color']}}
             hover:border-{{cur_style['__style.container.hover_border_color']}}
             hover:border-{{cur_style['__style.container.hover_border_width']}}
