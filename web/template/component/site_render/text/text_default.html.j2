@@ -1,16 +1,16 @@
 <p class="
-      text-{{cur_style['__style.text.color']}} 
+  text-{{cur_style['__style.text.color']}} 
 
-      {% if cur_style['__style.text.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.text.hover_color']}}{%endif%}
-      {% if cur_style['__style.text.override_focus_color'] == 'true' %}focus:text-{{cur_style['__style.text.focus_color']}}{%endif%}
-      
-      {{cur_style['__style.text.size']}} 
-      {{cur_style['__style.text.bold']}}  
-      {{cur_style['__style.text.margin']}}
+  {% if cur_style['__style.text.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.text.hover_color']}}{%endif%}
+  {% if cur_style['__style.text.override_focus_color'] == 'true' %}focus:text-{{cur_style['__style.text.focus_color']}}{%endif%}
 
-      {% if cur_style['__style.text.upper'] == 'true' %}uppercase{%endif%}
-      {% if cur_style['__style.text.underline'] == 'true' %}underline{%endif%}
-      {% if cur_style['__style.text.italics'] == 'true' %}italic{%endif%}
-      ">
+  {{cur_style['__style.text.size']}} 
+  {{cur_style['__style.text.bold']}}  
+  {{cur_style['__style.text.margin']}}
+
+  {% if cur_style['__style.text.upper'] == 'true' %}uppercase{%endif%}
+  {% if cur_style['__style.text.underline'] == 'true' %}underline{%endif%}
+  {% if cur_style['__style.text.italics'] == 'true' %}italic{%endif%}
+">  
   {{cur_data.text}}
 </p>
