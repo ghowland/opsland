@@ -110,7 +110,7 @@
     inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
 
     var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
-    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked == true));
   }
 
   function SetWidgetOption(name, value) {

@@ -30,14 +30,18 @@
 {% set cur_data = {'widget_id': '__style.container.border_color', 'label': 'Border Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.container.border_width', 'label': 'Border Width', 'value': cur_style['__style.container.border_width']} %}
-{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
+{% set label = 'Border Width' %}
+{% set element_id = '__style.container.border_width' %}
+{% set select_data = [{'0': 'No Border'}, {'2': '2px'}, {'4': '4px'}, {'8': '8px'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 
 </div>
 
 <div class="columns-2 block">
 
-{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Use Hover Color'} %}
+{% set cur_data = {'widget_id': '__style.container.override_hover_color', 'label': 'Override Hover Color', 'value': cur_style['__style.container.override_hover_color']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
 {% set cur_data = {'widget_id': '__style.container.hover_bg_color', 'label': 'Hover Background Color'} %}
@@ -46,14 +50,17 @@
 {% set cur_data = {'widget_id': '__style.container.hover_border_color', 'label': 'Hover Border Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.container.hover_border_width', 'label': 'Hover Border Width', 'value': cur_style['__style.container.hover_border_width']} %}
-{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
+{% set label = 'Hover Border Width' %}
+{% set element_id = '__style.container.hover_border_width' %}
+{% set select_data = [{'0': 'No Border'}, {'2': '2px'}, {'4': '4px'}, {'8': '8px'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 </div>
 
 <div class="columns-2 block">
 
-{% set cur_data = {'key_full': 'xyz.border-width', 'label': 'Use Focus Color'} %}
+{% set cur_data = {'widget_id': '__style.container.override_hover_color', 'label': 'Override Focus Color', 'value': cur_style['__style.container.override_focus_color']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
 {% set cur_data = {'widget_id': '__style.container.focus_bg_color', 'label': 'Focus Background Color'} %}
@@ -62,7 +69,12 @@
 {% set cur_data = {'widget_id': '__style.container.focus_border_color', 'label': 'Focus Border Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.container.focus_border_width', 'label': 'Focus Border Width', 'value': cur_style['__style.container.focus_border_width']} %}
-{% include 'component/site_editor/generic_widget/widget_int_string.html.j2' %}
+
+{% set label = 'Focus Border Width' %}
+{% set element_id = '__style.container.focus_border_width' %}
+{% set select_data = [{'0': 'No Border'}, {'2': '2px'}, {'4': '4px'}, {'8': '8px'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 
 </div>

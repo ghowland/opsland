@@ -1,3 +1,11 @@
-<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+<p class="text-{{cur_style['__style.text.color']}} 
+      {{cur_style['__style.text.size']}} 
+      {{cur_style['__style.text.bold']}}  
+      {{cur_style['__style.text.margin']}}
+
+      {% if cur_style['__style.text.upper'] == 'true' %}uppercase{%endif%}
+      {% if cur_style['__style.text.underline'] == 'true' %}underline{%endif%}
+      {% if cur_style['__style.text.italics'] == 'true' %}italic{%endif%}
+      ">
   {{cur_data.text}}
 </p>

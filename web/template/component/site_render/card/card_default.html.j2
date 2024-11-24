@@ -1,6 +1,14 @@
 
 
-<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="max-w-sm p-6 rounded-lg shadow 
+            bg-{{cur_style['__style.container.bg_color']}} 
+            border-{{cur_style['__style.container.border_color']}} 
+            border-{{cur_style['__style.container.border_width']}}
+            
+            hover:bg-{{cur_style['__style.container.hover_bg_color']}}
+            hover:border-{{cur_style['__style.container.hover_border_color']}}
+            hover:border-{{cur_style['__style.container.hover_border_width']}}
+            ">
 
     
 {% for widget_id in widget_data.include.default %}
