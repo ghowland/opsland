@@ -186,6 +186,18 @@ execute:
 
         execute.api.space_style:
           style_data: []
+    
+    space_edit_widget:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
+      input_path: /tmp/opsland/space_edit_widget_{uuid}.json
+      input:
+        # Pass through our request data
+        request:
+          record_id: [uri]
+
+        execute.api.space_page_data.{request.site_page_uri}:
+          last_version: []
+        
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
@@ -302,6 +314,11 @@ http:
     api/space_style:
       template: component/site_style.html.j2
       execute: execute.api.space_style
+
+    api/space_edit_widget:
+      # template: component/site_style.html.j2
+      execute: execute.api.space_edit_widget
+
 
   # GET
   get:
