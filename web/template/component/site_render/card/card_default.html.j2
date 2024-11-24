@@ -1,6 +1,6 @@
 
 
-<div class="max-w-sm shadow 
+<div class="max-w-sm 
             bg-{{cur_style['__style.container.bg_color']}} 
             border-{{cur_style['__style.container.border_color']}} 
             border-{{cur_style['__style.container.border_width']}}
@@ -8,6 +8,8 @@
             {{cur_style['__style.container.padding']}}
             {{cur_style['__style.container.margin']}}
             {{cur_style['__style.container.rounded']}}
+
+            {% if cur_style['__style.container.shadow'] == 'true' %}shadow{%endif%}
 
             hover:bg-{{cur_style['__style.container.hover_bg_color']}}
             hover:border-{{cur_style['__style.container.hover_border_color']}}
