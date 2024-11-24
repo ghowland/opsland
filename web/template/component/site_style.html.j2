@@ -22,12 +22,14 @@
 <input type="hidden" id="__control.current_style" value="{{space_style['__current']}}" class="widget_input">
 
 
-<div class="columns-3">
+<div class="columns-1">
   {% set cur_data = {'widget_id': '__control.style', 'label': 'Selected Style', 'value': space_style.__current} %}
   {% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
 
-  {% set cur_data = {'widget_id': '__style.style.parent', 'label': 'Parent Style', 'value': cur_style['__style.style.parent']} %}
-  {% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
+  {% if space_style['__control.style'] != 'default' %}
+    {% set cur_data = {'widget_id': '__style.style.parent', 'label': 'Parent Style', 'value': cur_style['__style.style.parent']} %}
+    {% include 'component/site_editor/generic_widget/widget_select_style.html.j2' %}
+  {% endif %}
 </div>
 
 <div id="">
