@@ -184,6 +184,9 @@ execute:
         request:
           record_id: [uri]
 
+        execute.api.space_style:
+          style_data: []
+
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
   site_page.try00: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml

@@ -1,61 +1,49 @@
-{% set widget_id = 'no.' %}
-{% set input = {} %}
-{% set output = {} %}
-{% set cur_data = {'key_full': 'Yeah', 'label': 'Got some!'} %}
-
-{% if not is_style_parent %}
-  {% set element_id = '__edit.widget_style' %}
-  {% set label = 'Selected Style' %}
-{% else %}
-  {% set element_id = '__edit.widget_style_parent' %}
-  {% set label = 'Parent Style' %}
-{% endif %}
 
 <!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
 <form class="max-w-sm mx-auto">
-  <label for="{{element_id}}" class="mb-2 text-sm font-medium text-gray-900">{{label}}</label>
-  <select id="{{element_id}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-    <option value="default" {% if input['__edit.widget_type'] == 'default' %}selected{% endif %}>Default</option>
-    <option value="alternate" {% if input['__edit.widget_type'] == 'alternate' %}selected{% endif %}>Alternate</option>
-    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Headline</option>
-    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Section Head</option>
-    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Title</option>
-    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Big</option>
-    <option value="special" {% if input['__edit.widget_type'] == 'special' %}selected{% endif %}>Small</option>
-    <option value="highlight" {% if input['__edit.widget_type'] == 'highlight' %}selected{% endif %}>Highlight</option>
-    <option value="disabled" {% if input['__edit.widget_type'] == 'disabled' %}selected{% endif %}>Disabled</option>
-    <option value="warning" {% if input['__edit.widget_type'] == 'warning' %}selected{% endif %}>Warning</option>
-    <option value="attract" {% if input['__edit.widget_type'] == 'attract' %}selected{% endif %}>Attract</option>
-    <option value="hero" {% if input['__edit.widget_type'] == 'hero' %}selected{% endif %}>Hero</option>
-    <option value="promotion" {% if input['__edit.widget_type'] == 'promotion' %}selected{% endif %}>Promotion</option>
-    <option value="premium" {% if input['__edit.widget_type'] == 'premium' %}selected{% endif %}>Premium</option>
-    <option value="boost" {% if input['__edit.widget_type'] == 'boost' %}selected{% endif %}>Boost</option>
-    <option value="spotlight" {% if input['__edit.widget_type'] == 'spotlight' %}selected{% endif %}>Spotlight</option>
-    <option value="callout" {% if input['__edit.widget_type'] == 'callout' %}selected{% endif %}>Callout</option>
-    <option value="exclusive" {% if input['__edit.widget_type'] == 'exclusive' %}selected{% endif %}>Exclusive</option>
-    <option value="engage" {% if input['__edit.widget_type'] == 'engage' %}selected{% endif %}>Engage</option>
-    <option value="iconic" {% if input['__edit.widget_type'] == 'iconic' %}selected{% endif %}>Iconic</option>
-    <option value="launch" {% if input['__edit.widget_type'] == 'launch' %}selected{% endif %}>Launch</option>
-    <option value="vivid" {% if input['__edit.widget_type'] == 'vivid' %}selected{% endif %}>Vivid</option>
-    <option value="vip" {% if input['__edit.widget_type'] == 'vip' %}selected{% endif %}>VIP</option>
-    <option value="curated" {% if input['__edit.widget_type'] == 'curated' %}selected{% endif %}>Curated</option>
-    <option value="impact" {% if input['__edit.widget_type'] == 'impact' %}selected{% endif %}>Impact</option>
-    <option value="limited" {% if input['__edit.widget_type'] == 'limited' %}selected{% endif %}>Limited</option>
-    <option value="conversion" {% if input['__edit.widget_type'] == 'conversion' %}selected{% endif %}>Conversion</option>
-    <option value="security" {% if input['__edit.widget_type'] == 'security' %}selected{% endif %}>Security</option>
-    <option value="problem" {% if input['__edit.widget_type'] == 'problem' %}selected{% endif %}>Problem</option>
-    <option value="error" {% if input['__edit.widget_type'] == 'error' %}selected{% endif %}>Error</option>
-    <option value="critical_failure" {% if input['__edit.widget_type'] == 'critical_failure' %}selected{% endif %}>Critical Failure</option>
-    <option value="verification_required" {% if input['__edit.widget_type'] == 'verification_required' %}selected{% endif %}>Verification Required</option>
-    <option value="access_denied" {% if input['__edit.widget_type'] == 'access_denied' %}selected{% endif %}>Access Denied</option>
-    <option value="data_breach_alert" {% if input['__edit.widget_type'] == 'data_breach_alert' %}selected{% endif %}>Data Breach Alert</option>
-    <option value="blocked" {% if input['__edit.widget_type'] == 'blocked' %}selected{% endif %}>Blocked</option>
-    <option value="update_required" {% if input['__edit.widget_type'] == 'update_required' %}selected{% endif %}>Update Required</option>
-    <option value="maintenance_mode" {% if input['__edit.widget_type'] == 'maintenance_mode' %}selected{% endif %}>Maintenance Mode</option>
-    <option value="recover_account" {% if input['__edit.widget_type'] == 'recover_account' %}selected{% endif %}>Recover Account</option>
-    <option value="custom_00" {% if input['__edit.widget_type'] == 'custom_00' %}selected{% endif %}>Custom 00</option>
-    <option value="custom_01" {% if input['__edit.widget_type'] == 'custom_01' %}selected{% endif %}>Custom 01</option>
-    <option value="custom_02" {% if input['__edit.widget_type'] == 'custom_02' %}selected{% endif %}>Custom 02</option>
+  <label for="{{cur_data.widget_id}}" class="mb-2 text-sm font-medium text-gray-900">{{cur_data.label}}</label>
+  <select id="{{cur_data.widget_id}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <option value="default" {% if cur_data.value == 'default' %}selected{% endif %}>Default</option>
+    <option value="alternate" {% if cur_data.value == 'alternate' %}selected{% endif %}>Alternate</option>
+    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Headline</option>
+    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Section Head</option>
+    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Title</option>
+    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Big</option>
+    <option value="special" {% if cur_data.value == 'special' %}selected{% endif %}>Small</option>
+    <option value="highlight" {% if cur_data.value == 'highlight' %}selected{% endif %}>Highlight</option>
+    <option value="disabled" {% if cur_data.value == 'disabled' %}selected{% endif %}>Disabled</option>
+    <option value="warning" {% if cur_data.value == 'warning' %}selected{% endif %}>Warning</option>
+    <option value="attract" {% if cur_data.value == 'attract' %}selected{% endif %}>Attract</option>
+    <option value="hero" {% if cur_data.value == 'hero' %}selected{% endif %}>Hero</option>
+    <option value="promotion" {% if cur_data.value == 'promotion' %}selected{% endif %}>Promotion</option>
+    <option value="premium" {% if cur_data.value == 'premium' %}selected{% endif %}>Premium</option>
+    <option value="boost" {% if cur_data.value == 'boost' %}selected{% endif %}>Boost</option>
+    <option value="spotlight" {% if cur_data.value == 'spotlight' %}selected{% endif %}>Spotlight</option>
+    <option value="callout" {% if cur_data.value == 'callout' %}selected{% endif %}>Callout</option>
+    <option value="exclusive" {% if cur_data.value == 'exclusive' %}selected{% endif %}>Exclusive</option>
+    <option value="engage" {% if cur_data.value == 'engage' %}selected{% endif %}>Engage</option>
+    <option value="iconic" {% if cur_data.value == 'iconic' %}selected{% endif %}>Iconic</option>
+    <option value="launch" {% if cur_data.value == 'launch' %}selected{% endif %}>Launch</option>
+    <option value="vivid" {% if cur_data.value == 'vivid' %}selected{% endif %}>Vivid</option>
+    <option value="vip" {% if cur_data.value == 'vip' %}selected{% endif %}>VIP</option>
+    <option value="curated" {% if cur_data.value == 'curated' %}selected{% endif %}>Curated</option>
+    <option value="impact" {% if cur_data.value == 'impact' %}selected{% endif %}>Impact</option>
+    <option value="limited" {% if cur_data.value == 'limited' %}selected{% endif %}>Limited</option>
+    <option value="conversion" {% if cur_data.value == 'conversion' %}selected{% endif %}>Conversion</option>
+    <option value="security" {% if cur_data.value == 'security' %}selected{% endif %}>Security</option>
+    <option value="problem" {% if cur_data.value == 'problem' %}selected{% endif %}>Problem</option>
+    <option value="error" {% if cur_data.value == 'error' %}selected{% endif %}>Error</option>
+    <option value="critical_failure" {% if cur_data.value == 'critical_failure' %}selected{% endif %}>Critical Failure</option>
+    <option value="verification_required" {% if cur_data.value == 'verification_required' %}selected{% endif %}>Verification Required</option>
+    <option value="access_denied" {% if cur_data.value == 'access_denied' %}selected{% endif %}>Access Denied</option>
+    <option value="data_breach_alert" {% if cur_data.value == 'data_breach_alert' %}selected{% endif %}>Data Breach Alert</option>
+    <option value="blocked" {% if cur_data.value == 'blocked' %}selected{% endif %}>Blocked</option>
+    <option value="update_required" {% if cur_data.value == 'update_required' %}selected{% endif %}>Update Required</option>
+    <option value="maintenance_mode" {% if cur_data.value == 'maintenance_mode' %}selected{% endif %}>Maintenance Mode</option>
+    <option value="recover_account" {% if cur_data.value == 'recover_account' %}selected{% endif %}>Recover Account</option>
+    <option value="custom_00" {% if cur_data.value == 'custom_00' %}selected{% endif %}>Custom 00</option>
+    <option value="custom_01" {% if cur_data.value == 'custom_01' %}selected{% endif %}>Custom 01</option>
+    <option value="custom_02" {% if cur_data.value == 'custom_02' %}selected{% endif %}>Custom 02</option>
   </select>
 </form>
 
