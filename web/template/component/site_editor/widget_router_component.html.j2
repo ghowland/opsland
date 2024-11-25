@@ -18,7 +18,7 @@
 {% endif %}
 
 
-<a href="#{{site_page['parents'][widget_id]}}" class="block rounded my-3 p-2 border border-green-700 cursor-pointer bg-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+<a href="#" onclick="CloseEditModal(); SetWidgetOption('__select_edit.widget_id', '{{site_page.parents[widget_id]}}'); RenderWidget('fetch')" class="block rounded my-3 p-2 border border-green-700 cursor-pointer bg-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
   Parent: {{site_page['parents'][widget_id]}}
 </a>
 
@@ -43,7 +43,7 @@
 
       {% for include_widget_id in include_widget_ids %}
       <div class="inline-flex rounded-md shadow-sm">
-        <a href="#{{include_widget_id}}" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-50 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
+        <a href="#" onclick="CloseEditModal(); SetWidgetOption('__select_edit.widget_id', '{{include_widget_id}}'); RenderWidget('fetch')" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-50 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           {{include_widget_id}}
         </a>
         <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_target', '{{include_target}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('raise')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-yellow-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
