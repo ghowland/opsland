@@ -9,6 +9,30 @@
 
 
 <script>
+  // Global Widget Options for collecting data
+  var WidgetOptions = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'};
+
+  function RenderWidget(command) {
+    // Set a command
+    if (command != undefined) SetWidgetOption('__command', command)
+    else SetWidgetOption('__command', 'set')
+
+    ScrapeData()
+
+    htmx.ajax('POST', '/api/space_editor_sidebar', {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
+      // Testing crud modal to make changes to this element
+      var button = document.getElementById('crud_modal_button')
+      button.click();
+    });
+  
+    // Have to scrape it again, because we just updated it
+    ScrapeData()
+
+    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+    SetWidgetOption('__command', 'none')
+    htmx.ajax('POST', '/api/space_editor_render', {'target': '#page_render', 'values': WidgetOptions})
+  }
+
   function MouseDownEdit(evt, widget_id)
   {
     //TODO: If we dont allow editing, just return here...
@@ -23,13 +47,12 @@
       // // Open the sidebar by simulating a click on the button
       // var button = document.getElementById('button_open_sidebar')
       // button.click();
-      
-      htmx.ajax('POST', '/api/space_edit_widget', {'target': '#crud_model_target', 'values': {'__widget_id': widget_id}}).then(() => {
-        // Testing crud modal to make changes to this element
-        var button = document.getElementById('crud_modal_button')
-        button.click();
-      });
 
+      SetWidgetOption('__select_edit.widget_id', widget_id)
+      SetWidgetOption('__command', 'fetch')
+
+      // Get the Modal to appear first
+      RenderWidget('fetch')
 
       // No more events from this click, and dont open the contextmenu
       evt.stopPropagation()
@@ -37,6 +60,23 @@
       return true;
     }
   }
+
+  function ScrapeData()
+  {
+    // Get all the inputs and checkboxes
+    var inputs = Array.from(document.getElementsByClassName("widget_input"));
+    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value));
+
+    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked));
+  }
+
+  function SetWidgetOption(name, value) {
+    WidgetOptions[name] = value;
+  }
+
+
+
 </script>
 
 
@@ -44,8 +84,8 @@
 <button id="crud_modal_button" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="hidden" type="button">Hidden Button to Open Modal</button>
 
 <!-- Main modal -->
-<div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
+<div id="crud-modal" tabindex="-1" aria-hidden="true" data-modal-placement="center-left" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-4xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -89,9 +129,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button type="button" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" data-modal-toggle="crud-modal">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    Submit
+                    Close
                 </button>
 
             </form>

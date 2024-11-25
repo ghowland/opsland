@@ -9,9 +9,13 @@
 
 <!-- Widget Router: Will render all of the widget data elements recursively -->
 {% for widget_id, widget_data in site_page.widgets.items() %}
-  {% set widget_map = map_widget_html[widget_data.widget] %}
-  {% set widget_spec = widget_specs[widget_map.spec] %}
+  {% if site_page['__select_edit.widget_id'] == widget_id %}
 
-  {% include 'component/site_editor/widget_router_component.html.j2' %}
+    {% set widget_map = map_widget_html[widget_data.widget] %}
+    {% set widget_spec = widget_specs[widget_map.spec] %}
+
+    {% include 'component/site_editor/widget_router_component.html.j2' %}
+    
+  {% endif %}
 {% endfor %}
 
