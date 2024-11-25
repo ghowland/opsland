@@ -36,8 +36,9 @@
     //TODO: If we dont allow editing, just return here...
     //...
 
-    // Handle Right Mouse Button only
-    if (evt.button == 2) 
+    // Handle Wheel button.  Perfect, because I never use that button for anything, unlike the middle to launch links in a new tab
+    //TODO: Make settings for this, so that users can tune how they want to control their editing experience
+    if (evt.button == 1) 
     {
       // Jump to the location
       window.location.hash = widget_id
@@ -77,6 +78,13 @@
   {
     var close_button = document.getElementById('crud_modal_close_button')
     close_button.click()
+
+    // Clear the dark opacity, it doesnt make editing things nicer, and I cant find a toggle for it
+    var modal = document.querySelector('#crud-modal');
+    modal.classList.remove('bg-gray-900', 'bg-opacity-50');
+
+    var elements = document.querySelectorAll('[modal-backdrop]'); 
+    elements.forEach
   }
 
 </script>
@@ -86,7 +94,7 @@
 <button id="crud_modal_button" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="hidden" type="button">Hidden Button to Open Modal</button>
 
 <!-- Main modal -->
-<div id="crud-modal" tabindex="-1" aria-hidden="true" data-modal-placement="center-left" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="crud-modal" tabindex="-1" aria-hidden="true" data-modal-placement="center-left" data-modal-backdrop="" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-4xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
