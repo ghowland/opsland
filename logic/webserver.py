@@ -12,13 +12,14 @@ import uvicorn
 import os, signal
 
 # We import these here, but all the child modules can use them through their `parent` reference
-from fastapi import FastAPI, Request, Response, Depends
+from fastapi import FastAPI, Request, Response, Depends, UploadFile, File
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 # from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.responses import RedirectResponse
 
+import shutil
 import secrets
 
 from pydantic import BaseModel
@@ -129,6 +130,7 @@ def GetBundlePathData(method, path):
   return (None, None, None)
 
 
+# OpsLand Cache Data printed out for manual inspection
 @APP.get("/opsland/data", response_class=HTMLResponse)
 async def Web_GET(request: Request):
   """Returns all the data for the Bundles"""
@@ -136,6 +138,23 @@ async def Web_GET(request: Request):
   data = {'bundles': CONFIG.cache.bundles}
 
   return TEMPLATES.TemplateResponse(name='pages/opsland_data.html.j2', context=data, request=request)
+
+
+# UPLOAD: Multiple Files
+@APP.post("/upload_multi")
+async def Upload_CreateUploadFileMulti(files: list[UploadFile]):
+  # with open("destination.png", "wb") as buffer:
+  #   shutil.copyfileobj(file.file, buffer)
+  return {"filenames": [file.filename for file in files]}
+
+
+# UPLOAD: Single File
+@APP.post("/upload_single")
+async def Upload_CreateUploadFile(file: UploadFile = File(...)):
+   with open("destination.png", "wb") as buffer:
+      shutil.copyfileobj(file.file, buffer)
+   return {"filename": file.filename}
+
 
 
 # -- Handle Every HTTP Method and all paths with per-method handler --
@@ -202,4 +221,3 @@ async def Web_DELETE(request: Request, full_path: str):
 
   rendered_html = f'DELETE: {full_path}  Data: {data}'#  Headers: {headers}'
   return Response(status_code=200, content=rendered_html)
-
