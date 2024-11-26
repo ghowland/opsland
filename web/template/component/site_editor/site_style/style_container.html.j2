@@ -20,6 +20,18 @@
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+{% set label = 'Width' %}
+{% set element_id = '__style.container.width' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'w-min': 'Minimum Width'}, {'w-full': 'Full Width'}, {'w-24': '24 em'}, {'w-32': '32 em'}, {'w-40': '40 em'}, {'w-48': '48 em'}, {'w-64': '64 em'}, {'w-72': 'Rounded Full'}, {'w-90': '90 em'}, {'w-96': '96 em'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+{% set label = 'Height' %}
+{% set element_id = '__style.container.height' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'h-min': 'Minimum Width'}, {'h-full': 'Full Width'}, {'h-24': '24 em'}, {'h-32': '32 em'}, {'h-40': '40 em'}, {'h-48': '48 em'}, {'h-64': '64 em'}, {'h-72': 'Rounded Full'}, {'h-90': '90 em'}, {'h-96': '96 em'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 </div>
 
 {% set cur_data = {'widget_id': '__style.container.shadow', 'label': 'Shadow', 'value': cur_style['__style.container.shadow']} %}

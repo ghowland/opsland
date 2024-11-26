@@ -22,6 +22,13 @@
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+
+{% set label = 'Alignment' %}
+{% set element_id = '__style.text.alignment' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'text-left': 'Left'}, {'text-center': 'Center'}, {'text-right': 'Right'}, {'text-justify': 'Justify'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 </div>
 
 <div class="columns-1 block">
