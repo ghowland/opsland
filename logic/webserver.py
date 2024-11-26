@@ -151,9 +151,18 @@ async def Upload_CreateUploadFileMulti(files: list[UploadFile]):
 # UPLOAD: Single File
 @APP.post("/upload_single")
 async def Upload_CreateUploadFile(file: UploadFile = File(...)):
-   with open("destination.png", "wb") as buffer:
-      shutil.copyfileobj(file.file, buffer)
-   return {"filename": file.filename}
+  #TODO:HARDCODE: Put into config and use from there
+  UPLOAD_PATH = '/mnt/d/_OpsLand/uploads/'
+
+  # For now, we will allow only unique names, and we will overwrite on getting them again, so it is just a file system storage
+  #TODO: Figure out the best way to manage this, we want controls and audits on the files
+  #TODO: Could AI to classify the images, and there should be services for that
+  save_path = UPLOAD_PATH + file.filename
+
+  with open(save_path, "wb") as buffer:
+    shutil.copyfileobj(file.file, buffer)
+
+  return {"filename": file.filename}
 
 
 

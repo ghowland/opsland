@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center w-full">
+<div class="flex items-center justify-center w-full" onclick="document.getElementById('upload-file').click()">
   <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
       <div class="flex flex-col items-center justify-center pt-5 pb-6">
           <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -7,18 +7,30 @@
           <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
           <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
       </div>
-      <form id='form_upload' hx-encoding='multipart/form-data' hx-post='/upload_single'>
-        <input id="dropzone-file" name="file" type="file" class="hidden" onchange="document.getElementById('form_submit').click()">
+      <form id='form_upload' hx-encoding='multipart/form-data' hx-post='/upload_single' hx-target='#upload_result'>
+        <input id="upload-file" name="file" type="file" class="hidden" onchange="document.getElementById('form_submit').click()">
         <button class="hidden" id="form_submit"></button>
       </form>
     </label>
 </div> 
 
+<!-- Progress Bar -->
+<div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+  <div class="bg-blue-600 h-2.5 rounded-full dark:bg-blue-500" id="progress" style="width: 2%"></div>
+</div>
+
+<div id="upload_result">
+
+</div>
+
 
 <script>
   // Bind our progress to the progress slider
   htmx.on('#form_upload', 'htmx:xhr:progress', function(evt) {
-    htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+    var percent_complete = evt.detail.loaded / evt.detail.total * 100
+    // alert(percent_complete + '%')
+    htmx.find('#progress').style.width = percent_complete + '%'
+    // htmx.find('#progress').setAttribute('value', percent_complete)
   })
 </script>
 
