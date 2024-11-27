@@ -44,6 +44,20 @@
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+
+{% set label = 'Justify Content' %}
+{% set element_id = '__style.container.flex_justify' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'justify-normal': 'Normal'}, {'justify-start': 'Start'}, {'justify-end': 'End'}, {'justify-center': 'Center'}, {'justify-between': 'Between'}, {'justify-around': 'Around'}, {'justify-evenly': 'Evenly'}, {'content-baseline': 'Baseline'}, {'justify-stretch': 'Stretch'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+
+{% set label = 'Flex Content Alignment' %}
+{% set element_id = '__style.container.flex_content' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'content-normal': 'Normal'}, {'content-center': 'Center'}, {'content-start': 'Start'}, {'content-end': 'End'}, {'content-between': 'Between'}, {'content-around': 'Around'}, {'content-evenly': 'Evenly'}, {'content-baseline': 'Baseline'}, {'content-stretch': 'Stretch'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 </div>
 
 {% set cur_data = {'widget_id': '__style.container.shadow', 'label': 'Shadow', 'value': cur_style['__style.container.shadow']} %}

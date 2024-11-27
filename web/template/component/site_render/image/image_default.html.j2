@@ -1,1 +1,13 @@
-<img class="rounded-lg" src="{{cur_data.image}}" alt="{{cur_data.alt}}" />
+<div class="flex
+  {{cur_style['__style.container.flex_justify']}}
+  {{cur_style['__style.container.rounded']}}
+  {{cur_style['__style.container.padding']}}
+">
+  <img src="{{cur_data.image}}" alt="{{cur_data.alt}}"
+  class="
+  {{cur_style['__style.container.width']}}
+  {{cur_style['__style.container.width_max']}}
+  {{cur_style['__style.container.width_min']}}
+  "
+>
+</div>
