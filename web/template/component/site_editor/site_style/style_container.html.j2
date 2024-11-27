@@ -26,6 +26,18 @@
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+{% set label = 'Max Width' %}
+{% set element_id = '__style.container.width_max' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"max-w-xs": "max-w-xs"}, {"max-w-sm": "max-w-sm"}, {"max-w-md": "max-w-md"}, {"max-w-lg": "max-w-lg"}, {"max-w-xl": "max-w-xl"}, {"max-w-2xl": "max-w-2xl"}, {"max-w-3xl": "max-w-3xl"}, {"max-w-4xl": "max-w-4xl"}, {"max-w-5xl": "max-w-5xl"}, {"max-w-6xl": "max-w-6xl"}, {"max-w-7xl": "max-w-7xl"}, {"max-w-full": "max-w-full"}, {"max-w-min": "max-w-min"}, {"max-w-max": "max-w-max"}, {"max-w-fit": "max-w-fit"}, {"max-w-none": "max-w-none"}, {"max-w-screen-sm": "max-w-screen-sm"}, {"max-w-screen-md": "max-w-screen-md"}, {"max-w-screen-lg": "max-w-screen-lg"}, {"max-w-screen-xl": "max-w-screen-xl"}, {"max-w-screen-2xl": "max-w-screen-2xl"}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+{% set label = 'Min Width' %}
+{% set element_id = '__style.container.width_min' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"min-w-full": "min-w-full"}, {"min-w-min": "min-w-min"}, {"min-w-max": "min-w-max"}, {"min-w-fit": "min-w-fit"}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 {% set label = 'Height' %}
 {% set element_id = '__style.container.height' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'h-min': 'Minimum Width'}, {'h-full': 'Full Width'}, {'h-24': '24 em'}, {'h-32': '32 em'}, {'h-40': '40 em'}, {'h-48': '48 em'}, {'h-64': '64 em'}, {'h-72': 'Rounded Full'}, {'h-90': '90 em'}, {'h-96': '96 em'}] %}

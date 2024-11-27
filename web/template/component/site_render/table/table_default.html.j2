@@ -1,4 +1,6 @@
 
+{% set headers = [{'text': 'Head 1'}, {'text': 'Head 2'}, {'text': 'Head 2'}, {'text': 'Head 2'}, {'text': 'Head 2'}] %}
+{% set rows = [] %}
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
   <table class="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
@@ -15,11 +17,11 @@
         {% for row in rows %}
           <tr class="bg-blue-500 border-b border-blue-400">
             {% for column in row.columns %}
-              {% if .loop.even %}
+              {% if column.even %}
               <th scope="row" class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">
                   {{column.text}}
               </th>
-              {% eles %}
+              {% else %}
               <td class="px-6 py-4">
                   Silver
               </td>
