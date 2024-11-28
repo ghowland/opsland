@@ -47,7 +47,7 @@
       {% for include_widget_id in include_widget_ids %}
       <div class="inline-flex rounded-md shadow-sm">
         <a href="#" onclick="ToggleEditModal(); SetWidgetOption('__select_edit.widget_id', '{{include_widget_id}}'); RenderWidget('fetch')" aria-current="page" class="rounded-s-lg px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-gray-50 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
-          {{include_widget_id}}
+          {{site_page.widgets[include_widget_id].widget}}:{{include_widget_id[:5]}}
         </a>
         <a href="#" onclick="SetWidgetOption('__edit_widget', '{{widget_id}}'); SetWidgetOption('__edit_target', '{{include_target}}'); SetWidgetOption('__edit_include_widget_id', '{{include_widget_id}}'); RenderWidget('raise', false)" class="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-100 border border-gray-200 hover:bg-yellow-300 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-100">
           -

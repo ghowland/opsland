@@ -33,7 +33,9 @@
         <div class="space-y-6 overflow-hidden border-b border-e-0 p-6 text-center dark:border-gray-700 lg:border-e lg:border-gray-200">
           <div class="h-44 flex justify-center">
             <a href="#">
-              <img class="h-auto max-h-full rounded-md border-4 border-gray-300 hover:border-gray-800" src="/uploads/thumbnail/{{file.path}}" alt="{{file.path}}" />
+              <img class="h-auto max-h-full rounded-md border-4 border-gray-300 hover:border-gray-800" src="/uploads/thumbnail/{{file.path}}" alt="{{file.path}}" 
+                onclick="document.getElementById('{{content_input_id}}').value = '/uploads/{{file.path}}'; RenderWidget(); return true;"
+              />
             </a>
           </div>
 

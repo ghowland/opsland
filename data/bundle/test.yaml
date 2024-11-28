@@ -300,6 +300,9 @@ http:
         execute.api.space_style:
           space_style: []
 
+        execute.api.upload_refresh:
+          files: []
+
 
     # New: Re-render the Full Page after a change
     api/space_editor_render:
@@ -318,6 +321,9 @@ http:
 
         execute.api.space_style:
           space_style: []
+
+        execute.api.upload_refresh:
+          files: []
 
     api/space_style:
       template: component/site_style.html.j2
