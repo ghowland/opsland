@@ -340,6 +340,8 @@ http:
       execute: execute.api.space_map_widget_html
     get/space_widget_tags:
       execute: execute.api.space_widget_tags
+    get/upload_refresh:
+      execute: execute.api.upload_refresh
 
     # Dynamic version
     plan00:
