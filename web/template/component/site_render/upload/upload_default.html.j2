@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center w-full" onclick="document.getElementById('upload-file').click()">
+<div class="flex items-center justify-center w-full" onclick="document.getElementById('upload-file').click()" ondrop="UploadDropHandler(event); return true;" ondragover="UploadDragOverHandler(event);">
   <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
       <div class="flex flex-col items-center justify-center pt-5 pb-6">
           <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -32,5 +32,48 @@
     htmx.find('#progress').style.width = percent_complete + '%'
     // htmx.find('#progress').setAttribute('value', percent_complete)
   })
+
+  function UploadDropHandler(evt)
+  {
+    console.log("File(s) dropped");
+
+    // Prevent default behavior (Prevent file from being opened)
+    evt.preventDefault();
+
+    var form = document.getElementById('form_upload')
+    var formData = new FormData(form);
+    
+    if (evt.dataTransfer.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      [...evt.dataTransfer.items].forEach((item, i) => {
+        // If dropped items aren't files, reject them
+        if (item.kind === "file") {
+          const file = item.getAsFile();
+          console.log(`… file[${i}].name = ${file.name}`);
+
+          formData.delete("file");
+          formData.append("file", file, file.name);
+        }
+      });
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      [...evt.dataTransfer.files].forEach((file, i) => {
+        console.log(`… file[${i}].name = ${file.name}`);
+
+        formData.delete("file");
+        formData.append("file", file, file.name);
+      });
+    }
+
+    // var form = document.getElementById('form_submit').click()
+  }
+
+  function UploadDragOverHandler(evt)
+  {
+    // console.log("File(s) in drop zone");
+
+    // Prevent default behavior (Prevent file from being opened)
+    evt.preventDefault();    
+  }
 </script>
 

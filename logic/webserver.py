@@ -12,7 +12,7 @@ import uvicorn
 import os, signal
 
 # We import these here, but all the child modules can use them through their `parent` reference
-from fastapi import FastAPI, Request, Response, Depends, UploadFile, File
+from fastapi import FastAPI, Request, Response, Depends, UploadFile, File, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -21,6 +21,7 @@ from fastapi.templating import Jinja2Templates
 
 import shutil
 import secrets
+from typing import List
 
 from pydantic import BaseModel
 
@@ -142,10 +143,28 @@ async def Web_GET(request: Request):
 
 # UPLOAD: Multiple Files
 @APP.post("/upload_multi")
-async def Upload_CreateUploadFileMulti(files: list[UploadFile]):
-  # with open("destination.png", "wb") as buffer:
-  #   shutil.copyfileobj(file.file, buffer)
-  return {"filenames": [file.filename for file in files]}
+def Upload_CreateUploadFileMulti(files: List[UploadFile] = File(...)):
+  #TODO:HARDCODE: Put into config and use from there
+  UPLOAD_PATH = '/mnt/d/_OpsLand/uploads/'
+
+  for file in files:
+    try:
+      # For now, we will allow only unique names, and we will overwrite on getting them again, so it is just a file system storage
+      #TODO: Figure out the best way to manage this, we want controls and audits on the files
+      #TODO: Could AI to classify the images, and there should be services for that
+      save_path = UPLOAD_PATH + file.filename
+
+      # Dont allow backwards movement
+      while '/../' in save_path: save_path = save_path.replace('/../', '')
+
+      with open(save_path, 'wb') as f:
+        shutil.copyfileobj(file.file, f)
+    except Exception:
+      raise HTTPException(status_code=500, detail='Upload failed')
+    finally:
+      file.file.close()
+
+  return {"filenames": [file.filename for file in files]}  
 
 
 # UPLOAD: Single File
