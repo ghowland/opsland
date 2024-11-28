@@ -1,0 +1,72 @@
+
+<div class="mx-auto max-w-screen-xl px-4 2xl:px-0 pt-6">
+
+  <form class="max-w-md mx-auto">   
+    <label for="content-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+    <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+        </div>
+        <input type="search" id="content-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required 
+          _="on keyup
+          if the event's key is 'Escape'
+            set my value to ''
+            trigger keyup
+          else
+          show <content-chunk/> in #content-search-list when its textContent.toLowerCase() contains my value.toLowerCase()"
+        />
+        <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+    </div>
+  </form>
+</div>
+  
+<div class="mx-auto max-w-screen-xl px-4 2xl:px-0" id="content-search-list">
+
+
+    <!-- PRODUCT CARDS -->
+    <div class="grid rounded-lg border bg-white shadow-sm *:border-gray-200 dark:border-gray-700 dark:bg-gray-800 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+      {% for file in files %}
+      <content-chunk>
+        <div class="space-y-6 overflow-hidden border-b border-e-0 p-6 text-center dark:border-gray-700 lg:border-e lg:border-gray-200">
+          <div class="h-44 flex justify-center">
+            <a href="#">
+              <img class="h-auto max-h-full rounded-md border-4 border-gray-300 hover:border-gray-800" src="/uploads/thumbnail/{{file.path}}" alt="{{file.path}}" />
+            </a>
+          </div>
+
+          <div>
+            <p class="mb-2 font-medium uppercase leading-tight text-primary-700">{{file.size}}</p>
+            <a href="#" class="text-xl font-semibold leading-tight text-gray-900 hover:underline">{{file.path}}</a>
+          </div>
+
+        </div>
+      </content-chunk>
+      {% endfor %}
+
+    </div>
+
+    <div class="mx-auto mt-4 flex flex-col items-center md:mt-8">
+      <!-- Help text -->
+      <span class=" mb-2 text-gray-100"> Showing <span class="font-semibold text-blue-600 dark:text-white">1</span> to <span class="font-semibold text-blue-600 dark:text-white">8</span> of <span class="font-semibold text-blue-600 dark:text-white">100</span> Entries </span>
+      <div class="xs:mt-0 mt-2 inline-flex">
+        <!-- Buttons -->
+        <button class="flex h-10 items-center justify-center rounded-s bg-gray-800 px-3 py-2.5 text-base font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <svg class="-ms-0.5 me-2 h-5 w-5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4" />
+          </svg>
+          Prev
+        </button>
+        <button class="flex h-10 items-center justify-center rounded-e border-0 border-s border-gray-700 bg-gray-800 px-3 py-2.5 text-base font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          Next
+          <svg class="-me-0.5 ms-2 h-5 w-5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
