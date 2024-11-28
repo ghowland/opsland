@@ -64,6 +64,7 @@ utility_jinja.AddJinjaUtilities(TEMPLATES)
 # Create the FastAPI server here, so we can add routes using decorators
 APP = FastAPI()
 APP.mount("/static", StaticFiles(directory="web/static"), name="static")
+APP.mount("/uploads", StaticFiles(directory="../uploads/"), name="uploads")
 
 # Number of Async thread works for FastAPI
 NUM_WORKERS = 4

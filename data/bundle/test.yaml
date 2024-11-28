@@ -186,6 +186,14 @@ execute:
 
         execute.api.space_style:
           style_data: []
+
+    # Upload Refresh: Ensure we have data about our uploads, and can add meta-data and search this way too    
+    upload_refresh:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/upload_refresh_{uuid}.json upload_refresh
+      input_path: /tmp/opsland/upload_refresh_{uuid}.json
+      input:
+        execute.api.upload_refresh:
+          existing: []
     
     # space_edit_widget:
     #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
@@ -315,6 +323,9 @@ http:
       template: component/site_style.html.j2
       execute: execute.api.space_style
 
+    api/upload_refresh:
+      execute: execute.api.upload_refresh
+
     # api/space_edit_widget:
     #   # template: component/site_style.html.j2
     #   execute: execute.api.space_edit_widget
@@ -345,6 +356,9 @@ http:
 
         execute.api.space_style:
           space_style: []
+
+        execute.api.upload_refresh:
+          files: []
 
     # Paths
     site_editor:
@@ -422,6 +436,9 @@ http:
           map_widget_html: []
         execute.api.space_widget_tags:
           site_page_tags: []
+
+        execute.api.upload_refresh:
+          files: []
 
     test:
       template: pages/generic_test.html.j2

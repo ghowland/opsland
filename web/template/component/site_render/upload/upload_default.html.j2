@@ -19,9 +19,8 @@
   <div class="bg-blue-600 h-2.5 rounded-full dark:bg-blue-500" id="progress" style="width: 2%"></div>
 </div>
 
-<div id="upload_result">
-
-</div>
+<div id="upload_result"></div>
+<div id="upload_refresh"></div>
 
 
 <script>
@@ -35,7 +34,11 @@
     // htmx.find('#progress').setAttribute('value', percent_complete)   // For Progress Bar
 
     console.log(`Upload: ${percent_complete}`);
-    if (percent_complete >= 99.99) console.log(`Upload: ${percent_complete}  Completed`);
+    if (percent_complete >= 99.99) 
+    {
+      console.log(`Upload: ${percent_complete}  Completed`);
+      htmx.ajax('POST', '/api/upload_refresh', {'target': '#upload_refresh'})
+    }
   }
 
   function UploadDropHandler(evt)
