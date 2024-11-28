@@ -7,7 +7,7 @@
           <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
           <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
       </div>
-      <form id='form_upload' hx-encoding='multipart/form-data' hx-post='/upload_single' hx-target='#upload_result'>
+      <form id='form_upload_{{widget_id}}' hx-encoding='multipart/form-data' hx-post='/upload_single' hx-target='#upload_result'>
         <input id="upload-file" name="file" type="file" class="hidden" onchange="document.getElementById('form_submit').click()">
         <button class="hidden" id="form_submit"></button>
       </form>
@@ -26,12 +26,17 @@
 
 <script>
   // Bind our progress to the progress slider
-  htmx.on('#form_upload', 'htmx:xhr:progress', function(evt) {
+  document.getElementById('form_upload_{{widget_id}}').removeEventListener('htmx:xhr:progress', UploadProgress)
+  htmx.on('#form_upload_{{widget_id}}', 'htmx:xhr:progress', UploadProgress)
+
+  function UploadProgress(evt) {
     var percent_complete = evt.detail.loaded / evt.detail.total * 100
-    // alert(percent_complete + '%')
     htmx.find('#progress').style.width = percent_complete + '%'
-    // htmx.find('#progress').setAttribute('value', percent_complete)
-  })
+    // htmx.find('#progress').setAttribute('value', percent_complete)   // For Progress Bar
+
+    console.log(`Upload: ${percent_complete}`);
+    if (percent_complete >= 99.99) console.log(`Upload: ${percent_complete}  Completed`);
+  }
 
   function UploadDropHandler(evt)
   {
@@ -40,7 +45,7 @@
     // Prevent default behavior (Prevent file from being opened)
     evt.preventDefault();
 
-    var form = document.getElementById('form_upload')
+    var form = document.getElementById('form_upload_{{widget_id}}')
     var formData = new FormData(form);
     
     if (evt.dataTransfer.items) {
