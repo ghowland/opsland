@@ -1,19 +1,24 @@
 <div class="flex
 
-  {% if cur_data.justify and cur_data.justify != 'parent' %}
-    {{cur_data.justify}}
-  {% else %}
-    {{cur_style['__style.container.flex_justify']}}
-  {% endif %}
+  {% if cur_data.justify and cur_data.justify != 'parent' %}  {{cur_data.justify}}
+  {% else %}                                                  {{cur_style['__style.container.flex_justify']}}   {% endif %}
 
-  {{cur_style['__style.container.rounded']}}
-  {{cur_style['__style.container.padding']}}
+  {% if cur_data.padding and cur_data.padding != 'parent' %}  {{cur_data.padding}}
+  {% else %}                                                  {{cur_style['__style.container.padding']}}   {% endif %}
 ">
   <img src="{{cur_data.image}}" alt="{{cur_data.alt}}"
   class="
-  {{cur_style['__style.container.width']}}
-  {{cur_style['__style.container.width_max']}}
-  {{cur_style['__style.container.width_min']}}
+  {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
+  {% else %}                                             {{cur_style['__style.container.width']}}   {% endif %}
+
+  {% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
+  {% else %}                                                     {{cur_style['__style.container.width_max']}}   {% endif %}
+
+  {% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
+  {% else %}                                                     {{cur_style['__style.container.width_min']}}   {% endif %}
+
+  {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
+  {% else %}                                                 {{cur_style['__style.container.rounded']}}   {% endif %}
   "
 >
 
