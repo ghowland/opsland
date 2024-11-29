@@ -1,5 +1,11 @@
 <div class="flex
-  {{cur_style['__style.container.flex_justify']}}
+
+  {% if cur_data.justify and cur_data.justify != 'parent' %}
+    {{cur_data.justify}}
+  {% else %}
+    {{cur_style['__style.container.flex_justify']}}
+  {% endif %}
+
   {{cur_style['__style.container.rounded']}}
   {{cur_style['__style.container.padding']}}
 ">
@@ -10,4 +16,5 @@
   {{cur_style['__style.container.width_min']}}
   "
 >
+
 </div>

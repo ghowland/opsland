@@ -1,11 +1,16 @@
 
+{{widget_data}}<br>
+{{edit_key}}<br>
+{{select_source}}<br>
+{{select[select_source]}}<br>
+
 <!-- NOTE: This is Static logic/config.  Do not try to make anything dynamic here.  This is just a static list.  Do dynamic things elsewhere, forever. -->
 <form class="max-w-sm mx-auto">
   <label for="__edit.{{widget_id}}.{{edit_key}}" class="mb-2 text-sm font-medium text-gray-900">{{edit_key}}</label>
   <select id="__edit.{{widget_id}}.{{edit_key}}" onchange="RenderWidget()" class="widget_input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
     {% for option_pair in select[select_source] %}
       {% for option_value, option_label in option_pair.items() %}
-        <option value="{{option_value}}" {% if widget_data.data[edit_key] and widget_data.data[edit_key].value == option_value %}selected{% endif %}>{{option_label}}</option>
+        <option value="{{option_value}}" {% if widget_data.data[edit_key] == option_value %}selected{% endif %}>{{option_label}}</option>
       {% endfor %}
     {% endfor %}
   </select>
