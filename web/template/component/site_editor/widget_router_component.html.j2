@@ -10,9 +10,12 @@
 {% if widget_spec and widget_spec.data %}
   {% for edit_item in widget_spec.data %}
     {% for edit_key, edit_type in edit_item.items() %}
-      <!-- Edit: {{edit_item}}<br> -->
+      {% if not edit_key.startswith('_') %}
+        <!-- Edit: {{edit_item}}<br> -->
 
-      {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}
+        {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}
+        
+      {% endif %}
     {% endfor %}
   {% endfor %}
 {% else %}
