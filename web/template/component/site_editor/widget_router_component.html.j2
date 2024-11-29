@@ -13,6 +13,11 @@
       {% if not edit_key.startswith('_') %}
         <!-- Edit: {{edit_item}}<br> -->
 
+        {% if edit_item._source %}
+          {% set select_source = edit_item._source %}
+        {% endif %}
+
+
         {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}
         
       {% endif %}
