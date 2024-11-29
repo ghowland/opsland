@@ -195,9 +195,13 @@ execute:
         execute.api.upload_refresh:
           existing: []
 
-    # Data for the `select` widgets    
+    # Data for the `select` widgets
     space_style_select_data:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_style_select_data
+
+    # Data for the Tables
+    table_data_refresh:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py table_data_refresh
     
     # space_edit_widget:
     #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
@@ -306,7 +310,10 @@ http:
 
         execute.api.upload_refresh:
           files: []
-        
+                
+        execute.api.table_data_refresh:
+          tables: []
+
         execute.api.space_style_select_data:
           select: []
 
@@ -331,6 +338,9 @@ http:
 
         execute.api.upload_refresh:
           files: []
+        
+        execute.api.table_data_refresh:
+          tables: []
         
         execute.api.space_style_select_data:
           select: []
@@ -358,8 +368,11 @@ http:
       execute: execute.api.space_widget_tags
     get/upload_refresh:
       execute: execute.api.upload_refresh
+    get/table_data_refresh:
+      execute: execute.api.table_data_refresh
     get/space_style_select_data:
       execute: execute.api.space_style_select_data
+      
 
     # Dynamic version
     plan00:
@@ -379,7 +392,10 @@ http:
 
         execute.api.upload_refresh:
           files: []
-        
+                
+        execute.api.table_data_refresh:
+          tables: []
+
         execute.api.space_style_select_data:
           select: []
 
@@ -462,6 +478,9 @@ http:
 
         execute.api.upload_refresh:
           files: []
+        
+        execute.api.table_data_refresh:
+          tables: []
         
         execute.api.space_style_select_data:
           select: []
