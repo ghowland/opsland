@@ -1,9 +1,16 @@
-
 <label for="__edit.{{widget_id}}.{{edit_key}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{edit_key}}</label>
 <div class="flex">
   <input value="{{ widget_data.data[edit_key] }}" placeholder="Image..." onchange="RenderWidget('set', false)" type="text" id="__edit.{{widget_id}}.{{edit_key}}" class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 </div>
 
+{% set content_toggle_id = '__toggle.' + widget_id + '.' + edit_key %}
 {% set content_input_id = '__edit.' + widget_id + '.' + edit_key %}
+
+<div class="flex justify-end">
+  <button type="submit" onclick="document.getElementById('{{content_toggle_id}}').classList.toggle('hidden')" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+    Change Image
+  </button>  
+</div>
+
 {% include 'component/site_render/search_result/search_result_content.html.j2' %}
 
