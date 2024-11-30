@@ -1,4 +1,10 @@
+<div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+  <!-- List -->
+  <ul role="list" class="mb-8 space-y-4 text-left">
 
-<ol class="relative border-s border-gray-200 dark:border-gray-700">                  
-  {{default}}
-</ol>
+    {% for widget_id in widget_data.include.default %}
+      {% include 'component/site_render/page_render_widget_inner.html.j2' %}
+    {% endfor %}
+    
+  </ul>
+</div>

@@ -1,0 +1,7 @@
+
+<div class="flex items-center">
+  <input {% if widget_data.data[edit_key] == "true" %}checked{%endif%} id="__edit.{{widget_id}}.{{edit_key}}" onchange="RenderWidget('set', false)" type="checkbox" class="widget_checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+  <label for="__edit.{{widget_id}}.{{edit_key}}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{edit_key}}</label>
+</div>
+
+

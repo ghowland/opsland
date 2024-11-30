@@ -37,7 +37,7 @@ wid: {{wid}}<br> -->
     {% endfor %}
   </div>  
 </div>
-<a href="#" onclick="document.getElementById('__edit.{{widget_id}}.{{edit_key}}').value = 'parent'; RenderWidget(); return true;">Use Parent</a><br>
+<a href="#" onclick="document.getElementById('__edit.{{widget_id}}.{{edit_key}}').value = 'parent'; RenderWidget('set', false); return true;">Use Parent</a><br>
 
 
 <script>
