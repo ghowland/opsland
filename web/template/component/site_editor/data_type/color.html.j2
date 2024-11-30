@@ -1,0 +1,134 @@
+{% set wid = widget_id %}
+
+
+<span>
+  {{ edit_key }}:
+</span>
+<button id="{{wid}}_color_label" type="button" class="text-gray-50 bg-blue-700 m-3 border-2 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5" onclick="document.getElementById('{{wid}}_color_map').classList.toggle('hidden')">
+  {{ widget_data.data[edit_key] }}
+</button>
+
+
+<input type="hidden" id="__edit.{{widget_id}}.{{edit_key}}" value="{{ widget_data.data[edit_key] }}" class="widget_input">
+
+{% set colors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose'] %}
+{% set color_values = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] %}
+
+<!-- cur_style: {{cur_style}}<br>
+wid: {{wid}}<br> -->
+
+<div id="{{wid}}_color_map" class="hidden">
+  <p>
+    Hover: <span id="{{wid}}_hover_target" class="font-bold p-1 rounded"></span>
+  </p>
+  <div class="m-3 grid grid-cols-10 gap-0 border-8 border-neutral-200">
+    {% for color in colors %}
+      {% for color_value in color_values %}
+      {% if color_value <= 400 %}
+        {% set inverse_color_value = 900 %}
+      {% else %}
+        {% set inverse_color_value = 100 %}
+      {% endif %}
+        
+      <div class="h-5 bg-{{color}}-{{color_value}} hover:border-{{color}}-{{inverse_color_value}} text-center text-xs text-{{color}}-{{inverse_color_value}} hover:border-4 hover:outline-none" onclick="SetColorValue('__edit.{{widget_id}}.{{edit_key}}', '{{wid}}_color_label', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}'); document.getElementById('{{wid}}_color_map').classList.toggle('hidden'); return true;" onmousemove="SetHover('{{wid}}_hover_target', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}')">
+        {{color}}-{{color_value}}
+      </div>
+      {% endfor %}
+    {% endfor %}
+  </div>  
+</div>
+<a href="#" onclick="document.getElementById('__edit.{{widget_id}}.{{edit_key}}').value = 'parent'; RenderWidget(); return true;">Use Parent</a><br>
+
+
+<script>
+  var colors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose']
+
+  // If we got a style, then set the color
+  if ('{{ widget_data.data[edit_key] }}' != '') {
+    SetColorValue('__edit.{{widget_id}}.{{edit_key}}', '{{wid}}_color_label', '{{widget_data.data[edit_key]}}', 'text-' + GetInverseColor('{{widget_data.data[edit_key]}}'), true);
+    // alert('Got a color background: {{widg}}: ' + '{{ widget_data.data[edit_key] }}')
+  }
+
+  function SetColorValue(input_element_id, element_id, bg_color, text_inverse_color, first_time) {
+    // alert(shout)
+    var el = document.getElementById(element_id)
+
+    ElementStripClassByPrefix(el, 'bg-')
+
+    // text-*
+    var remove_list = GetArrayWithPrefixSuffix(colors, 'text-', '')
+    remove_list.forEach(item => {
+      ElementStripClassByPrefix(el, item)
+    })
+    el.classList.add(text_inverse_color)
+
+    // border-*
+    remove_list = GetArrayWithPrefixSuffix(colors, 'border-', '')
+    remove_list.forEach(item => {
+      ElementStripClassByPrefix(el, item)
+    })
+    el.classList.add(text_inverse_color)
+
+    el.classList.add('bg-' + bg_color);
+    el.innerText = bg_color;
+
+    input_el = document.getElementById(input_element_id)
+    input_el.value = bg_color;
+
+    if (!first_time) RenderWidget()
+  }
+
+  function GetInverseColor(color)
+  {
+    var parts = color.split('-')
+    value = parseInt(parts[1])
+    inverse_value = 900
+    if (value > 400) inverse_value = 50
+
+    return parts[0] + '-' + inverse_value
+  }
+  
+  function GetArrayWithPrefixSuffix(source, prefix, suffix) {
+    var newArray = new Array()
+
+    source.forEach(item => {
+      newArray.push(prefix + item + suffix)
+    })
+
+    return newArray
+  }
+
+  function SetHover(element_id, color, text_inverse_color) {
+    var el = document.getElementById(element_id)
+    el.innerText = color;
+
+    var remove_list = GetArrayWithPrefixSuffix(colors, 'text-', '')
+    remove_list.forEach(item => {
+      ElementStripClassByPrefix(el, item)
+    })
+    el.classList.add(text_inverse_color)
+    
+    remove_list = GetArrayWithPrefixSuffix(colors, 'bg-', '')
+    remove_list.forEach(item => {
+      ElementStripClassByPrefix(el, item)
+    })
+    el.classList.add('bg-' + color)
+  }
+
+  // For this element `el` all the classList class names starting with this prefix will be removed, if they exist
+  function ElementStripClassByPrefix(el, prefix) {
+    var remove_list = new Array();
+
+    el.classList.forEach(function (value, key, listObj) {
+      if (value.startsWith(prefix)) {
+        remove_list.push(value)
+      }
+    }, "arg");
+
+    remove_list.forEach(value => {
+      el.classList.toggle(value)
+    })
+
+  }
+
+</script>

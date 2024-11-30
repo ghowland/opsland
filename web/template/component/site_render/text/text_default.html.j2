@@ -1,20 +1,23 @@
 <p class="
-  text-{{cur_style['__style.text.color']}} 
+  {% if cur_style['__style.text.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.text.hover_color']}}{%endif%}
 
   {% if cur_style['__style.text.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.text.hover_color']}}{%endif%}
   {% if cur_style['__style.text.override_focus_color'] == 'true' %}focus:text-{{cur_style['__style.text.focus_color']}}{%endif%}
 
+  {% if cur_data.color and cur_data.color != 'parent' %} text-{{cur_data.color}}
+  {% else %}                                             text-{{cur_style['__style.text.color']}}   {% endif %}
+
   {% if cur_data.margin and cur_data.margin != 'parent' %} {{cur_data.margin}}
-  {% else %}                                               {{cur_style['__style.container.margin']}}   {% endif %}
+  {% else %}                                               {{cur_style['__style.text.margin']}}   {% endif %}
 
   {% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
-  {% else %}                                                     {{cur_style['__style.container.alignment']}}   {% endif %}
+  {% else %}                                                     {{cur_style['__style.text.alignment']}}   {% endif %}
 
   {% if cur_data.size and cur_data.size != 'parent' %} {{cur_data.size}}
-  {% else %}                                           {{cur_style['__style.container.size']}}   {% endif %}
+  {% else %}                                           {{cur_style['__style.text.size']}}   {% endif %}
 
   {% if cur_data.bold and cur_data.bold != 'parent' %} {{cur_data.bold}}
-  {% else %}                                           {{cur_style['__style.container.bold']}}   {% endif %}
+  {% else %}                                           {{cur_style['__style.text.bold']}}   {% endif %}
 
   {% if cur_style['__style.text.upper'] == 'true' %}uppercase{%endif%}
   {% if cur_style['__style.text.underline'] == 'true' %}underline{%endif%}
