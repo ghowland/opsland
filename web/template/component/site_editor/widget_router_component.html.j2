@@ -17,7 +17,6 @@
           {% set select_source = edit_item._source %}
         {% endif %}
 
-
         {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}
         
       {% endif %}
@@ -34,7 +33,7 @@
   </a>
 {% endif %}
 
-<div class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
+<div class="w-96 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
   {% for include_target, include_widget_ids in widget_data.include.items() %}
     <ul>
 
