@@ -2,32 +2,8 @@
 
 <div class="columns-3 block">
 
-{% set label = 'Size Normal' %}
+{% set label = 'Size' %}
 {% set element_id = '__style.text.size' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 1 - Title' %}
-{% set element_id = '__style.text.size_h1' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 2 - Sub-Title' %}
-{% set element_id = '__style.text.size_h2' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 3 - Section Title' %}
-{% set element_id = '__style.text.size_h3' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 4 - Card Title' %}
-{% set element_id = '__style.text.size_h4' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
@@ -38,11 +14,13 @@
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+
 {% set label = 'Margin' %}
 {% set element_id = '__style.text.margin' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 
 {% set label = 'Alignment' %}
 {% set element_id = '__style.text.alignment' %}
@@ -54,25 +32,6 @@
 
 <div class="columns-1 block">
 
-{% set label = 'Text Transform' %}
-{% set element_id = '__style.text.transform' %}
-{% set select_data = select.text_transform %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Text Decoration' %}
-{% set element_id = '__style.text.decoration' %}
-{% set select_data = select.text_decoration %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Text Font Style' %}
-{% set element_id = '__style.text.font_style' %}
-{% set select_data = select.text_font_style %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-<!-- 
 {% set cur_data = {'widget_id': '__style.text.underline', 'label': 'Underline', 'value': cur_style['__style.text.underline']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
@@ -81,7 +40,6 @@
 
 {% set cur_data = {'widget_id': '__style.text.italics', 'label': 'Italics', 'value': cur_style['__style.text.italics']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
--->
 </div>
 
 <div class="columns-1 block mt-4">

@@ -21,13 +21,13 @@
 
   
   {% if cur_data.transform and cur_data.transform != 'parent' %} {{cur_data.transform}}
-  {% else %}                                             {{cur_style['__style.text.upper']}}   {% endif %}
+  {% else %}                                                     {{cur_style['__style.text.transform']}}   {% endif %}
 
   {% if cur_data.decoration and cur_data.decoration != 'parent' %} {{cur_data.decoration}}
-  {% else %}                                                     {{cur_style['__style.text.underline']}}   {% endif %}
+  {% else %}                                                       {{cur_style['__style.text.decoration']}}   {% endif %}
 
   {% if cur_data.font_style and cur_data.font_style != 'parent' %} {{cur_data.font_style}}
-  {% else %}                                                 {{cur_style['__style.text.italics']}}   {% endif %}
+  {% else %}                                                       {{cur_style['__style.text.font_style']}}   {% endif %}
   "
   onmousedown="return MouseDownEdit(event, '{{widget_id}}')
 ">

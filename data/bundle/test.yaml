@@ -359,6 +359,10 @@ http:
       template: component/site_style.html.j2
       execute: execute.api.space_style
 
+      cache:
+        execute.api.space_style_select_data:
+          select: []
+
     api/upload_refresh:
       execute: execute.api.upload_refresh
 
