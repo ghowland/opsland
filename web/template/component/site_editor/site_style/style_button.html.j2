@@ -1,54 +1,30 @@
-<h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Text</h2>
+<h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Button</h2>
 
 <div class="columns-3 block">
 
-{% set label = 'Size Normal' %}
-{% set element_id = '__style.text.size' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 1 - Title' %}
-{% set element_id = '__style.text.size_h1' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 2 - Sub-Title' %}
-{% set element_id = '__style.text.size_h2' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 3 - Section Title' %}
-{% set element_id = '__style.text.size_h3' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 4 - Card Title' %}
-{% set element_id = '__style.text.size_h4' %}
+{% set label = 'Size' %}
+{% set element_id = '__style.button.size' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 
 {% set label = 'Bold' %}
-{% set element_id = '__style.text.bold' %}
+{% set element_id = '__style.button.bold' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'font-thin': 'Thin'}, {'font-normal': 'Normal'}, {'font-medium': 'Medium'}, {'font-semibold': 'Semi-Bold'}, {'font-bold': 'Bold'}, {'font-extrabold': 'Extra Bold'}, {'font-black': 'Black'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 
 {% set label = 'Margin' %}
-{% set element_id = '__style.text.margin' %}
+{% set element_id = '__style.button.margin' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 
 {% set label = 'Alignment' %}
-{% set element_id = '__style.text.alignment' %}
+{% set element_id = '__style.button.alignment' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'text-left': 'Left'}, {'text-center': 'Center'}, {'text-right': 'Right'}, {'text-justify': 'Justify'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
@@ -57,35 +33,52 @@
 
 <div class="columns-1 block">
 
-{% set cur_data = {'widget_id': '__style.text.underline', 'label': 'Underline', 'value': cur_style['__style.text.underline']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.upper', 'label': 'Upper', 'value': cur_style['__style.text.upper']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-
-{% set cur_data = {'widget_id': '__style.text.italics', 'label': 'Italics', 'value': cur_style['__style.text.italics']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+  {% set label = 'Text Transform' %}
+  {% set element_id = '__style.button.transform' %}
+  {% set select_data = select.text_transform %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+  
+  {% set label = 'Text Decoration' %}
+  {% set element_id = '__style.button.decoration' %}
+  {% set select_data = select.text_decoration %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+  
+  {% set label = 'Text Font Style' %}
+  {% set element_id = '__style.button.font_style' %}
+  {% set select_data = select.text_font_style %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+  
 </div>
 
 <div class="columns-1 block mt-4">
 
-{% set cur_data = {'widget_id': '__style.text.override_color', 'label': 'Override Parent Color', 'value': cur_style['__style.text.override_color']} %}
+{% set cur_data = {'widget_id': '__style.button.override_color', 'label': 'Override Parent Color', 'value': cur_style['__style.button.override_color']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.color', 'label': 'Color'} %}
+{% set cur_data = {'widget_id': '__style.button.color', 'label': 'Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
   
-{% set cur_data = {'widget_id': '__style.text.override_hover_color', 'label': 'Override Parent Hover Color', 'value': cur_style['__style.text.override_hover_color']} %}
+{% set cur_data = {'widget_id': '__style.button.override_hover_color', 'label': 'Override Parent Hover Color', 'value': cur_style['__style.button.override_hover_color']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.hover_color', 'label': 'Hover Color'} %}
+{% set cur_data = {'widget_id': '__style.button.hover_color', 'label': 'Hover Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.override_focus_color', 'label': 'Override Parent Focus Color', 'value': cur_style['__style.text.override_focus_color']} %}
+{% set cur_data = {'widget_id': '__style.button.override_focus_color', 'label': 'Override Parent Focus Color', 'value': cur_style['__style.button.override_focus_color']} %}
 {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.focus_color', 'label': 'Focus Color'} %}
+{% set cur_data = {'widget_id': '__style.button.focus_color', 'label': 'Focus Color'} %}
+{% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+{% set cur_data = {'widget_id': '__style.button.override_ring_color', 'label': 'Override Parent Ring Color', 'value': cur_style['__style.button.override_ring_color']} %}
+{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+
+{% set cur_data = {'widget_id': '__style.button.ring_color', 'label': 'Ring Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
 
 </div>

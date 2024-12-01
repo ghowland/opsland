@@ -1,91 +1,49 @@
-<h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Text</h2>
+<h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Image</h2>
 
 <div class="columns-3 block">
 
-{% set label = 'Size Normal' %}
-{% set element_id = '__style.text.size' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
+{% set label = 'Padding' %}
+{% set element_id = '__style.image.Padding' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'p-0': '0 em'}, {'p-2': '2 em'}, {'p-4': '4 em'}, {'p-6': '6 em'}, {'p-8': '8 em'}, {'p-12': '12 em'}, {'p-16': '16 em'}, {'p-24': '24 em'}, {'p-32': '32 em'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 1 - Title' %}
-{% set element_id = '__style.text.size_h1' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 2 - Sub-Title' %}
-{% set element_id = '__style.text.size_h2' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 3 - Section Title' %}
-{% set element_id = '__style.text.size_h3' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-{% set label = 'Size Heading 4 - Card Title' %}
-{% set element_id = '__style.text.size_h4' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-xs': 'Extra Small'}, {'text-sm': 'Small'}, {'text-base': 'Normal'}, {'text-lg': 'Large'}, {'text-xl': 'XL'}, {'text-2xl': '2XL'}, {'text-3xl': '3XL'}, {'text-4xl': '4XL'}, {'text-5xl': '5XL'}, {'text-6xl': '6XL'}, {'text-7xl': '7XL'}, {'text-8xl': '8XL'}, {'text-9xl': '9XL'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-
-{% set label = 'Bold' %}
-{% set element_id = '__style.text.bold' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'font-thin': 'Thin'}, {'font-normal': 'Normal'}, {'font-medium': 'Medium'}, {'font-semibold': 'Semi-Bold'}, {'font-bold': 'Bold'}, {'font-extrabold': 'Extra Bold'}, {'font-black': 'Black'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
-
-{% set label = 'Margin' %}
-{% set element_id = '__style.text.margin' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-
 
 {% set label = 'Alignment' %}
-{% set element_id = '__style.text.alignment' %}
+{% set element_id = '__style.image.alignment' %}
 {% set select_data = [{'parent': 'Use Parent'}, {'text-left': 'Left'}, {'text-center': 'Center'}, {'text-right': 'Right'}, {'text-justify': 'Justify'}] %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
-</div>
 
-<div class="columns-1 block">
+{% set label = 'Rounded' %}
+{% set element_id = '__style.image.rounded' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'rounded-none': 'Square Corners'}, {'rounded-sm': 'Rounded Small'}, {'rounded': 'Rounded'}, {'rounded-md': 'Rounded Medium'}, {'rounded-lg': 'Rounded Large'}, {'rounded-xl': 'Rounded XL'}, {'rounded-2xl': 'Rounded 2XL'}, {'rounded-full': 'Rounded Full'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.underline', 'label': 'Underline', 'value': cur_style['__style.text.underline']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+{% set label = 'Width' %}
+{% set element_id = '__style.image.width' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'w-min': 'Minimum Width'}, {'w-full': 'Full Width'}, {'w-24': '24 em'}, {'w-32': '32 em'}, {'w-40': '40 em'}, {'w-48': '48 em'}, {'w-64': '64 em'}, {'w-72': 'Rounded Full'}, {'w-90': '90 em'}, {'w-96': '96 em'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.upper', 'label': 'Upper', 'value': cur_style['__style.text.upper']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
+{% set label = 'Max Width' %}
+{% set element_id = '__style.image.width_max' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"max-w-xs": "max-w-xs"}, {"max-w-sm": "max-w-sm"}, {"max-w-md": "max-w-md"}, {"max-w-lg": "max-w-lg"}, {"max-w-xl": "max-w-xl"}, {"max-w-2xl": "max-w-2xl"}, {"max-w-3xl": "max-w-3xl"}, {"max-w-4xl": "max-w-4xl"}, {"max-w-5xl": "max-w-5xl"}, {"max-w-6xl": "max-w-6xl"}, {"max-w-7xl": "max-w-7xl"}, {"max-w-full": "max-w-full"}, {"max-w-min": "max-w-min"}, {"max-w-max": "max-w-max"}, {"max-w-fit": "max-w-fit"}, {"max-w-none": "max-w-none"}, {"max-w-screen-sm": "max-w-screen-sm"}, {"max-w-screen-md": "max-w-screen-md"}, {"max-w-screen-lg": "max-w-screen-lg"}, {"max-w-screen-xl": "max-w-screen-xl"}, {"max-w-screen-2xl": "max-w-screen-2xl"}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
-{% set cur_data = {'widget_id': '__style.text.italics', 'label': 'Italics', 'value': cur_style['__style.text.italics']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-</div>
+{% set label = 'Min Width' %}
+{% set element_id = '__style.image.width_min' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"min-w-full": "min-w-full"}, {"min-w-min": "min-w-min"}, {"min-w-max": "min-w-max"}, {"min-w-fit": "min-w-fit"}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
-<div class="columns-1 block mt-4">
-
-{% set cur_data = {'widget_id': '__style.text.override_color', 'label': 'Override Parent Color', 'value': cur_style['__style.text.override_color']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-
-{% set cur_data = {'widget_id': '__style.text.color', 'label': 'Color'} %}
-{% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
-
-  
-{% set cur_data = {'widget_id': '__style.text.override_hover_color', 'label': 'Override Parent Hover Color', 'value': cur_style['__style.text.override_hover_color']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-
-{% set cur_data = {'widget_id': '__style.text.hover_color', 'label': 'Hover Color'} %}
-{% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
-
-{% set cur_data = {'widget_id': '__style.text.override_focus_color', 'label': 'Override Parent Focus Color', 'value': cur_style['__style.text.override_focus_color']} %}
-{% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-
-{% set cur_data = {'widget_id': '__style.text.focus_color', 'label': 'Focus Color'} %}
-{% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+{% set label = 'Height' %}
+{% set element_id = '__style.image.height' %}
+{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'h-min': 'Minimum Width'}, {'h-full': 'Full Width'}, {'h-24': '24 em'}, {'h-32': '32 em'}, {'h-40': '40 em'}, {'h-48': '48 em'}, {'h-64': '64 em'}, {'h-72': 'Rounded Full'}, {'h-90': '90 em'}, {'h-96': '96 em'}] %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 </div>
+
