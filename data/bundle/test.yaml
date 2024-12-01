@@ -202,6 +202,10 @@ execute:
     # Data for the Tables
     table_data_refresh:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py table_data_refresh
+
+    # Cache Icons
+    cache_icons:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py cache_icons
     
     # space_edit_widget:
     #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
@@ -314,6 +318,9 @@ http:
         execute.api.table_data_refresh:
           tables: []
 
+        execute.api.cache_icons:
+          icons: []
+
         execute.api.space_style_select_data:
           select: []
 
@@ -341,6 +348,9 @@ http:
         
         execute.api.table_data_refresh:
           tables: []
+
+        execute.api.cache_icons:
+          icons: []
         
         execute.api.space_style_select_data:
           select: []
@@ -372,6 +382,8 @@ http:
       execute: execute.api.table_data_refresh
     get/space_style_select_data:
       execute: execute.api.space_style_select_data
+    get/cache_icons:
+      execute: execute.api.cache_icons
       
 
     # Dynamic version
@@ -395,6 +407,9 @@ http:
                 
         execute.api.table_data_refresh:
           tables: []
+
+        execute.api.cache_icons:
+          icons: []
 
         execute.api.space_style_select_data:
           select: []
@@ -481,6 +496,9 @@ http:
         
         execute.api.table_data_refresh:
           tables: []
+
+        execute.api.cache_icons:
+          icons: []
         
         execute.api.space_style_select_data:
           select: []
