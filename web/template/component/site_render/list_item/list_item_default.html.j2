@@ -1,6 +1,10 @@
 <li class="flex items-center space-x-3">
   <!-- Icon -->
-  <div class="flex-shrink-0 w-5 h-5 text-green-500">
+  <div class="flex-shrink-0 w-5 h-5 
+
+    {% if cur_data.icon_color and cur_data.icon_color != 'parent' %} text-{{cur_data.icon_color}}
+    {% else %}                                                       text-{{cur_style['__style.text.color']}}   {% endif %}
+  ">
     {% if icons[cur_data.icon] %}
       {{ icons[cur_data.icon].html | safe}}
     {% endif %}
