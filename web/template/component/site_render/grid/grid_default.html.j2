@@ -1,0 +1,11 @@
+<div class="
+  grid 
+  {{cur_data.column}}
+  {{cur_data.column_gap}}
+  {{cur_data.column_gap_x}}
+  {{cur_data.column_gap_y}}
+">
+  {% for widget_id in widget_data.include.default %}
+    {% include 'component/site_render/page_render_widget_inner.html.j2' %}
+  {% endfor %}
+</div>
