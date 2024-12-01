@@ -9,5 +9,5 @@
       {{ icons[cur_data.icon].html | safe}}
     {% endif %}
   </div>
-  <span>{{cur_data.text}}</span>
+  <span>{{cur_data.text_html | render | safe}}</span>
 </li>

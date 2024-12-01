@@ -4,7 +4,7 @@
 <span>
   {{ edit_key }}:
 </span>
-<button id="{{wid}}_color_label" type="button" class="text-gray-50 bg-blue-700 m-3 border-2 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5" onclick="document.getElementById('{{wid}}_color_map').classList.toggle('hidden')">
+<button id="{{wid}}_{{edit_key}}_color_label" type="button" class="text-gray-50 bg-blue-700 m-3 border-2 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5" onclick="document.getElementById('{{wid}}_{{edit_key}}_color_map').classList.toggle('hidden')">
   {{ widget_data.data[edit_key] }}
 </button>
 
@@ -17,9 +17,9 @@
 <!-- cur_style: {{cur_style}}<br>
 wid: {{wid}}<br> -->
 
-<div id="{{wid}}_color_map" class="hidden">
+<div id="{{wid}}_{{edit_key}}_color_map" class="hidden">
   <p>
-    Hover: <span id="{{wid}}_hover_target" class="font-bold p-1 rounded"></span>
+    Hover: <span id="{{wid}}_{{edit_key}}_hover_target" class="font-bold p-1 rounded"></span>
   </p>
   <div class="m-3 grid grid-cols-10 gap-0 border-8 border-neutral-200">
     {% for color in colors %}
@@ -30,7 +30,7 @@ wid: {{wid}}<br> -->
         {% set inverse_color_value = 100 %}
       {% endif %}
         
-      <div class="h-5 bg-{{color}}-{{color_value}} hover:border-{{color}}-{{inverse_color_value}} text-center text-xs text-{{color}}-{{inverse_color_value}} hover:border-4 hover:outline-none" onclick="SetColorValue('__edit.{{widget_id}}.{{edit_key}}', '{{wid}}_color_label', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}'); document.getElementById('{{wid}}_color_map').classList.toggle('hidden'); return true;" onmousemove="SetHover('{{wid}}_hover_target', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}')">
+      <div class="h-5 bg-{{color}}-{{color_value}} hover:border-{{color}}-{{inverse_color_value}} text-center text-xs text-{{color}}-{{inverse_color_value}} hover:border-4 hover:outline-none" onclick="SetColorValue('__edit.{{widget_id}}.{{edit_key}}', '{{wid}}_{{edit_key}}_color_label', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}'); document.getElementById('{{wid}}_{{edit_key}}_color_map').classList.toggle('hidden'); return true;" onmousemove="SetHover('{{wid}}_{{edit_key}}_hover_target', '{{color}}-{{color_value}}', 'text-{{color}}-{{inverse_color_value}}')">
         {{color}}-{{color_value}}
       </div>
       {% endfor %}
@@ -45,7 +45,7 @@ wid: {{wid}}<br> -->
 
   // If we got a style, then set the color
   if ('{{ widget_data.data[edit_key] }}' != '') {
-    SetColorValue('__edit.{{widget_id}}.{{edit_key}}', '{{wid}}_color_label', '{{widget_data.data[edit_key]}}', 'text-' + GetInverseColor('{{widget_data.data[edit_key]}}'), true);
+    SetColorValue('__edit.{{widget_id}}.{{edit_key}}', '{{wid}}_{{edit_key}}_color_label', '{{widget_data.data[edit_key]}}', 'text-' + GetInverseColor('{{widget_data.data[edit_key]}}'), true);
     // alert('Got a color background: {{widg}}: ' + '{{ widget_data.data[edit_key] }}')
   }
 

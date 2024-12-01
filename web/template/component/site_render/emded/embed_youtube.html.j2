@@ -1,0 +1,17 @@
+<div class="flex
+
+            {% if cur_data.padding and cur_data.padding != 'parent' %} {{cur_data.padding}}
+            {% else %}                                                 {{cur_style['__style.text.padding']}}   {% endif %}
+
+            {% if cur_data.justify and cur_data.justify != 'parent' %} {{cur_data.justify}}
+            {% else %}                                                 {{cur_style['__style.container.justify']}}   {% endif %}
+
+">
+  <div>
+    <iframe id="ytplayer" type="text/html" width="{{cur_data.width}}" height="{{cur_data.height}}"
+    src="https://www.youtube.com/embed/{{ cur_data.video_id }}?autoplay={%if cur_data.autoplay=='true'%}1{%else%}0{%endif%}&origin=http://localhost"
+    frameborder="0"
+    class="
+  "></iframe>
+  </div>
+</div>

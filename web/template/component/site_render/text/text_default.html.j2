@@ -1,11 +1,9 @@
 <p class="
-  {% if cur_style['__style.text.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.text.hover_color']}}{%endif%}
+  {% if cur_data.color and cur_data.color != 'parent' %} text-{{cur_data.color}}
+  {% else %}                                             text-{{cur_style['__style.text.color']}}   {% endif %}
 
   {% if cur_style['__style.text.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.text.hover_color']}}{%endif%}
   {% if cur_style['__style.text.override_focus_color'] == 'true' %}focus:text-{{cur_style['__style.text.focus_color']}}{%endif%}
-
-  {% if cur_data.color and cur_data.color != 'parent' %} text-{{cur_data.color}}
-  {% else %}                                             text-{{cur_style['__style.text.color']}}   {% endif %}
 
   {% if cur_data.margin and cur_data.margin != 'parent' %} {{cur_data.margin}}
   {% else %}                                               {{cur_style['__style.text.margin']}}   {% endif %}
@@ -31,5 +29,5 @@
   "
   onmousedown="return MouseDownEdit(event, '{{widget_id}}')
 ">
-  {{ cur_data.text_html | safe }}
+  {{ cur_data.text_html | render | safe }}
 </p>
