@@ -31,5 +31,5 @@
   "
   onmousedown="return MouseDownEdit(event, '{{widget_id}}')
 ">
-  {{cur_data.text}}
+  {{ cur_data.text_html | safe }}
 </p>
