@@ -29,7 +29,7 @@
   {% if cur_data.font_style and cur_data.font_style != 'parent' %} {{cur_data.font_style}}
   {% else %}                                                 {{cur_style['__style.text.italics']}}   {% endif %}
   "
-  onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
->
+  onmousedown="return MouseDownEdit(event, '{{widget_id}}')
+">
   {{cur_data.text}}
 </p>
