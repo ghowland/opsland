@@ -1,0 +1,36 @@
+<button type="button" 
+        onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
+        class="
+              {% if cur_data.color and cur_data.color != 'parent' %} text-{{cur_data.color}}
+              {% else %}                                             text-{{cur_style['__style.button.color']}}   {% endif %}
+
+              {% if cur_style['__style.button.override_hover_color'] == 'true' %}hover:text-{{cur_style['__style.button.hover_color']}}{%endif%}
+              {% if cur_style['__style.button.override_focus_color'] == 'true' %}focus:text-{{cur_style['__style.button.focus_color']}}{%endif%}
+
+              {% if cur_data.margin and cur_data.margin != 'parent' %} {{cur_data.margin}}
+              {% else %}                                               {{cur_style['__style.button.margin']}}   {% endif %}
+
+              {% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
+              {% else %}                                                     {{cur_style['__style.button.alignment']}}   {% endif %}
+
+              {% if cur_data.text_size and cur_data.text_size != 'parent' %} {{cur_data.text_size}}
+              {% else %}                                                     {{cur_style['__style.button.text_size']}}   {% endif %}
+              
+              {% if cur_data.text_bold and cur_data.text_bold != 'parent' %} {{cur_data.text_bold}}
+              {% else %}                                                     {{cur_style['__style.text.bold']}}   {% endif %}
+
+              {% if cur_data.transform and cur_data.transform != 'parent' %} {{cur_data.transform}}
+              {% else %}                                                     {{cur_style['__style.button.transform']}}   {% endif %}
+
+              {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
+              {% else %}                                             {{cur_style['__style.button.width']}}   {% endif %}
+
+              {% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
+              {% else %}                                             {{cur_style['__style.button.width_min']}}   {% endif %}
+
+              {% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
+              {% else %}                                             {{cur_style['__style.button.width_max']}}   {% endif %}
+
+">
+  {{ cur_data.text }}
+</button>
