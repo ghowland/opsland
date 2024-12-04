@@ -3,44 +3,44 @@
 <div class="columns-3 block">
 
 {% set label = 'Padding' %}
-{% set element_id = '__style.image.Padding' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'p-0': '0 em'}, {'p-2': '2 em'}, {'p-4': '4 em'}, {'p-6': '6 em'}, {'p-8': '8 em'}, {'p-12': '12 em'}, {'p-16': '16 em'}, {'p-24': '24 em'}, {'p-32': '32 em'}] %}
+{% set element_id = '__style.image.padding' %}
+{% set select_data = select.padding %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 {% set label = 'Alignment' %}
 {% set element_id = '__style.image.alignment' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-left': 'Left'}, {'text-center': 'Center'}, {'text-right': 'Right'}, {'text-justify': 'Justify'}] %}
+{% set select_data = select.justify %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 {% set label = 'Rounded' %}
 {% set element_id = '__style.image.rounded' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'rounded-none': 'Square Corners'}, {'rounded-sm': 'Rounded Small'}, {'rounded': 'Rounded'}, {'rounded-md': 'Rounded Medium'}, {'rounded-lg': 'Rounded Large'}, {'rounded-xl': 'Rounded XL'}, {'rounded-2xl': 'Rounded 2XL'}, {'rounded-full': 'Rounded Full'}] %}
+{% set select_data = select.rounded %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 {% set label = 'Width' %}
 {% set element_id = '__style.image.width' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'w-min': 'Minimum Width'}, {'w-full': 'Full Width'}, {'w-24': '24 em'}, {'w-32': '32 em'}, {'w-40': '40 em'}, {'w-48': '48 em'}, {'w-64': '64 em'}, {'w-72': 'Rounded Full'}, {'w-90': '90 em'}, {'w-96': '96 em'}] %}
+{% set select_data = select.width %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 {% set label = 'Max Width' %}
 {% set element_id = '__style.image.width_max' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"max-w-xs": "max-w-xs"}, {"max-w-sm": "max-w-sm"}, {"max-w-md": "max-w-md"}, {"max-w-lg": "max-w-lg"}, {"max-w-xl": "max-w-xl"}, {"max-w-2xl": "max-w-2xl"}, {"max-w-3xl": "max-w-3xl"}, {"max-w-4xl": "max-w-4xl"}, {"max-w-5xl": "max-w-5xl"}, {"max-w-6xl": "max-w-6xl"}, {"max-w-7xl": "max-w-7xl"}, {"max-w-full": "max-w-full"}, {"max-w-min": "max-w-min"}, {"max-w-max": "max-w-max"}, {"max-w-fit": "max-w-fit"}, {"max-w-none": "max-w-none"}, {"max-w-screen-sm": "max-w-screen-sm"}, {"max-w-screen-md": "max-w-screen-md"}, {"max-w-screen-lg": "max-w-screen-lg"}, {"max-w-screen-xl": "max-w-screen-xl"}, {"max-w-screen-2xl": "max-w-screen-2xl"}] %}
+{% set select_data = select.width_max %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 {% set label = 'Min Width' %}
 {% set element_id = '__style.image.width_min' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"min-w-full": "min-w-full"}, {"min-w-min": "min-w-min"}, {"min-w-max": "min-w-max"}, {"min-w-fit": "min-w-fit"}] %}
+{% set select_data = select.width_min %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 {% set label = 'Height' %}
 {% set element_id = '__style.image.height' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'h-min': 'Minimum Width'}, {'h-full': 'Full Width'}, {'h-24': '24 em'}, {'h-32': '32 em'}, {'h-40': '40 em'}, {'h-48': '48 em'}, {'h-64': '64 em'}, {'h-72': 'Rounded Full'}, {'h-90': '90 em'}, {'h-96': '96 em'}] %}
+{% set select_data = select.height %}
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 

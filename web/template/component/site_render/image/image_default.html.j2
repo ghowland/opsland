@@ -1,24 +1,27 @@
 <div class="flex
 
-  {% if cur_data.justify and cur_data.justify != 'parent' %}  {{cur_data.justify}}
-  {% else %}                                                  {{cur_style['__style.container.flex_justify']}}   {% endif %}
-
   {% if cur_data.padding and cur_data.padding != 'parent' %}  {{cur_data.padding}}
-  {% else %}                                                  {{cur_style['__style.container.padding']}}   {% endif %}
+  {% else %}                                                  {{cur_style['__style.image.padding']}}   {% endif %}
+
+  {% if cur_data.alignment and cur_data.alignment != 'parent' %}  {{cur_data.alignment}}
+  {% else %}                                                      {{cur_style['__style.image.alignment']}}   {% endif %}
 ">
   <img src="{{cur_data.image}}" alt="{{cur_data.alt}}"
   class="
   {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
-  {% else %}                                             {{cur_style['__style.container.width']}}   {% endif %}
+  {% else %}                                             {{cur_style['__style.image.width']}}   {% endif %}
 
   {% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
-  {% else %}                                                     {{cur_style['__style.container.width_max']}}   {% endif %}
+  {% else %}                                                     {{cur_style['__style.image.width_max']}}   {% endif %}
 
   {% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
-  {% else %}                                                     {{cur_style['__style.container.width_min']}}   {% endif %}
+  {% else %}                                                     {{cur_style['__style.image.width_min']}}   {% endif %}
+
+  {% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
+  {% else %}                                               {{cur_style['__style.image.height']}}   {% endif %}
 
   {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
-  {% else %}                                                 {{cur_style['__style.container.rounded']}}   {% endif %}
+  {% else %}                                                 {{cur_style['__style.image.rounded']}}   {% endif %}
   "
 >
 
