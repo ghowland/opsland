@@ -2,30 +2,10 @@
 
 
 <div class="columns-3 block">
-
-  {% set label = 'Size' %}
-  {% set element_id = '__style.button.text_size' %}
-  {% set select_data = select.text_size %}
-  {% set cur_value = cur_style[element_id] %}
-  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
   
-  
-  {% set label = 'Bold' %}
-  {% set element_id = '__style.button.text_bold' %}
-  {% set select_data = select.text_bold %}
-  {% set cur_value = cur_style[element_id] %}
-  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-  
-  {% set label = 'Hover Bold' %}
-  {% set element_id = '__style.button.hover_text_bold' %}
-  {% set select_data = select.text_bold %}
-  {% set cur_value = cur_style[element_id] %}
-  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-  
-  
-  {% set label = 'Margin' %}
-  {% set element_id = '__style.button.margin' %}
-  {% set select_data = select.margin %}
+  {% set label = 'Padding' %}
+  {% set element_id = '__style.button.padding' %}
+  {% set select_data = select.padding %}
   {% set cur_value = cur_style[element_id] %}
   {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
   
@@ -57,78 +37,54 @@
   {% set cur_value = cur_style[element_id] %}
   {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
   
-  {% set label = 'Justify' %}
-  {% set element_id = '__style.button.justify' %}
-  {% set select_data = select.justify %}
+
+  {% set label = 'Height' %}
+  {% set element_id = '__style.button.height' %}
+  {% set select_data = select.height %}
   {% set cur_value = cur_style[element_id] %}
   {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
   
   </div>
   
-  <div class="columns-1 block">
-  
-    {% set label = 'Text Transform' %}
-    {% set element_id = '__style.button.transform' %}
-    {% set select_data = select.text_transform %}
-    {% set cur_value = cur_style[element_id] %}
-    {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-    
-    {% set label = 'Hover Text Transform' %}
-    {% set element_id = '__style.button.hover_transform' %}
-    {% set select_data = select.text_transform %}
-    {% set cur_value = cur_style[element_id] %}
-    {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-    
-    {% set label = 'Text Decoration' %}
-    {% set element_id = '__style.button.decoration' %}
-    {% set select_data = select.text_decoration %}
-    {% set cur_value = cur_style[element_id] %}
-    {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-    
-    {% set label = 'Hover Text Decoration' %}
-    {% set element_id = '__style.button.hover_decoration' %}
-    {% set select_data = select.text_decoration %}
-    {% set cur_value = cur_style[element_id] %}
-    {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-    
-    {% set label = 'Text Font Style' %}
-    {% set element_id = '__style.button.font_style' %}
-    {% set select_data = select.text_font_style %}
-    {% set cur_value = cur_style[element_id] %}
-    {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-  
-    {% set label = 'Hover Text Font Style' %}
-    {% set element_id = '__style.button.hover_font_style' %}
-    {% set select_data = select.text_font_style %}
-    {% set cur_value = cur_style[element_id] %}
-    {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-    justify
-  </div>
   
   <div class="columns-1 block mt-4">
   
-  {% set cur_data = {'widget_id': '__style.button.override_color', 'label': 'Override Parent Color', 'value': cur_style['__style.button.override_color']} %}
-  {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-  
   {% set cur_data = {'widget_id': '__style.button.color', 'label': 'Color'} %}
   {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
-  
     
-  {% set cur_data = {'widget_id': '__style.button.override_hover_color', 'label': 'Override Parent Hover Color', 'value': cur_style['__style.button.override_hover_color']} %}
-  {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
-  
   {% set cur_data = {'widget_id': '__style.button.hover_color', 'label': 'Hover Color'} %}
   {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
-  
-  {% set cur_data = {'widget_id': '__style.button.override_focus_color', 'label': 'Override Parent Focus Color', 'value': cur_style['__style.button.override_focus_color']} %}
-  {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
   
   {% set cur_data = {'widget_id': '__style.button.focus_color', 'label': 'Focus Color'} %}
   {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
   
-  {% set cur_data = {'widget_id': '__style.button.override_ring_color', 'label': 'Override Parent Ring Color', 'value': cur_style['__style.button.override_ring_color']} %}
-  {% include 'component/site_editor/generic_widget/widget_checkbox.html.j2' %}
   
+  
+  {% set label = 'Border Width' %}
+  {% set element_id = '__style.button.border_width' %}
+  {% set select_data = select.border_width %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set cur_data = {'widget_id': '__style.button.border_color', 'label': 'Border Color'} %}
+  {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+
+  {% set cur_data = {'widget_id': '__style.button.hover_border_color', 'label': 'Hover Border Color'} %}
+  {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+
+  {% set cur_data = {'widget_id': '__style.button.focus_border_color', 'label': 'Focus Border Color'} %}
+  {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+  
+  {% set label = 'Ring Width' %}
+  {% set element_id = '__style.button.ring_width' %}
+  {% set select_data = select.ring_width %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
   {% set cur_data = {'widget_id': '__style.button.ring_color', 'label': 'Ring Color'} %}
   {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
   
