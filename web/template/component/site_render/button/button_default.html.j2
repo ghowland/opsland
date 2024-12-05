@@ -37,9 +37,6 @@
               {% else %}                                                 {{cur_style['__style.button.padding']}}   {% endif %}
 
 
-              {% if cur_data.margin and cur_data.margin != 'parent' %} {{cur_data.margin}}
-              {% else %}                                                 {{cur_style['__style.button.margin']}}   {% endif %}
-
               {% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
               {% else %}                                                     {{cur_style['__style.button.alignment']}}   {% endif %}
 
@@ -54,6 +51,9 @@
 
               {% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
               {% else %}                                               {{cur_style['__style.button.height']}}   {% endif %}
+
+              {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
+              {% else %}                                                 {{cur_style['__style.button.rounded']}}   {% endif %}
 
 ">
 
