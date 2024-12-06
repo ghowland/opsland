@@ -1,14 +1,14 @@
 <button type="button" 
         onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
         class="
-              {% if cur_data.color and cur_data.color != 'parent' %}  bg-{{cur_data.color}}
-              {% else %}                                              bg-{{cur_style['__style.button.color']}}   {% endif %}
+              {% if cur_data.color and cur_data.color != 'parent' %}  !bg-{{cur_data.color}}
+              {% else %}                                              !bg-{{cur_style['__style.button.color']}}   {% endif %}
 
-              {% if cur_data.hover_color and cur_data.hover_color != 'parent' %}  hover:bg-{{cur_data.hover_color}}
-              {% else %}                                                          hover:bg-{{cur_style['__style.button.hover_color']}}   {% endif %}
+              {% if cur_data.hover_color and cur_data.hover_color != 'parent' %}  hover:!bg-{{cur_data.hover_color}}
+              {% else %}                                                          hover:!bg-{{cur_style['__style.button.hover_color']}}   {% endif %}
 
-              {% if cur_data.focus_color and cur_data.focus_color != 'parent' %}  focus:bg-{{cur_data.focus_color}}
-              {% else %}                                                          focus:bg-{{cur_style['__style.button.focus_color']}}   {% endif %}
+              {% if cur_data.focus_color and cur_data.focus_color != 'parent' %}  focus:!bg-{{cur_data.focus_color}}
+              {% else %}                                                          focus:!bg-{{cur_style['__style.button.focus_color']}}   {% endif %}
 
 
               {% if cur_data.border_width and cur_data.border_width != 'parent' %} {{cur_data.border_width}}
