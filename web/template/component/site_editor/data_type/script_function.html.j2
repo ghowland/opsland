@@ -1,0 +1,7 @@
+
+<label for="__edit.{{widget_id}}.{{edit_key}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{edit_key}}</label>
+<div class="flex">
+  <textarea id="__edit.{{widget_id}}.{{edit_key}}" cols="60" rows="4" placeholder="Script Function..." onchange="RenderWidget('set', false)" type="text" 
+    class="widget_input rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+  >{{ widget_data.data[edit_key] }}</textarea>
+</div>

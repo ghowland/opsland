@@ -1,10 +1,9 @@
 {% set widget_data = site_page.widgets[widget_id] %}
 {% set widget_info = map_widget_html[widget_data.widget] %}
-
-<!-- Widget ID: {{widget_id}}<br>
+{#<!-- Widget ID: {{widget_id}}<br>
 Widget Info: {{widget_info}}<br>
 Widget Data: {{widget_data}}<br>
-Widget Data: Data Value: {{widget_data.data}}<br> -->
+Widget Data: Data Value: {{widget_data.data}}<br> -->#}
 
 {% if widget_data.data is defined %}
   {% set cur_data = widget_data.data %}
@@ -13,10 +12,7 @@ Widget Data: Data Value: {{widget_data.data}}<br> -->
   {% set cur_data = {} %}
 {% endif %}
 
-<!-- Cur Data: {{cur_data}}<br> -->
-
+{#<!-- Cur Data: {{cur_data}}<br> -->#}
 {% set html_data = widget_info %}
 
-
 {% include 'component/site_render/render_widget.html.j2' %} 
-

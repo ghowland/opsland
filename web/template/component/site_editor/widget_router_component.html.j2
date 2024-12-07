@@ -1,9 +1,9 @@
-<!-- 
+{#<!-- 
 <b>{{widget_id}}:</b> {{widget_data}}<br>
 <b>widget_data:</b> {{ widget_map }}<br>
 <b>widget_spec:</b> {{ widget_spec }}<br>
 <br> 
--->
+-->#}
 
 <h1 id="{{widget_id}}" class="text-xl font-bold leading-tight tracking-tight text-blue-700 mb-3">{{widget_specs[map_widget_html[widget_data.widget].spec].name}}: {{map_widget_html[widget_data.widget].name}}: {{widget_id}}</h1>
 
@@ -12,13 +12,11 @@
     {% for edit_key, edit_type in edit_item.items() %}
       {% if not edit_key.startswith('_') %}
         <!-- Edit: {{edit_item}}<br> -->
-
         {% if edit_item._source %}
           {% set select_source = edit_item._source %}
         {% endif %}
 
-        {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}
-        
+        {% include 'component/site_editor/data_type/' + edit_type + '.html.j2' %}        
       {% endif %}
     {% endfor %}
   {% endfor %}
