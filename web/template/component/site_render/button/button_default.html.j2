@@ -1,64 +1,107 @@
-<button type="button" 
-        onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
-        class="
-              {% if cur_data.color and cur_data.color != 'parent' %}  !bg-{{cur_data.color}}
-              {% else %}                                              !bg-{{cur_style['__style.button.color']}}   {% endif %}
+<div class="flex
 
-              {% if cur_data.hover_color and cur_data.hover_color != 'parent' %}  hover:!bg-{{cur_data.hover_color}}
-              {% else %}                                                          hover:!bg-{{cur_style['__style.button.hover_color']}}   {% endif %}
+{% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
+{% else %}                                                     {{cur_style['__style.button.alignment']}}   {% endif %}
 
-              {% if cur_data.focus_color and cur_data.focus_color != 'parent' %}  focus:!bg-{{cur_data.focus_color}}
-              {% else %}                                                          focus:!bg-{{cur_style['__style.button.focus_color']}}   {% endif %}
+">
+  <button type="button" 
+  onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
+  class="
+        {% if cur_data.color and cur_data.color != 'parent' %}  !bg-{{cur_data.color}}
+        {% else %}                                              !bg-{{cur_style['__style.button.color']}}   {% endif %}
 
+        {% if cur_data.hover_color and cur_data.hover_color != 'parent' %}  hover:!bg-{{cur_data.hover_color}}
+        {% else %}                                                          hover:!bg-{{cur_style['__style.button.hover_color']}}   {% endif %}
 
-              {% if cur_data.border_width and cur_data.border_width != 'parent' %} {{cur_data.border_width}}
-              {% else %}                                                           {{cur_style['__style.button.border_width']}}   {% endif %}
-
-              {% if cur_data.border_color and cur_data.border_color != 'parent' %} {{cur_data.border_color}}
-              {% else %}                                                           {{cur_style['__style.button.border_color']}}   {% endif %}
-
-              {% if cur_data.hover_border_color and cur_data.hover_border_color != 'parent' %} {{cur_data.hover_border_color}}
-              {% else %}                                                                       {{cur_style['__style.button.hover_border_color']}}   {% endif %}
-
-              {% if cur_data.focus_border_color and cur_data.focus_border_color != 'parent' %} {{cur_data.focus_border_color}}
-              {% else %}                                                                       {{cur_style['__style.button.focus_border_color']}}   {% endif %}
-
-              {% if cur_data.ring_border_color and cur_data.ring_border_color != 'parent' %} {{cur_data.ring_border_color}}
-              {% else %}                                                                     {{cur_style['__style.button.ring_border_color']}}   {% endif %}
-
-              {% if cur_data.ring_width and cur_data.ring_width != 'parent' %} {{cur_data.ring_width}}
-              {% else %}                                                       {{cur_style['__style.button.ring_width']}}   {% endif %}
-
-              {% if cur_data.ring_color and cur_data.ring_color != 'parent' %} {{cur_data.ring_color}}
-              {% else %}                                                       {{cur_style['__style.button.ring_color']}}   {% endif %}
+        {% if cur_data.focus_color and cur_data.focus_color != 'parent' %}  focus:!bg-{{cur_data.focus_color}}
+        {% else %}                                                          focus:!bg-{{cur_style['__style.button.focus_color']}}   {% endif %}
 
 
-              {% if cur_data.padding and cur_data.padding != 'parent' %} {{cur_data.padding}}
-              {% else %}                                                 {{cur_style['__style.button.padding']}}   {% endif %}
+        {% if cur_data.hover_border_color and cur_data.hover_border_color != 'parent' %} {{cur_data.hover_border_color}}
+        {% else %}                                                                       {{cur_style['__style.button.hover_border_color']}}   {% endif %}
+
+        {% if cur_data.focus_border_color and cur_data.focus_border_color != 'parent' %} {{cur_data.focus_border_color}}
+        {% else %}                                                                       {{cur_style['__style.button.focus_border_color']}}   {% endif %}
+
+        {% if cur_data.ring_border_color and cur_data.ring_border_color != 'parent' %} {{cur_data.ring_border_color}}
+        {% else %}                                                                     {{cur_style['__style.button.ring_border_color']}}   {% endif %}
+
+        {% if cur_data.ring_width and cur_data.ring_width != 'parent' %} {{cur_data.ring_width}}
+        {% else %}                                                       {{cur_style['__style.button.ring_width']}}   {% endif %}
+
+        {% if cur_data.ring_color and cur_data.ring_color != 'parent' %} {{cur_data.ring_color}}
+        {% else %}                                                       {{cur_style['__style.button.ring_color']}}   {% endif %}
 
 
-              {% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
-              {% else %}                                                     {{cur_style['__style.button.alignment']}}   {% endif %}
+        {% if cur_data.padding and cur_data.padding != 'parent' %} {{cur_data.padding}}
+        {% else %}                                                 {{cur_style['__style.button.padding']}}   {% endif %}
 
-              {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
-              {% else %}                                             {{cur_style['__style.button.width']}}   {% endif %}
 
-              {% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
-              {% else %}                                                     {{cur_style['__style.button.width_min']}}   {% endif %}
+        {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
+        {% else %}                                             {{cur_style['__style.button.width']}}   {% endif %}
 
-              {% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
-              {% else %}                                                     {{cur_style['__style.button.width_max']}}   {% endif %}
+        {% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
+        {% else %}                                                     {{cur_style['__style.button.width_min']}}   {% endif %}
 
-              {% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
-              {% else %}                                               {{cur_style['__style.button.height']}}   {% endif %}
+        {% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
+        {% else %}                                                     {{cur_style['__style.button.width_max']}}   {% endif %}
 
-              {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
-              {% else %}                                                 {{cur_style['__style.button.rounded']}}   {% endif %}
+        {% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
+        {% else %}                                               {{cur_style['__style.button.height']}}   {% endif %}
+
+
+
+        {% if cur_data.border_width and cur_data.border_width != 'parent' %} {% set class_value = cur_data.border_width %}
+        {% else %}                                                           {% set class_value = cur_style['__style.button.border_width'] %}   {% endif %}
+        {% if class_value and class_value != 'parent' %}
+          {% if is_special %}
+            {% if special == 'first' %}
+              {{class_value}}
+            {% elif special == 'last' %}
+              {{class_value}}
+            {% else %}
+              {{class_value | replace('border', 'border-t') }}
+              {{class_value | replace('border', 'border-b') }}
+            {% endif %}
+          {% else %}
+            {{class_value}}
+          {% endif %}
+        {% endif %}
+
+
+        {% if cur_data.border_color and cur_data.border_color != 'parent' %} border-{{cur_data.border_color}}
+        {% else %}                                                           border-{{cur_style['__style.button.border_color']}}   {% endif %}
+
+        {% if cur_data.border_color and cur_data.border_color != 'parent' %} hover:border-{{cur_data.hover_border_color}}
+        {% else %}                                                           hover:border-{{cur_style['__style.button.hover_border_color']}}   {% endif %}
+
+        {% if cur_data.border_color and cur_data.border_color != 'parent' %} focus:border-{{cur_data.focus_border_color}}
+        {% else %}                                                           focus:border-{{cur_style['__style.button.focus_border_color']}}   {% endif %}
+
+
+        {% if cur_data.rounded and cur_data.rounded != 'parent' %} {% set class_value = cur_data.rounded %}
+        {% else %}                                                 {% set class_value = cur_style['__style.button.rounded'] %}   {% endif %}
+        {% if is_special %}
+          {% if special == 'first' %}
+            {{ class_value | replace('rounded', 'rounded-s') }}
+          {% elif special == 'last' %}
+            {{ class_value | replace('rounded', 'rounded-e') }}
+          {% else %}
+            not-rounded-cause-middle-button
+          {% endif %}
+        {% else %}
+          {{class_value}}
+        {% endif %}
+
+        {% if is_special %}
+          inline-flex items-center
+        {% endif %}
 
 ">
 
-    {% for widget_id in widget_data.include.default %}
-      {% include 'component/site_render/page_render_widget_inner.html.j2' %}
-    {% endfor %}
+{% for widget_id in widget_data.include.default %}
+{% include 'component/site_render/page_render_widget_inner.html.j2' %}
+{% endfor %}
 
-  </button>
+</button>
+</div>

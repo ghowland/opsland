@@ -1,0 +1,26 @@
+
+<div class="flex
+
+{% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
+{% else %}                                                     {{cur_style['__style.button.alignment']}}   {% endif %}
+
+">
+  <div role="group" class="inline-flex rounded-md shadow-sm
+  ">
+
+    {% for widget_id in widget_data.include.default %}
+      {% set is_special = 1 %}
+      {% set special = 'none' %}
+      {% if loop.first %}
+        {% set special = 'first' %}
+      {% elif loop.last %}
+        {% set special = 'last' %}
+      {% endif %}
+
+      {% include 'component/site_render/page_render_widget_inner.html.j2' %}
+
+      {% set is_special = 0 %}
+    {% endfor %}
+
+  </div>  
+</div>
