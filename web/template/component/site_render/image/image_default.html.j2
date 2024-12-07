@@ -30,11 +30,28 @@
 
 <script>
   //TODO:DEVONLY: Global for this, repeats wont matter on load, but this is messy
-  var Cropper_Last_Invoked = null
-  var Cropper_Last = null
+  var Cropper_Last_Invoked
+  var Cropper_Last
 
   function Cropper_Image_{{widget_id}}() {
     // alert('Cropper for image_{{widget_id}}')
+    // document.getElementById('image_{{widget_id}}').Croppie()
+    var img_boundary = document.getElementById('image_{{widget_id}}').getBoundingClientRect();
+
+    var opts = {
+      viewport: {width: 150, height: 150, type: 'square'},
+      boundary: { width: img_boundary.width, height: img_boundary.height },
+      showZoomer: true,
+      
+    }
+    Cropper_Last = new Croppie(document.getElementById('image_{{widget_id}}'), opts);
+    // alert(Cropper_Last)
+    // call a method
+    // Cropper_Last.method(args);
+
+
+
+/*  
     const image = document.getElementById('image_{{widget_id}}')
     const cropper = new Cropper(image, {
       aspectRatio: 16 / 9,
@@ -48,9 +65,11 @@
         console.log('image_{{widget_id}}: scaleY: ' + event.detail.scaleY)
       },
     });
+*/
 
     // Set for use by a button or something
     Cropper_Last_Invoked = Cropper_Image_{{widget_id}}
-    Cropper_Last = cropper
+    // Cropper_Last = cropper
+
   }
 </script>

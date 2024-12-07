@@ -7,16 +7,6 @@
   <button type="button" id="button_{{widget_id}}" onclick="OnClick_{{widget_id}}(event)"
   onmousedown="return MouseDownEdit(event, '{{widget_id}}')"
 
-  {% if cur_data.on_click_api_url %}
-    hx-trigger="click"
-
-    hx-{{cur_data.on_click_api_method}}="{{cur_data.on_click_api_url}}" 
-    
-    {% if cur_data.on_click_api_is_multipart_form %}
-      hx-encoding="multipart/form-data"
-    {% endif %}
-  {% endif %}
-
   class="
         {% if cur_data.color and cur_data.color != 'parent' %}  !bg-{{cur_data.color}}
         {% else %}                                              !bg-{{cur_style['__style.button.color']}}   {% endif %}
@@ -116,9 +106,14 @@
 
 </button>
 </div>
+<div id="result_{{widget_id}}"></div>
 
 <script>
   function OnClick_{{widget_id}}(evt) {
     {{cur_data.on_click | safe }}
   }
+
+  // If we have on-load data, we want to just execute it to prep handlers or whatever
+  {{cur_data.on_load | replace('{{widget_id}}', widget_id) | replace('{{ widget_id }}', widget_id) | safe }}
+
 </script>
