@@ -10,7 +10,6 @@
     
         {% if limit_depth_indent < 0 %}-{% endif %}start-{{ limit_depth_indent | abs }}">
 
-
         <svg class="w-2.5 h-2.5 text-blue-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
         </svg>
@@ -19,21 +18,21 @@
 
     <h3 class="
         flex items-center 
-        text-lg font-semibold 
+        text-md font-semibold 
 
         {% if cur_data.title_color and cur_data.title_color != 'parent' %}  text-{{cur_data.title_color}}
-        {% else %}                                                          text-{{cur_style['__style.button.title_color']}}   {% endif %}
+        {% else %}                                                          text-{{cur_style['__style.list.title_color']}}   {% endif %}
     ">
       {{cur_data.title}} 
       <span class="
-            text-blue-800 text-sm font-medium 
+            text-blue-800 text-xs font-medium 
             ms-3
             me-2 
             px-2.5 py-0.5 
             rounded 
         
             {% if cur_data.tag_color and cur_data.tag_color != 'parent' %}  bg-{{cur_data.tag_color}}
-            {% else %}                                                      bg-{{cur_style['__style.button.tag_color']}}   {% endif %}
+            {% else %}                                                      bg-{{cur_style['__style.list.tag_color']}}   {% endif %}
       ">
         {{cur_data.tag}}
       </span>

@@ -22,7 +22,7 @@
         text-lg font-semibold 
 
         {% if cur_data.title_color and cur_data.title_color != 'parent' %}  text-{{cur_data.title_color}}
-        {% else %}                                                          text-{{cur_style['__style.button.title_color']}}   {% endif %}
+        {% else %}                                                          text-{{cur_style['__style.list.title_color']}}   {% endif %}
     ">
       {{cur_data.title}} 
       <span class="
@@ -33,7 +33,7 @@
             rounded 
         
             {% if cur_data.tag_color and cur_data.tag_color != 'parent' %}  bg-{{cur_data.tag_color}}
-            {% else %}                                                      bg-{{cur_style['__style.button.tag_color']}}   {% endif %}
+            {% else %}                                                      bg-{{cur_style['__style.list.tag_color']}}   {% endif %}
       ">
         {{cur_data.tag}}
       </span>
