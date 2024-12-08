@@ -6,8 +6,7 @@
   {% if cur_data.alignment and cur_data.alignment != 'parent' %}  {{cur_data.alignment}}
   {% else %}                                                      {{cur_style['__style.image.alignment']}}   {% endif %}
 ">
-<div>
-  <img src="{{cur_data.image}}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" oncontextmenu="Cropper_Image_{{widget_id}}(); return false;"
+  <img src="{{cur_data.image}}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;"
   class="
   {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
   {% else %}                                             {{cur_style['__style.image.width']}}   {% endif %}
@@ -23,53 +22,7 @@
 
   {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
   {% else %}                                                 {{cur_style['__style.image.rounded']}}   {% endif %}
-  "
->
-</div>
+  ">
 </div>
 
-<script>
-  //TODO:DEVONLY: Global for this, repeats wont matter on load, but this is messy
-  var Cropper_Last_Invoked
-  var Cropper_Last
-
-  function Cropper_Image_{{widget_id}}() {
-    // alert('Cropper for image_{{widget_id}}')
-    // document.getElementById('image_{{widget_id}}').Croppie()
-    var img_boundary = document.getElementById('image_{{widget_id}}').getBoundingClientRect();
-
-    var opts = {
-      viewport: {width: 150, height: 150, type: 'square'},
-      boundary: { width: img_boundary.width, height: img_boundary.height },
-      showZoomer: true,
-      
-    }
-    Cropper_Last = new Croppie(document.getElementById('image_{{widget_id}}'), opts);
-    // alert(Cropper_Last)
-    // call a method
-    // Cropper_Last.method(args);
-
-
-
-/*  
-    const image = document.getElementById('image_{{widget_id}}')
-    const cropper = new Cropper(image, {
-      aspectRatio: 16 / 9,
-      crop(event) {
-        console.log('image_{{widget_id}}: x: ' + event.detail.x)
-        console.log('image_{{widget_id}}: y: ' + event.detail.y)
-        console.log('image_{{widget_id}}: width: ' + event.detail.width)
-        console.log('image_{{widget_id}}: height: ' + event.detail.height)
-        console.log('image_{{widget_id}}: rotate: ' + event.detail.rotate)
-        console.log('image_{{widget_id}}: scaleX: ' + event.detail.scaleX)
-        console.log('image_{{widget_id}}: scaleY: ' + event.detail.scaleY)
-      },
-    });
-*/
-
-    // Set for use by a button or something
-    Cropper_Last_Invoked = Cropper_Image_{{widget_id}}
-    // Cropper_Last = cropper
-
-  }
-</script>
+{% include 'component/site_editor/control_panel/image_cropper.html.j2' %}

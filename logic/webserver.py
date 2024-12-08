@@ -185,18 +185,17 @@ async def Upload_CreateUploadFile(file: UploadFile = File(...)):
   return {"filename": file.filename}
 
 
+# # UPLOAD: Single File
+# @APP.post("/upload_single_str")
+# async def Upload_CreateUploadFileStr(request: Request):
+#   LOG.info(f'Params: {request.query_params._dict}')
+#   LOG.info(f'Headers: {request.headers}')
 
-# UPLOAD: Single File
-@APP.post("/upload_single_str")
-async def Upload_CreateUploadFileStr(request: Request):
-  LOG.info(f'Params: {request.query_params._dict}')
-  LOG.info(f'Headers: {request.headers}')
+#   body = await request.body()
+#   LOG.info(f'Body: {body}')
+#   # LOG.info(f'Headers: {request.headers}')
 
-  body = await request.body()
-  LOG.info(f'Body: {body}')
-  # LOG.info(f'Headers: {request.headers}')
-
-  return {"filename": request.headers}
+#   return {"filename": request.headers}
 
 
 # -- Handle Every HTTP Method and all paths with per-method handler --

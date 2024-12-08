@@ -12,7 +12,7 @@
         <button class="hidden" id="form_submit"></button>
       </form>
     </label>
-</div> 
+</div>
 
 <!-- Progress Bar -->
 <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
@@ -37,7 +37,7 @@
     if (percent_complete >= 99.99) 
     {
       console.log(`Upload: ${percent_complete}  Completed`);
-      htmx.ajax('POST', '/api/upload_refresh', {'target': '#upload_refresh'})
+      htmx.ajax('POST', '/api/upload_refresh', {'target': '#upload_result'})
     }
   }
 
