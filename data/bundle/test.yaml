@@ -206,6 +206,10 @@ execute:
     # Cache Icons
     cache_icons:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py cache_icons
+
+    # Cache Content Data
+    space_content_data:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_content_data    
     
     # space_edit_widget:
     #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
@@ -388,6 +392,8 @@ http:
       execute: execute.api.space_style_select_data
     get/cache_icons:
       execute: execute.api.cache_icons
+    get/space_content_data:
+      execute: execute.api.space_content_data
       
 
     # Dynamic version
