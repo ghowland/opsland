@@ -1,4 +1,4 @@
-<div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900
+<div class="flex flex-col 
 
     {% if cur_data.bg_color and cur_data.bg_color != 'parent' %} bg-{{cur_data.bg_color}}
     {% else %}                                                   bg-{{cur_style['__style.list.bg_color']}}   {% endif %}
@@ -23,6 +23,9 @@
     {% if cur_data.padding and cur_data.padding != 'parent' %} {{cur_data.padding}}
     {% else %}                                                 {{cur_style['__style.list.padding']}}   {% endif %}
 
+    {% if cur_data.shadow and cur_data.shadow != 'parent' %} {{cur_data.shadow}}
+    {% else %}                                               {{cur_style['__style.list.shadow']}}   {% endif %}
+
 
     {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
     {% else %}                                             {{cur_style['__style.list.width']}}   {% endif %}
@@ -36,8 +39,7 @@
     {% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
     {% else %}                                               {{cur_style['__style.list.height']}}   {% endif %}
 
-
-                                                shadow-sm">
+">
 
 
                                                 
