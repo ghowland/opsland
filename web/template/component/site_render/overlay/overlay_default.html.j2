@@ -1,0 +1,21 @@
+<!--<div class="absolute inset-0 bg-gray-700 opacity-40 rounded-md"></div>-->
+<div class="absolute inset-0 flex items-center justify-center
+
+
+{% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
+{% else %}                                             {{cur_style['__style.container.width']}}   {% endif %}
+
+{% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
+{% else %}                                                     {{cur_style['__style.container.width_max']}}   {% endif %}
+
+{% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
+{% else %}                                                     {{cur_style['__style.container.width_min']}}   {% endif %}
+
+{% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
+{% else %}                                               {{cur_style['__style.container.height']}}   {% endif %}
+
+">
+  {% for widget_id in widget_data.include.default %}
+    {% include 'component/site_render/page_render_widget_inner.html.j2' %}
+  {% endfor %}
+</div>

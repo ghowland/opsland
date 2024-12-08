@@ -1,4 +1,4 @@
-<div class="flex
+<div class="flex relative
 
   {% if cur_data.padding and cur_data.padding != 'parent' %}  {{cur_data.padding}}
   {% else %}                                                  {{cur_style['__style.image.padding']}}   {% endif %}
@@ -6,6 +6,10 @@
   {% if cur_data.alignment and cur_data.alignment != 'parent' %}  {{cur_data.alignment}}
   {% else %}                                                      {{cur_style['__style.image.alignment']}}   {% endif %}
 ">
+{% for widget_id in widget_data.include.default %}
+  {% include 'component/site_render/page_render_widget_inner.html.j2' %}
+{% endfor %}
+
   <img src="{{cur_data.image}}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;"
   class="
   {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
@@ -23,6 +27,7 @@
   {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
   {% else %}                                                 {{cur_style['__style.image.rounded']}}   {% endif %}
   ">
+
 </div>
 
 {% include 'component/site_editor/control_panel/image_cropper.html.j2' %}
