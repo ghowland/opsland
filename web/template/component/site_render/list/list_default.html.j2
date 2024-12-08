@@ -15,6 +15,28 @@
 
 
 
+    {% if cur_data.alignment and cur_data.alignment != 'parent' %} {{cur_data.alignment}}
+    {% else %}                                                     {{cur_style['__style.list.alignment']}}   {% endif %}
+
+    
+
+    {% if cur_data.padding and cur_data.padding != 'parent' %} {{cur_data.padding}}
+    {% else %}                                                 {{cur_style['__style.list.padding']}}   {% endif %}
+
+
+    {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
+    {% else %}                                             {{cur_style['__style.list.width']}}   {% endif %}
+
+    {% if cur_data.width_min and cur_data.width_min != 'parent' %} {{cur_data.width_min}}
+    {% else %}                                                     {{cur_style['__style.list.width_min']}}   {% endif %}
+
+    {% if cur_data.width_max and cur_data.width_max != 'parent' %} {{cur_data.width_max}}
+    {% else %}                                                     {{cur_style['__style.list.width_max']}}   {% endif %}
+
+    {% if cur_data.height and cur_data.height != 'parent' %} {{cur_data.height}}
+    {% else %}                                               {{cur_style['__style.list.height']}}   {% endif %}
+
+
                                                 shadow-sm">
 
 

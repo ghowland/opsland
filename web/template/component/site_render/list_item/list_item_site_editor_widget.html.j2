@@ -1,12 +1,12 @@
 {% set margin_value_pair = select.padding_start[(list_depth*3) + 10].keys() | list %}
 {% set limit_depth_indent = (list_depth*3) - 3 %}
-<li class="mb-10 {{ margin_value_pair[0] }}">
+<li class="mb-0 {{ margin_value_pair[0] }}">
     {% if loop_index > -1 %}        
     <span class="absolute flex items-center justify-center 
         w-6 h-6 
         bg-blue-100 
         rounded-full 
-        ring-8 ring-white 
+        ring-2 ring-white 
     
         {% if limit_depth_indent < 0 %}-{% endif %}start-{{ limit_depth_indent | abs }}">
 
@@ -38,9 +38,9 @@
         {{cur_data.tag}}
       </span>
     </h3>
-    <p class="mb-4 text-base font-normal text-gray-500 ">
+    <!-- <p class="mb-0 text-base font-normal text-gray-500 ">
       {{cur_data.text_html | render | safe}}
-    </p>
+    </p> -->
 
     {% for widget_id in widget_data.include.default %}
       {% set list_depth = list_depth + 1 %}
