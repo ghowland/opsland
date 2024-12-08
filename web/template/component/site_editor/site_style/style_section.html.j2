@@ -22,6 +22,13 @@
 {% set cur_value = cur_style[element_id] %}
 {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+  
+{% set label = 'Shadow' %}
+{% set element_id = '__style.section.shadow' %}
+{% set select_data = select.shadow %}
+{% set cur_value = cur_style[element_id] %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
 </div>
 
 {% set cur_data = {'widget_id': '__style.section.bg_color', 'label': 'Background Color'} %}

@@ -98,6 +98,10 @@
           inline-flex items-center
         {% endif %}
 
+
+        {% if cur_data.shadow and cur_data.shadow != 'parent' %} {{cur_data.shadow}}
+        {% else %}                                               {{cur_style['__style.button.shadow']}}   {% endif %}
+      
 ">
 
 {% for widget_id in widget_data.include.default %}

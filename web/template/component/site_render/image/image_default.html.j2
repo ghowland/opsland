@@ -26,6 +26,10 @@
 
   {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{cur_data.rounded}}
   {% else %}                                                 {{cur_style['__style.image.rounded']}}   {% endif %}
+
+  {% if cur_data.shadow and cur_data.shadow != 'parent' %} {{cur_data.shadow}}
+  {% else %}                                               {{cur_style['__style.image.shadow']}}   {% endif %}
+
   ">
 
 </div>

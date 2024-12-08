@@ -7,6 +7,9 @@
   {{cur_style['__style.section.margin']}}
   {{cur_style['__style.container.rounded']}}
 
+  {% if cur_data.shadow and cur_data.shadow != 'parent' %} {{cur_data.shadow}}
+  {% else %}                                               {{cur_style['__style.section.shadow']}}   {% endif %}
+
   "
   
   onmousedown="return MouseDownEdit(event, '{{widget_id}}')"

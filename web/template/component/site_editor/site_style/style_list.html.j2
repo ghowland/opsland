@@ -50,6 +50,12 @@
   {% set cur_value = cur_style[element_id] %}
   {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
+  
+  {% set label = 'Shadow' %}
+  {% set element_id = '__style.list.shadow' %}
+  {% set select_data = select.shadow %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
   {% set label = 'Justify Content' %}
   {% set element_id = '__style.list.flex_justify' %}
