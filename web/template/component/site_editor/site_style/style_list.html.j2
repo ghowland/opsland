@@ -2,17 +2,82 @@
 
 <div class="columns-3 block">
 
-{% set label = 'Margin' %}
-{% set element_id = '__style.list.margin' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'m-0': '0 em'}, {'m-2': '2 em'}, {'m-4': '4 em'}, {'m-6': '6 em'}, {'m-8': '8 em'}, {'m-12': '12 em'}, {'m-16': '16 em'}, {'m-24': '24 em'}, {'m-32': '32 em'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+  {% set label = 'Padding' %}
+  {% set element_id = '__style.list.padding' %}
+  {% set select_data = select.padding %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set label = 'Margin' %}
+  {% set element_id = '__style.list.margin' %}
+  {% set select_data = select.padding %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+    
+
+  {% set label = 'Alignment' %}
+  {% set element_id = '__style.list.alignment' %}
+  {% set select_data = select.justify %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set cur_data = {'widget_id': '__style.list.bg_color', 'label': 'Background Color'} %}
+  {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+  
+  {% set cur_data = {'widget_id': '__style.container.border_color', 'label': 'Border Color'} %}
+  {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}
+
+  {% set label = 'Border Width' %}
+  {% set element_id = '__style.container.border_width' %}
+  {% set select_data = [{'0': 'No Border'}, {'2': '2px'}, {'4': '4px'}, {'8': '8px'}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+    
+  {% set label = 'Rounded' %}
+  {% set element_id = '__style.container.rounded' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'rounded-none': 'Square Corners'}, {'rounded-sm': 'Rounded Small'}, {'rounded': 'Rounded'}, {'rounded-md': 'Rounded Medium'}, {'rounded-lg': 'Rounded Large'}, {'rounded-xl': 'Rounded XL'}, {'rounded-2xl': 'Rounded 2XL'}, {'rounded-full': 'Rounded Full'}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 
-{% set label = 'Alignment' %}
-{% set element_id = '__style.list.alignment' %}
-{% set select_data = [{'parent': 'Use Parent'}, {'text-left': 'Left'}, {'text-center': 'Center'}, {'text-right': 'Right'}, {'text-justify': 'Justify'}] %}
-{% set cur_value = cur_style[element_id] %}
-{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+  {% set label = 'Justify Content' %}
+  {% set element_id = '__style.container.flex_justify' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'justify-normal': 'Normal'}, {'justify-start': 'Start'}, {'justify-end': 'End'}, {'justify-center': 'Center'}, {'justify-between': 'Between'}, {'justify-around': 'Around'}, {'justify-evenly': 'Evenly'}, {'content-baseline': 'Baseline'}, {'justify-stretch': 'Stretch'}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+
+  {% set label = 'Flex Content Alignment' %}
+  {% set element_id = '__style.container.flex_content' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'content-normal': 'Normal'}, {'content-center': 'Center'}, {'content-start': 'Start'}, {'content-end': 'End'}, {'content-between': 'Between'}, {'content-around': 'Around'}, {'content-evenly': 'Evenly'}, {'content-baseline': 'Baseline'}, {'content-stretch': 'Stretch'}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  
+  {% set label = 'Width' %}
+  {% set element_id = '__style.container.width' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'w-min': 'Minimum Width'}, {'w-full': 'Full Width'}, {'w-24': '24 em'}, {'w-32': '32 em'}, {'w-40': '40 em'}, {'w-48': '48 em'}, {'w-64': '64 em'}, {'w-72': 'Rounded Full'}, {'w-90': '90 em'}, {'w-96': '96 em'}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set label = 'Max Width' %}
+  {% set element_id = '__style.container.width_max' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"max-w-xs": "max-w-xs"}, {"max-w-sm": "max-w-sm"}, {"max-w-md": "max-w-md"}, {"max-w-lg": "max-w-lg"}, {"max-w-xl": "max-w-xl"}, {"max-w-2xl": "max-w-2xl"}, {"max-w-3xl": "max-w-3xl"}, {"max-w-4xl": "max-w-4xl"}, {"max-w-5xl": "max-w-5xl"}, {"max-w-6xl": "max-w-6xl"}, {"max-w-7xl": "max-w-7xl"}, {"max-w-full": "max-w-full"}, {"max-w-min": "max-w-min"}, {"max-w-max": "max-w-max"}, {"max-w-fit": "max-w-fit"}, {"max-w-none": "max-w-none"}, {"max-w-screen-sm": "max-w-screen-sm"}, {"max-w-screen-md": "max-w-screen-md"}, {"max-w-screen-lg": "max-w-screen-lg"}, {"max-w-screen-xl": "max-w-screen-xl"}, {"max-w-screen-2xl": "max-w-screen-2xl"}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set label = 'Min Width' %}
+  {% set element_id = '__style.container.width_min' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {"min-w-full": "min-w-full"}, {"min-w-min": "min-w-min"}, {"min-w-max": "min-w-max"}, {"min-w-fit": "min-w-fit"}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set label = 'Height' %}
+  {% set element_id = '__style.container.height' %}
+  {% set select_data = [{'parent': 'Use Parent'}, {'': 'No Setting'}, {'h-min': 'Minimum Width'}, {'h-full': 'Full Width'}, {'h-24': '24 em'}, {'h-32': '32 em'}, {'h-40': '40 em'}, {'h-48': '48 em'}, {'h-64': '64 em'}, {'h-72': 'Rounded Full'}, {'h-90': '90 em'}, {'h-96': '96 em'}] %}
+  {% set cur_value = cur_style[element_id] %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
 </div>

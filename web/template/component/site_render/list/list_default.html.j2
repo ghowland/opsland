@@ -1,10 +1,32 @@
-<div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900
+
+    {% if cur_data.bg_color and cur_data.bg_color != 'parent' %} bg-{{cur_data.bg_color}}
+    {% else %}                                                   bg-{{cur_style['__style.list.bg_color']}}   {% endif %}
+
+
+    {% if cur_data.border_color and cur_data.border_color != 'parent' %} border-{{cur_data.border_color}}
+    {% else %}                                                           border-{{cur_style['__style.list.border_color']}}   {% endif %}
+
+    {% if cur_data.border_width and cur_data.border_width != 'parent' %} {{ cur_data.border_width }}
+    {% else %}                                                           {{ cur_style['__style.list.border_width'] }}   {% endif %}
+
+    {% if cur_data.rounded and cur_data.rounded != 'parent' %} {{ cur_data.rounded }}
+    {% else %}                                                 {{ cur_style['__style.list.rounded'] }}   {% endif %}
+
+
+
+                                                shadow-sm">
+
+
+                                                
   <!-- List -->
-  <ul role="list" class="mb-8 space-y-4 text-left">
+  <ol role="list" class="mb-8 space-y-4 text-left relative border-s border-gray-200">
 
     {% for widget_id in widget_data.include.default %}
+      {% set loop_index = loop.index0 %}
+      {% set list_depth = 0 %}
       {% include 'component/site_render/page_render_widget_inner.html.j2' %}
     {% endfor %}
     
-  </ul>
+  </ol>
 </div>
