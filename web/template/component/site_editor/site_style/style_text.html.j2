@@ -1,6 +1,6 @@
 <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Text</h2>
 
-<div class="columns-3 block">
+<div class="columns-2 block">
 
 {% set label = 'Size Normal' %}
 {% set element_id = '__style.text.size' %}
@@ -58,7 +58,7 @@
 
 </div>
 
-<div class="columns-1 block">
+<div class="columns-1 block flex justify-center">
 
 {% set label = 'Text Transform' %}
 {% set element_id = '__style.text.transform' %}
@@ -80,7 +80,7 @@
 
 </div>
 
-<div class="columns-1 block mt-4">
+<div class="columns-1 block mt-4 flex justify-center">
 
 {% set cur_data = {'widget_id': '__style.text.color', 'label': 'Color'} %}
 {% include 'component/site_editor/generic_widget/widget_color_grid.html.j2' %}

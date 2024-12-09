@@ -1,0 +1,117 @@
+<script>
+  // Global Widget Options for collecting data
+  var WidgetOptions = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'};
+
+  function RenderWidget(command, do_toggle_modal) {
+    // Set a command
+    if (command != undefined) SetWidgetOption('__command', command)
+    else SetWidgetOption('__command', 'set')
+
+    ScrapeData()
+
+    htmx.ajax('POST', '/api/space_editor_sidebar', {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
+      if (do_toggle_modal != false) { ToggleEditModal() }
+    });
+  
+    // Have to scrape it again, because we just updated it
+    ScrapeData()
+
+    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+    SetWidgetOption('__command', 'none')
+    htmx.ajax('POST', '/api/space_editor_render', {'target': '#page_render', 'values': WidgetOptions})
+  }
+
+  function MouseDownEdit(evt, widget_id)
+  {
+    //TODO: If we dont allow editing, just return here...
+    //...
+
+    // Handle Wheel button.  Perfect, because I never use that button for anything, unlike the middle to launch links in a new tab
+    //TODO: Make settings for this, so that users can tune how they want to control their editing experience
+    if (evt.button == 1) 
+    {
+      // Jump to the location
+      window.location.hash = widget_id
+
+      // // Open the sidebar by simulating a click on the button
+      // var button = document.getElementById('button_open_sidebar')
+      // button.click();
+
+      SetWidgetOption('__select_edit.widget_id', widget_id)
+      SetWidgetOption('__command', 'fetch')
+
+      // Get the Modal to appear first
+      RenderWidget('fetch')
+
+      // No more events from this click, and dont open the contextmenu
+      evt.stopPropagation()
+      evt.preventDefault()
+      return true;
+    }
+  }
+
+  function ScrapeData()
+  {
+    // Get all the inputs and checkboxes
+    var inputs = Array.from(document.getElementsByClassName("widget_input"))
+    inputs.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.value))
+
+    var checkboxes = Array.from(document.getElementsByClassName("widget_checkbox"));
+    checkboxes.forEach((element, index) => SetWidgetOption(element.getAttribute('id'), element.checked))
+  }
+
+  function SetWidgetOption(name, value) {
+    WidgetOptions[name] = value;
+  }
+
+  function ToggleEditModal()
+  {
+    var close_button = document.getElementById('crud_modal_close_button')
+    close_button.click()
+    
+    //TODO: It's annoying to see the flicker, but this is mostly gone.  Can try to make it tighter later, but we have a workaround for getting things going
+    setTimeout(() => {
+      // Clear the dark opacity, it doesnt make editing things nicer, and I cant find a toggle for it
+      var elements = document.querySelectorAll('[modal-backdrop]'); 
+      elements.forEach((element, index) => { element.classList.remove('bg-gray-900/50', 'dark:bg-gray-900/80');  })
+      elements = document.querySelectorAll('div.fixed'); 
+      elements.forEach((element, index) => { element.classList.remove('bg-gray-900/50', 'dark:bg-gray-900/80'); })
+    }, 100)
+  }
+
+</script>
+
+
+<!-- Modal toggle -->
+<button id="crud_modal_button" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="hidden" type="button">Hidden Button to Open Modal</button>
+
+<!-- Main modal -->
+<div id="crud-modal" tabindex="-1" aria-hidden="true" data-modal-placement="center-left" data-modal-backdrop="" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-4xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Edit Widget
+                </h3>
+                <button type="button" data-modal-toggle="crud-modal" id="crud_modal_close_button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <form class="p-4 md:p-5">
+                <div class="mb-4" id="crud_model_target">
+
+                  <!-- Contents will be set here -->
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div> 
