@@ -450,25 +450,9 @@ http:
     # Dynamic version
     plan00:
       template: pages/site_page_render.html.j2
-      cache:
-        execute.api.space_page_data.plan00:
-          site_page: []
-        execute.api.space_widget_spec:
-          widget_specs: []
-        execute.api.space_map_widget_html:
-          map_widget_html: []
-        execute.api.space_widget_tags:
-          site_page_tags: []
-        execute.api.space_style:
-          space_style: []
-        execute.api.upload_refresh:
-          files: []
-        execute.api.table_data_refresh:
-          tables: []
-        execute.api.cache_icons:
-          icons: []
-        execute.api.space_style_select_data:
-          select: []
+      _import_static_data: 
+        - space_page_base
+
 
     # Paths
     site_editor:
