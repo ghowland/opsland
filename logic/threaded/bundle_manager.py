@@ -34,6 +34,8 @@ class BundleManager(thread_base.ThreadBase):
     bundle_data = utility.LoadYaml(path)
 
     with self._lock:
+      # Process the Bundle, then store it
+      self._ProcessBundleData(bundle_data)
       self._config.data[path] = bundle_data
       self.timestamps[path] = time.time()
 
@@ -42,6 +44,25 @@ class BundleManager(thread_base.ThreadBase):
     # If this is the first time, we want to load cache off storage so we start with the last data.  Allows smooth restarts
     if load_cache:
       self._config.cache.LoadInitialBundleCache(path, self.GetBundles())
+
+
+  def _ProcessBundleData(self, bundle_data):
+    """Go through the bundle data, and perform any processing steps.  ex: `_import_static_data`"""
+    for method_key, method_data in bundle_data['http'].items():
+      for endpoint_uri, endpoint_data in method_data.items():
+        if '_import_static_data' in endpoint_data:
+          for static_import in endpoint_data['_import_static_data']:
+            found_static = bundle_data['static_data'].get(static_import, None)
+
+            # If we dont have this, its a configuration error
+            if found_static == None:
+              LOG.error(f'Missing Static Data import: {static_import}')
+              continue
+
+            # Else, update our dictionary with it
+            else:
+              #TODO: Merge the dictionaries per level.  For now just straigth update which blows away peer data in deeper areas, so its not an nice overlay
+              endpoint_data.update(found_static)
 
 
   def ExecuteTask(self, task):
