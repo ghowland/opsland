@@ -61,7 +61,7 @@
 
   <p class="text-sm font-medium text-gray-900 ml-1">{{cur_item.value}}</p>
 
-  {% if cur_item.count %}
+  {% if cur_item.count and cur_item.show_count %}
     <a href="#" class="text-sm font-medium text-gray-500 hover:underline ml-1">({{cur_item.count}})</a>
   {% endif %}
 </div>

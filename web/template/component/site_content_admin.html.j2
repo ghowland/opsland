@@ -137,7 +137,7 @@
                 <!-- Rating -->
                 <div class="flex items-center gap-4">
 
-                  {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count } %}
+                  {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count, 'show_count': False } %}
                   {% include 'component/site_render/rating/rating_stars.html.j2' %}
 
                   <!-- Control: Edit Data -->
