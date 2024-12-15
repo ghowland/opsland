@@ -61,9 +61,21 @@
       <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
         <div class="space-y-6">
 
-          {% set cur_items = [{'rating': 4.8, 'rating_count': 97, 'cost': 1499}, {'rating': 3.3, 'rating_count': 23, 'cost': 2549}] %}
+          {% set cur_items = [
+            {
+              'rating': 4.8, 'rating_count': 97, 'cost': 1499, 
+              'tags': ['Something or other', 'More stuff here', 'Again'],
+              'labels': ['site:Copyright', 'custom:Other', 'gen:Video'],
+            }, 
+            {
+              'rating': 3.3, 'rating_count': 23, 'cost': 2549, 
+              'tags': ['Oh yeah', 'Waka Waka'],
+              'labels': ['site:Title', 'custom:Risky', 'gen:Image'],
+            },
+            ] 
+          %}
           
-          {% for this_item in cur_items %}
+          {% for loop_item in cur_items %}
 
           <content-chunk class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm block">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
@@ -90,40 +102,49 @@
                   </button>
                 </div>
                 <div class="text-end md:order-4 md:w-32">
-                  <p class="text-base font-bold text-gray-900">${{this_item.cost}}</p>
+                  <p class="text-base font-bold text-gray-900">${{loop_item.cost}}</p>
                 </div>
               </div>
 
-              <!-- Rating -->
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                <a href="#" class="text-base font-medium text-gray-900 hover:underline">
-                  PC system All in One APPLE iMac (2023) mqrq3ro/a, Apple M3, 24" Retina 4.5K, 8GB, SSD 256GB, 10-core GPU, Keyboard layout INT
-                </a>
+                <!-- Labels: Strict.  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
+                {% for label in loop_item.labels %}
+                  {% set cur_item = {'value': label, 'text_color': 'text-pink-800', 'bg_color': 'bg-pink-100' } %}
+                  {% include 'component/site_render/badge/badge_chip.html.j2' %}
+                {% endfor %}
+
+                <!-- Tags: Loose.  List of strings. -->
+                {% for tag in loop_item.tags %}
+                  {% set cur_item = {'value': tag, 'text_color': 'text-blue-800', 'bg_color': 'bg-blue-100'} %}
+                  {% include 'component/site_render/badge/badge_chip.html.j2' %}
+                {% endfor %}
                 
+                <!-- Rating -->
                 <div class="flex items-center gap-4">
 
-                  {% set cur_item = {'value': this_item.rating, 'count': this_item.rating_count } %}
+                  {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count } %}
                   {% include 'component/site_render/rating/rating_stars.html.j2' %}
+
+
+                  <!-- Control: Add Label -->
+                  <button type="button" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
+                    <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
+                    </svg>
+                    Add Label
+                  </button>
+
+                  <!-- Control: Delete -->
+                  <button type="button" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                    <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                    </svg>
+                    Delete Content
+                  </button>
 
                 </div>
 
-              <!-- Controls -->
-              <button type="button" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
-                  <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
-                  </svg>
-                  Add Label
-                </button>
-
-                <button type="button" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
-                  <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
-                  </svg>
-                  Delete Content
-                </button>
-
               </div>
-
             </div>
           </content-chunk>
 
