@@ -64,13 +64,13 @@
           {% set cur_items = [
             {
               'uuid': '0a',
-              'rating': 4.8, 'rating_count': 97, 'cost': 1499, 
+              'rating': 4.5, 'rating_count': 97, 'cost': 1499, 
               'tags': ['Something or other', 'More stuff here', 'Again', 'debug=False'],
               'labels': ['gen:Video', 'gen:Video/MP4', 'site:Copyright', 'custom:Other'],
             }, 
             {
               'uuid': '1x',
-              'rating': 3.3, 'rating_count': 23, 'cost': 2549, 
+              'rating': 3.5, 'rating_count': 23, 'cost': 2549, 
               'tags': ['Oh yeah', 'Waka Waka', 'product=123'],
               'labels': ['gen:Image', 'gen:Image/PNG', 'site:Title', 'custom:Risky'],
             },
@@ -140,12 +140,12 @@
                   {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count } %}
                   {% include 'component/site_render/rating/rating_stars.html.j2' %}
 
-                  <!-- Control: Add Label -->
+                  <!-- Control: Edit Data -->
                   <button type="button" onclick="document.getElementById('add_a_label_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
-                    <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
-                    </svg>
-                    Add Label
+                    <span class="pe-1">
+                      {{icons['edit'].html|safe}}
+                    </span>
+                    Edit Data
                   </button>
 
                   <!-- Control: Delete -->
@@ -161,7 +161,17 @@
                 <!-- Add Labels -->
                 <div id="add_a_label_{{ loop_item.uuid }}" class="hidden">
 
-                  <div class="block">
+                  <div class="block ps-2">
+                    <div>
+                      {% set label = 'Ratings' %}
+                      {% set element_id = '__set.' + loop_item.uuid|string + '.rating' %}
+                      {% set select_data = select.rating_score %}
+                      {% set cur_value = loop_item.rating|string %}
+                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                    </div>
+                  </div>
+
+                  <div class="block ps-2">
                     <div>
                       {% set label = 'Site Label' %}
                       {% set element_id = '__add.label_site.' + loop_item.uuid|string + '.label_site' %}
@@ -171,7 +181,7 @@
                     </div>
                   </div>
 
-                  <div class="block">
+                  <div class="block ps-2">
                     <div>
                       {% set label = 'Custom Label' %}
                       {% set element_id = '__add.label_custom.' + loop_item.uuid|string + '.label_custom' %}
