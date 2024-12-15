@@ -63,16 +63,16 @@
 
           {% set cur_items = [
             {
-              'uuid': 0,
+              'uuid': '0a',
               'rating': 4.8, 'rating_count': 97, 'cost': 1499, 
               'tags': ['Something or other', 'More stuff here', 'Again', 'debug=False'],
-              'labels': ['site:Copyright', 'custom:Other', 'gen:Video', 'gen:Video/MP4'],
+              'labels': ['gen:Video', 'gen:Video/MP4', 'site:Copyright', 'custom:Other'],
             }, 
             {
-              'uuid': 1,
+              'uuid': '1x',
               'rating': 3.3, 'rating_count': 23, 'cost': 2549, 
               'tags': ['Oh yeah', 'Waka Waka', 'product=123'],
-              'labels': ['site:Title', 'custom:Risky', 'gen:Image', 'gen:Image/PNG'],
+              'labels': ['gen:Image', 'gen:Image/PNG', 'site:Title', 'custom:Risky'],
             },
             ] 
           %}
@@ -112,16 +112,17 @@
                 <!-- Labels: Strict.  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
                 {% for label in loop_item.labels %}
                   {% if label.startswith('gen:') %}
-                    {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100' } %}
+                    {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100', 'allow_delete': False } %}
 
                   {% elif label.startswith('custom:') %}
-                    {% set cur_item = {'value': label.replace('custom:', ''), 'text_color': 'text-blue-800', 'bg_color': 'bg-blue-100' } %}
+                    {% set cur_item = {'value': label.replace('custom:', ''), 'text_color': 'text-blue-800', 'bg_color': 'bg-blue-100', 'allow_delete': True } %}
 
                   {% elif label.startswith('site:') %}
-                    {% set cur_item = {'value': label.replace('site:', ''), 'text_color': 'text-green-800', 'bg_color': 'bg-green-100' } %}
+                    {% set cur_item = {'value': label.replace('site:', ''), 'text_color': 'text-green-800', 'bg_color': 'bg-green-100', 'allow_delete': True } %}
 
                   {% else %}
-                    {% set cur_item = {'value': label, 'text_color': 'text-gray-800', 'bg_color': 'bg-gray-100' } %}
+                    {% set cur_item = {'value': label, 'text_color': 'text-gray-800', 'bg_color': 'bg-gray-100', 'allow_delete': True } %}
+
                   {% endif %}
 
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
@@ -129,7 +130,7 @@
 
                 <!-- Tags: Loose.  List of strings. -->
                 {% for tag in loop_item.tags %}
-                  {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600'} %}
+                  {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True} %}
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
                 {% endfor %}
                 
@@ -157,13 +158,36 @@
 
                 </div>
 
+                <!-- Add Labels -->
                 <div id="add_a_label_{{ loop_item.uuid }}" class="hidden">
 
-                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag', 'label': 'Custom Tags', 'allow_new': True, 'allow_delete': True} %}
+                  <div class="block">
+                    <div>
+                      {% set label = 'Site Label' %}
+                      {% set element_id = '__add.label_site.' + loop_item.uuid|string + '.label_site' %}
+                      {% set select_data = select.label_site %}
+                      {% set cur_value = 0 %}
+                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                    </div>
+                  </div>
+
+                  <div class="block">
+                    <div>
+                      {% set label = 'Custom Label' %}
+                      {% set element_id = '__add.label_custom.' + loop_item.uuid|string + '.label_custom' %}
+                      {% set select_data = select.label_custom %}
+                      {% set cur_value = 0 %}
+                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                    </div>
+                  </div>
+                  
+                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...'} %}
                   {% include 'component/site_render/form/list/text/text_list_simple.html.j2' %}
+
 
                 </div>
 
+                <!-- Delete this Item -->
                 <div id="delete_this_{{ loop_item.uuid }}" class="hidden">
                   Confirm Delete: 
                   <button type="button" onclick="document.getElementById('delete_this_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-100 bg-red-800 m-2 p-2 rounded hover:bg-red-600">

@@ -4,14 +4,14 @@
 <div class="inline-flex block min-w-0 w-full">
   {% if cur_item.allow_delete %}
   <div class="p-2">
-    <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
+    <button type="button" onclick="SetWidgetOption('__delete__.{{cur_item.element_prefix}}.{{loop.index0}}', 1); RenderWidget('delete', false)" data-input-counter-decrement="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
       <svg class="h-2.5 w-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
       </svg>
     </button>  
   </div>
   {% endif %}
-  <input value="{{item}}" placeholder="Custom tag text..." onchange="RenderWidget2('set', false)" type="text" id="{{cur_item.element_prefix}}.{{loop.index0}}" class="widget_input rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 min-w-0 w-full text-sm border-gray-300 p-2.5">
+  <input value="{{item}}" placeholder="{{cur_item.placeholder}}" onchange="RenderWidget('set', false)" type="text" id="{{cur_item.element_prefix}}.{{loop.index0}}" class="widget_input rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 min-w-0 w-full text-sm border-gray-300 p-2.5">
 </div>
 {% endfor %}
 
@@ -20,13 +20,13 @@
 <div class="inline-flex block min-w-0 w-full">
   {% if cur_item.allow_delete %}
   <div class="p-2">
-    <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
+    <button type="button" data-input-counter-decrement="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
       <svg class="h-2.5 w-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
       </svg>
     </button>  
   </div>
   {% endif %}
-  <input value="" placeholder="Custom tag text..." onchange="RenderWidget2('set', false)" type="text" id="{{cur_item.element_prefix}}.-1" class="widget_input rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 min-w-0 w-full text-sm border-gray-300 p-2.5">
+  <input value="" placeholder="{{cur_item.placeholder}}" onchange="RenderWidget('set', false)" type="text" id="{{cur_item.element_prefix}}.-1" class="widget_input rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 min-w-0 w-full text-sm border-gray-300 p-2.5">
 </div>
 {% endif %}

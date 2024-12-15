@@ -7,6 +7,7 @@
   {{cur_item.bg_color}}
 ">
   {{ cur_item.value }}
+  {% if cur_item.allow_delete %}
   <button type="button" data-dismiss-target="#badge-dismiss-default" aria-label="Remove" class="
       inline-flex items-center 
       p-1 ms-2 
@@ -19,4 +20,5 @@
     </svg>
     <span class="sr-only">Remove badge</span>
   </button>
+{% endif %}
 </span>
