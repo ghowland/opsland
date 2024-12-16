@@ -1,5 +1,5 @@
 
-<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{cur_item.label}}</label>
+<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white {{cur_item.label_add_class}}">{{cur_item.label}}</label>
 {% for item in cur_item.data %}
 <div class="inline-flex block min-w-0 w-full">
   {% if cur_item.allow_delete %}
@@ -27,6 +27,6 @@
     </button>  
   </div>
   {% endif %}
-  <input value="" placeholder="{{cur_item.placeholder}}" onchange="RenderWidget('set', false)" type="text" id="{{cur_item.element_prefix}}.-1" class="widget_input rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 min-w-0 w-full text-sm border-gray-300 p-2.5">
+  <input value="" placeholder="New {{cur_item.placeholder}}" onchange="RenderWidget('set', false)" type="text" id="{{cur_item.element_prefix}}.-1" class="widget_input rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 min-w-0 w-full text-sm border-gray-300 p-2.5">
 </div>
 {% endif %}

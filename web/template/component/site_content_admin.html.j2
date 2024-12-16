@@ -40,6 +40,7 @@
           {% set cur_items = [
             {
               'uuid': '0a',
+              'priority': 75,
               'rating': 4.5, 'rating_count': 97, 
               'cost': 1499, 'cost_type': 'usd',
               'tags': ['Something or other', 'More stuff here', 'Again', 'debug=False'],
@@ -47,6 +48,7 @@
             },
             {
               'uuid': '1x',
+              'priority': 21,
               'rating': 3.5, 'rating_count': 23, 
               'cost': 2549, 'cost_type': 'usd',
               'tags': ['Oh yeah', 'Waka Waka', 'product=123'],
@@ -69,13 +71,16 @@
               <label for="counter-input" class="sr-only">Priority:</label>
               <div class="flex items-center justify-between md:order-3 md:justify-end">
                 <div class="flex items-center">
-                  <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
+                  <!-- Down Button -->
+                  <button type="button" onclick="var el = document.getElementById('__set.{{loop_item.uuid|string}}.priority'); el.value = parseInt(el.value) - 1;" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
                     <svg class="h-2.5 w-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                     </svg>
                   </button>
-                  <input type="text" id="counter-input" data-input-counter class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0" placeholder="" value="2" required />
-                  <button type="button" id="increment-button" data-input-counter-increment="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
+                  <!-- Input Int -->
+                  <input type="text" placeholder="" value="{{loop_item.priority}}" required id="__set.{{loop_item.uuid|string}}.priority"  class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0" />
+                  <!-- Up Button -->
+                  <button type="button" onclick="var el = document.getElementById('__set.{{loop_item.uuid|string}}.priority'); el.value = parseInt(el.value) + 1;" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 ">
                     <svg class="h-2.5 w-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                     </svg>
@@ -87,7 +92,7 @@
               </div>
 
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                <!-- Labels: Strict.  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
+                <!-- Labels: Strict:  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
                 {% for label in loop_item.labels %}
                   {% if label.startswith('gen:') %}
                     {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100', 'allow_delete': False } %}
@@ -106,16 +111,17 @@
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
                 {% endfor %}
 
-                <!-- Tags: Loose.  List of strings. -->
+                <!-- Tags: Loose:  List of strings -->
                 {% for tag in loop_item.tags %}
                   {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True} %}
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
                 {% endfor %}
                 
-                <!-- Rating -->
+                <!-- Rating & Control Button Line -->
                 <div class="flex items-center gap-4">
 
-                  {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count, 'show_count': False } %}
+                <!-- Rating -->
+                {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count, 'show_count': False } %}
                   {% include 'component/site_render/rating/rating_stars.html.j2' %}
 
                   <!-- Control: Edit Data -->
@@ -169,7 +175,7 @@
                     </div>
                   </div>
                   
-                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...'} %}
+                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
                   {% include 'component/site_render/form/list/text/text_list_simple.html.j2' %}
 
 
