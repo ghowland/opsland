@@ -210,7 +210,7 @@ execute:
     # Cache Content Data
     space_content_data:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_content_data    
-      input_path: /tmp/opsland/upload_refresh_{uuid}.json
+      input_path: /tmp/opsland/space_content_data_{uuid}.json
       input:
         execute.api.upload_refresh:
           existing: []
