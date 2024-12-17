@@ -147,7 +147,7 @@
 
                   <div class="block ps-2">
                     <div>
-                      {% set label = 'Ratings' %}
+                      {% set label = 'Set Ratings' %}
                       {% set element_id = '__set.' + loop_item.uuid|string + '.rating' %}
                       {% set select_data = select.rating_score %}
                       {% set cur_value = loop_item.rating|string %}
@@ -157,7 +157,7 @@
 
                   <div class="block ps-2">
                     <div>
-                      {% set label = 'Site Label' %}
+                      {% set label = 'Add Site Label' %}
                       {% set element_id = '__add.label_site.' + loop_item.uuid|string + '.label_site' %}
                       {% set select_data = select.label_site %}
                       {% set cur_value = 0 %}
@@ -167,7 +167,7 @@
 
                   <div class="block ps-2">
                     <div>
-                      {% set label = 'Custom Label' %}
+                      {% set label = 'Add Custom Label' %}
                       {% set element_id = '__add.label_custom.' + loop_item.uuid|string + '.label_custom' %}
                       {% set select_data = select.label_custom %}
                       {% set cur_value = 0 %}
@@ -175,7 +175,7 @@
                     </div>
                   </div>
                   
-                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
+                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Set Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
                   {% include 'component/site_render/form/list/text/text_list_simple.html.j2' %}
 
 
