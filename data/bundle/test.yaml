@@ -215,10 +215,9 @@ execute:
         execute.api.upload_refresh:
           existing: []
 
-
     # Cache Content Data
     site_content_admin:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_content_admin_{uuid}.json site_content_admin    
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_content_admin_{uuid}.json site_content_admin
       input_path: /tmp/opsland/site_content_admin_{uuid}.json
       input:
         execute.api.site_content_admin:
@@ -226,6 +225,15 @@ execute:
         execute.api.space_content_data:
           content_data: []
 
+    # Content Register
+    site_content_register:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_content_register_{uuid}.json site_content_register
+      input_path: /tmp/opsland/site_content_register_{uuid}.json
+      input:
+        # execute.api.site_content_register:
+        #   existing: []
+        execute.api.upload_refresh:
+          files: []
 
     # space_edit_widget:
     #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
@@ -413,6 +421,9 @@ http:
     
     api/site_content_admin:
       execute: execute.api.site_content_admin
+    
+    api/content_register:
+      execute: execute.api.site_content_register
 
     # api/space_edit_widget:
     #   # template: component/site_style.html.j2

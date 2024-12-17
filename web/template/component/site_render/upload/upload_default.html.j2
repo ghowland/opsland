@@ -21,6 +21,7 @@
 
 <div id="upload_result"></div>
 <div id="upload_refresh"></div>
+<div id="content_refresh"></div>
 
 
 <script>
@@ -28,17 +29,52 @@
   document.getElementById('form_upload_{{widget_id}}').removeEventListener('htmx:xhr:progress', UploadProgress)
   htmx.on('#form_upload_{{widget_id}}', 'htmx:xhr:progress', UploadProgress)
 
+  // Bind post-request event handler to get response payload
+  document.getElementById('form_upload_{{widget_id}}').removeEventListener('htmx:afterRequest', UploadProcessAfter)
+  htmx.on('#form_upload_{{widget_id}}', 'htmx:afterRequest', UploadProcessAfter)
+
   function UploadProgress(evt) {
+    // alert(StringifyEvent(evt.detail))
+
     var percent_complete = evt.detail.loaded / evt.detail.total * 100
     htmx.find('#progress').style.width = percent_complete + '%'
     // htmx.find('#progress').setAttribute('value', percent_complete)   // For Progress Bar
 
-    console.log(`Upload: ${percent_complete}`);
+    console.log(`Upload: ${percent_complete}`)
     if (percent_complete >= 99.99) 
     {
       console.log(`Upload: ${percent_complete}  Completed`);
-      htmx.ajax('POST', '/api/upload_refresh', {'target': '#upload_result'})
+      htmx.ajax('POST', '/api/upload_refresh', {'target': '#upload_refresh'})
     }
+  }
+
+  function UploadProcessAfter(evt) {
+    const responsePayload = event.detail.xhr.responseText;
+
+    var data = JSON.parse(responsePayload)
+
+    console.log(data['filename'])
+
+    var ContentRegisterData = {'type': 'image', 'filename': data['filename']}
+
+    htmx.ajax('POST', '/api/content_register', {'target': '#content_refresh', 'values': ContentRegisterData}).then(() => {
+      // Post Content Register
+      
+    })
+  }
+
+  function StringifyEvent(evt) {
+    const obj = {};
+
+    for (let k in evt) {
+      obj[k] = evt[k]
+    }
+
+    return JSON.stringify(obj, (k, v) => {
+      if (v instanceof Node) return 'Node'
+      if (v instanceof Window) return 'Window'
+      return v
+    }, ' ')
   }
 
   function UploadDropHandler(evt)
