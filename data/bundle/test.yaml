@@ -230,8 +230,8 @@ execute:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_content_register_{uuid}.json site_content_register
       input_path: /tmp/opsland/site_content_register_{uuid}.json
       input:
-        # execute.api.site_content_register:
-        #   existing: []
+        execute.api.site_content_register:
+          existing: []
         execute.api.upload_refresh:
           files: []
 
