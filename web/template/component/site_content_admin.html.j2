@@ -97,7 +97,10 @@
                   {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True} %}
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
                 {% endfor %}
-                
+
+                {% set cur_item = {'value': 'file:' + loop_item.filename, 'text_color': 'text-slate-50', 'bg_color': 'bg-slate-600', 'allow_delete': True} %}
+                {% include 'component/site_render/badge/badge_chip.html.j2' %}
+
                 <!-- Rating & Control Button Line -->
                 <div class="flex items-center gap-4">
                   <!-- Rating -->
@@ -138,7 +141,7 @@
                   <div class="block ps-2">
                     <div>
                       {% set label = 'Add Site Label' %}
-                      {% set element_id = '__add.label_site.' + loop_item.uuid|string + '.label_site' %}
+                      {% set element_id = '__add.' + loop_item.uuid|string + '.label_site' %}
                       {% set select_data = select.label_site %}
                       {% set cur_value = 0 %}
                       {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
@@ -148,7 +151,7 @@
                   <div class="block ps-2">
                     <div>
                       {% set label = 'Add Custom Label' %}
-                      {% set element_id = '__add.label_custom.' + loop_item.uuid|string + '.label_custom' %}
+                      {% set element_id = '__add.' + loop_item.uuid|string + '.label_custom' %}
                       {% set select_data = select.label_custom %}
                       {% set cur_value = 0 %}
                       {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
