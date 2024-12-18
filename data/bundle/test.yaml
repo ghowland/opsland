@@ -294,6 +294,8 @@ static_data:
         select: []
       execute.api.space_content_data:
         content: []
+      execute.api.site_content_register:
+        space_content: []
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
