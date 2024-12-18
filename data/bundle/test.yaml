@@ -424,8 +424,12 @@ http:
     api/site_content_admin:
       execute: execute.api.site_content_admin
     
-    api/content_register:
+    api/site_content_register:
       execute: execute.api.site_content_register
+
+      cache:
+        execute.api.site_content_register:
+          space_content: []
 
     # api/space_edit_widget:
     #   # template: component/site_style.html.j2

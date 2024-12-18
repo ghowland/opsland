@@ -57,9 +57,9 @@
 
     var ContentRegisterData = {'type': 'image', 'filename': data['filename']}
 
-    htmx.ajax('POST', '/api/content_register', {'target': '#content_refresh', 'values': ContentRegisterData}).then(() => {
+    htmx.ajax('POST', '/api/site_content_register', {'target': '#content_refresh', 'values': ContentRegisterData}).then(() => {
       // Post Content Register
-      
+
     })
   }
 

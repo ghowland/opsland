@@ -9,7 +9,7 @@
 
     ScrapeData()
 
-    htmx.ajax('POST', '/api/site_content_admin', {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
+    htmx.ajax('POST', '/api/site_content_register', {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
       if (do_toggle_modal != false) { ToggleEditModal() }
     });
   
