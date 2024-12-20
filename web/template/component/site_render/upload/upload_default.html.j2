@@ -59,8 +59,19 @@
 
     htmx.ajax('POST', '/api/site_content_register', {'target': '#content_refresh', 'values': ContentRegisterData}).then(() => {
       // Post Content Register
+      //
+      // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+      // htmx.ajax('POST', '/api/content_admin', {'target': '#page_render', 'values': {} })
+
+      // Reload the page.  It's the easiest way to deal with this quickly
+      setTimeout(ReloadPage, 500)
 
     })
+  }
+
+  function ReloadPage()
+  {
+    location.reload()
   }
 
   function StringifyEvent(evt) {
