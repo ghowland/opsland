@@ -94,7 +94,7 @@
 
                 <!-- Tags: Loose:  List of strings -->
                 {% for tag in loop_item.tags %}
-                  {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': tag} %}
+                  {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True, 'delete_command': '__delete_tag.'+loop_uuid, 'delete_field': tag} %}
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
                 {% endfor %}
 

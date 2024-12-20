@@ -435,6 +435,10 @@ http:
     #   # template: component/site_style.html.j2
     #   execute: execute.api.space_edit_widget
 
+    api/content_admin:
+      template: component/site_content_admin.html.j2
+      _import_static_data: 
+        - space_page_base
 
   # GET
   get:

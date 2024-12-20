@@ -1,6 +1,7 @@
 <script>
   // Global Widget Options for collecting data
-  var WidgetOptions = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'};
+  var WidgetOptionsOriginal = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'};
+  var WidgetOptions = JSON.parse(JSON.stringify(WidgetOptionsOriginal))
 
   function RenderWidget(command, do_toggle_modal) {
     // Set a command
@@ -19,6 +20,9 @@
     // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
     SetWidgetOption('__command', 'none')
     htmx.ajax('POST', '/api/space_editor_render', {'target': '#page_render', 'values': WidgetOptions})
+
+    // Reset our values at the end.  We want clean API payloads, not gathering cruft
+    WidgetOptions = JSON.parse(JSON.stringify(WidgetOptionsOriginal))
   }
 
   function MouseDownEdit(evt, widget_id)
