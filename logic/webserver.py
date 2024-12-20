@@ -65,6 +65,7 @@ utility_jinja.AddJinjaUtilities(TEMPLATES)
 APP = FastAPI()
 APP.mount("/static", StaticFiles(directory="web/static"), name="static")
 APP.mount("/uploads", StaticFiles(directory="../uploads/"), name="uploads")
+APP.mount("/content", StaticFiles(directory="../content/"), name="content")
 
 # Number of Async thread works for FastAPI
 NUM_WORKERS = 4
