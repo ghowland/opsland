@@ -8,7 +8,10 @@
 ">
   {{ cur_item.value }}
   {% if cur_item.allow_delete %}
-  <button type="button" data-dismiss-target="#badge-dismiss-default" aria-label="Remove" class="
+  <button type="button" 
+          onclick="SetWidgetOption('{{cur_item.delete_command}}', '{{cur_item.delete_field}}'); RenderWidget('delete', false)" 
+          data-dismiss-target="#badge-dismiss-default" aria-label="Remove" 
+          class="
       inline-flex items-center 
       p-1 ms-2 
       text-sm text-blue-400 
