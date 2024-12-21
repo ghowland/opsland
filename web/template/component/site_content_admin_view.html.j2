@@ -1,4 +1,8 @@
-{% set cur_content = space_content[request.id] %}
+{% if request.id %}
+  {% set cur_content = space_content[request.id] %}
+{% else %}
+  {% set cur_content = {} %}
+{% endif %}
 
 <h2 class="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-blue-500 p-6">View Content: {{cur_content.filename}}</h2>
 

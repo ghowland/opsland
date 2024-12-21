@@ -235,6 +235,16 @@ execute:
         execute.api.upload_refresh:
           files: []
 
+    # Content Register
+    site_content_derived:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_content_derived_{uuid}.json site_content_derived
+      input_path: /tmp/opsland/site_content_derived_{uuid}.json
+      input:
+        execute.api.site_content_derived:
+          existing: []
+        execute.api.site_content_register:
+          content: []
+
     # space_edit_widget:
     #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
     #   input_path: /tmp/opsland/space_edit_widget_{uuid}.json
@@ -296,6 +306,8 @@ static_data:
         content: []
       execute.api.site_content_register:
         space_content: []
+      execute.api.site_content_derived:
+        space_content_derived: []
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
@@ -424,6 +436,7 @@ http:
     api/site_content_admin:
       execute: execute.api.site_content_admin
     
+    # Upload Content
     api/site_content_register:
       execute: execute.api.site_content_register
 
@@ -431,16 +444,25 @@ http:
         execute.api.site_content_register:
           space_content: []
 
-    # api/space_edit_widget:
-    #   # template: component/site_style.html.j2
-    #   execute: execute.api.space_edit_widget
-
+    # Upload Content - Rerender
     api/content_admin:
       template: component/site_content_admin.html.j2
       _import_static_data: 
         - space_page_base
 
-    api/content_view:
+    # Derived Content
+    api/site_content_derived:
+      execute: execute.api.site_content_derived
+
+      cache:
+        execute.api.site_content_derived:
+          space_content_derived: []
+
+        execute.api.site_content_register:
+          space_content: []
+
+    # Derived Content - Rerender
+    api/content_admin_view:
       template: component/site_content_admin_view.html.j2
       _import_static_data: 
         - space_page_base
