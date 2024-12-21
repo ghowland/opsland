@@ -440,6 +440,11 @@ http:
       _import_static_data: 
         - space_page_base
 
+    api/content_view:
+      template: component/site_content_admin_view.html.j2
+      _import_static_data: 
+        - space_page_base
+
   # GET
   get:
     # Refresh these to update static content
@@ -464,6 +469,13 @@ http:
     # Content Admin
     content_admin:
       template: pages/site_content.html.j2
+      _import_static_data: 
+        - space_page_base
+
+
+    # Content View
+    content_view:
+      template: pages/site_content_view.html.j2
       _import_static_data: 
         - space_page_base
 

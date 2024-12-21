@@ -10,19 +10,19 @@
 
     ScrapeData()
 
-    htmx.ajax('POST', '/api/space_editor_sidebar', {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
+    // Submit the scrapped data and anything we set manually
+    htmx.ajax('POST', RenderWidgetApiSubmit, {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
       if (do_toggle_modal != false) { ToggleEditModal() }
     });
   
-    // Have to scrape it again, because we just updated it
-    ScrapeData()
-
-    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
-    SetWidgetOption('__command', 'none')
-    htmx.ajax('POST', '/api/space_editor_render', {'target': '#page_render', 'values': WidgetOptions})
-
     // Reset our values at the end.  We want clean API payloads, not gathering cruft
     WidgetOptions = JSON.parse(JSON.stringify(WidgetOptionsOriginal))
+
+    // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
+    if (RenderWidgetApiRerender != null) {
+      SetWidgetOption('__command', 'none')
+      htmx.ajax('POST', RenderWidgetApiRerender, {'target': '#page_render', 'values': WidgetOptions})
+    }
   }
 
   function MouseDownEdit(evt, widget_id)
