@@ -73,15 +73,23 @@
                   <!-- Priority int spinner -->
                   {% set parent_data0 = cur_data %}
                   {% set cur_data = {'label': 'Priority', 'value': loop_item.priority, 'element_id': '__set.' + loop_item.uuid|string + '.priority' } %}
-                  {% include 'component/site_render/form/int/int_up_down_no_border.html.j2' %}
+                  {% include 'component/site_render/form/int/int_up_down.html.j2' %}
                   {% set cur_data = parent_data0 %}
 
                 </div>
-                <div class="text-end md:order-4 md:w-32">
-                  <p class="text-base font-bold text-gray-900">${{loop_item.cost}}</p>
+                <div class="text-end md:order-4 md:w-32 inline-flex">
+                  <!-- <p class="text-base font-bold text-gray-900">${{loop_item.cost}}</p> -->
+                  <div class="mt-2 ms-8 font-bold">
+                    $
+                  </div>
+                  <div>
+                    {% set parent_data0 = cur_data %}
+                    {% set cur_data = {'label': 'Cost', 'value': loop_item.cost, 'element_id': '__set.' + loop_item.uuid|string + '.cost' } %}
+                    {% include 'component/site_render/form/int/int.html.j2' %}
+                    {% set cur_data = parent_data0 %}  
+                  </div>
                 </div>
               </div>
-
 
 
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
