@@ -1,0 +1,212 @@
+<div id="cropper_control_panel_{{widget_id}}" class="hidden flex justify-center">
+  {% set label = 'Crop Shape' %}
+  {% set element_id = '__control.image_cropper.'+widget_id+'.reticle' %}
+  {% set select_data = select.image_crop_reticle %}
+  {% set cur_value = cur_style[element_id] %}
+  {% set select_on_change = 'CropImage_ChangeSize_Reticle_'+ widget_id + '(this.value)' %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  {% set label = 'Search Format Style' %}
+  {% set element_id = '__control.image_cropper.'+widget_id+'.sizing' %}
+  {% set select_data = select.image_crop_sizing %}
+  {% set cur_value = cur_style[element_id] %}
+  {% set select_on_change = 'CropImage_ChangeSize_Reticle_'+ widget_id + '(this.value)' %}
+  {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+
+  
+  <label for="__control.image_cropper.{{widget_id}}.name" class="text-sm font-medium text-gray-900">Name</label>
+  <div class="flex">
+    <input value="{{cur_data.image.split('/')[-1][:-4]}}_crop" placeholder="Name" type="text" id="__control.image_cropper.{{widget_id}}.name" class="control_input bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 flex-1 text-sm border-gray-300">
+  </div>
+  
+  <label for="__control.image_cropper.{{widget_id}}.parent" class="text-sm font-medium text-gray-900">Parent</label>
+  <div class="flex">
+    <input value="{{loop_uuid}}" placeholder="Name" type="text" id="__control.image_cropper.{{widget_id}}.parent" class="control_input bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 flex-1 text-sm border-gray-300">
+  </div>
+  
+  <label for="__control.image_cropper.{{widget_id}}.size_x" class="text-sm font-medium text-gray-900">Size X</label>
+  <div class="flex">
+    <input value="150" onchange="CropImage_ChangeSize_Width_{{widget_id}}(parseInt(this.value))" placeholder="Size" type="text" id="__control.image_cropper.{{widget_id}}.size_x" class="control_input bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 flex-1 text-sm border-gray-300">
+  </div>
+  
+  <label for="__control.image_cropper.{{widget_id}}.size_y" class="text-sm font-medium text-gray-900">Size Y</label>
+  <div class="flex">
+    <input value="150" onchange="CropImage_ChangeSize_Height_{{widget_id}}(parseInt(this.value))" placeholder="Size" type="text" id="__control.image_cropper.{{widget_id}}.size_y" class="control_input bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 flex-1 text-sm border-gray-300">
+  </div>
+
+
+  <button type="button" onclick="Crop_Image_Now_{{widget_id}}()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">
+    Crop
+  </button>
+
+</div>
+
+
+<script>
+  //TODO:DEVONLY: Global for this, repeats wont matter on load, but this is messy
+  var Cropper_{{widget_id}}
+  var Cropper_IgnoreNext_{{widget_id}} = 2
+  var Cropper_Last
+
+  var Cropper_Opts_{{widget_id}} = {
+    viewport: {width: 150, height: 150, type: 'square'},
+    boundary: { width: 100, height: 100 },
+    showZoomer: true,
+    enableResize: true,
+  }
+
+  // Init
+  function Cropper_Init_{{widget_id}}() {
+    // Destroy if exists, and recreate with updated options
+    if (Cropper_{{widget_id}} != undefined) Cropper_{{widget_id}}.destroy()
+
+    var img_boundary = document.getElementById('image_{{widget_id}}').getBoundingClientRect();
+
+    var opts = Cropper_Opts_{{widget_id}}
+    opts.boundary = { width: img_boundary.width, height: img_boundary.height }
+
+    Cropper_{{widget_id}} = new Croppie(document.getElementById('image_{{widget_id}}'), opts);
+    Cropper_Last = Cropper_{{widget_id}}
+
+    Cropper_IgnoreNext_{{widget_id}} = 2
+
+    // Add our update
+    var parentElement = FindAncestor(document.getElementById('image_{{widget_id}}'), 'croppie-container')
+    parentElement.addEventListener('update', CropImage_ChangeSize_UpdateEvent_{{widget_id}});
+
+    var el = document.getElementById('cropper_control_panel_{{widget_id}}')
+    if (el.classList.contains('hidden')) { el.classList.toggle('hidden') }
+  }
+
+  // Crop
+  function Crop_Image_Now_{{widget_id}}() {
+    Cropper_{{widget_id}}.result({ type: 'blob', format: 'png' }).then(function(blob) {
+      var file_name = document.getElementById('__control.image_cropper.{{widget_id}}.name').value
+
+      const formData = new FormData();
+      formData.append("file", blob, file_name + '.png');
+
+      fetch('/upload_single_derived', {
+        method: 'POST',
+        body: formData,
+      }).then(() => {setTimeout(UploadRefresh, 1500)})
+    });
+
+    Cropper_{{widget_id}}.destroy()
+    Cropper_{{widget_id}} = undefined
+
+    var el = document.getElementById('cropper_control_panel_{{widget_id}}')
+    if (!el.classList.contains('hidden')) { el.classList.toggle('hidden') }
+  }
+
+  function UploadRefresh() {
+    htmx.ajax('GET', '/get/content_derived_refresh', {'target': '#upload_result'})
+  }
+
+  // Change Width
+  function CropImage_ChangeSize_Width_{{widget_id}}(value) {
+    AdjustHeightWidthForSizing_{{widget_id}}(document.getElementById('__control.image_cropper.{{widget_id}}.sizing').value, value, Cropper_Opts_{{widget_id}}.viewport.height, true)
+
+    // Recreate
+    Cropper_Init_{{widget_id}}()
+  }
+
+  // Change Height
+  function CropImage_ChangeSize_Height_{{widget_id}}(value) {
+    AdjustHeightWidthForSizing_{{widget_id}}(document.getElementById('__control.image_cropper.{{widget_id}}.sizing').value, Cropper_Opts_{{widget_id}}.viewport.width, value, false)
+
+    // Recreate
+    Cropper_Init_{{widget_id}}()
+  }
+  
+  // Change Reticle
+  function CropImage_ChangeSize_Reticle_{{widget_id}}(reticle) {
+    Cropper_Opts_{{widget_id}}.viewport = {width: Cropper_Opts_{{widget_id}}.viewport.width, height: Cropper_Opts_{{widget_id}}.viewport.height, type: reticle}
+
+    // Recreate
+    Cropper_Init_{{widget_id}}()
+  }
+
+  // Update Slider position for new Reticle size
+  function CropImage_ChangeSize_UpdateEvent_{{widget_id}}(evt) {
+    if (Cropper_IgnoreNext_{{widget_id}} > 0) {
+      Cropper_IgnoreNext_{{widget_id}}--
+    }
+    else {
+      const rawData = Cropper_{{widget_id}}.get();
+
+      var cropData = evt.detail;
+      console.log(`Crop: ${JSON.stringify(rawData)}`)
+      var w = (cropData.points[2] - [0]) * cropData.zoom
+      var h = (cropData.points[3] - [1]) * cropData.zoom
+      // console.log(`Crop: ${w}, ${h}`)
+
+      // Set it to free
+      var sizingSelectEl = document.getElementById('__control.image_cropper.{{widget_id}}.sizing')
+      sizingSelectEl.value = 'free'
+    }
+  }
+
+  function AdjustHeightWidthForSizing_{{widget_id}}(sizing, width, height, use_height) {
+    console.log(`Adjust: Start: ${sizing}  W: ${width} H: ${height}  Use Height: ${use_height}`)
+
+    if (sizing == 'fixed-16x9') {
+      if (!use_height) {
+        width = Math.round(height * 16 / 9)
+      } else {
+        height = Math.round(width * 9 / 16)
+      }
+    } else if (sizing == 'fixed-4x3') {
+      if (!use_height) {
+        width = Math.round(height * 4 / 3)
+      } else {
+        height = Math.round(width * 3 / 4)
+      }
+    } else if (sizing == 'fixed-3x4') {
+      if (!use_height) {
+        width = Math.round(height * 3 / 4)
+      } else {
+        height = Math.round(width * 4 / 3)
+      }
+    } else if (sizing == 'square') {
+      if (!use_height) {
+        width = height
+      } else {
+        height = width
+      }
+    }
+
+    result = {width: width, height: height}
+
+    console.log(`Adjust: End: ${sizing}  W: ${width} H: ${height}`)
+
+    var sizingElX = document.getElementById('__control.image_cropper.{{widget_id}}.size_x')
+    var sizingElY = document.getElementById('__control.image_cropper.{{widget_id}}.size_y')
+    if (!use_height) {
+      console.log(`Not height: Set ${width} into X: ${sizingElX.value}`)
+      sizingElX.value = width
+    } else {
+      console.log(`Height: Set ${height} into Y: ${sizingElY.value}`)
+      sizingElY.value = height
+    }
+
+    Cropper_Opts_{{widget_id}}.viewport = {type: Cropper_Opts_{{widget_id}}.viewport.type, width: width, height: height}
+
+    console.log(`Adjust: Set Values: W: ${sizingElX.value} H: ${sizingElY.value}  WW: ${sizingElX.tagName}`)
+
+    return result
+  }
+
+  // Find Ancestor element
+  function FindAncestor(element, className) {
+    while (element) {
+        if (element.classList && element.classList.contains(className)) {
+            return element;
+        }
+        element = element.parentElement;
+    }
+    return null;
+  }
+
+</script>
+

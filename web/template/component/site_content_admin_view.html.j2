@@ -60,7 +60,7 @@
 
     <!-- Main Column -->
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8" id="content-search-list">
-      <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+      <div class="mx-auto w-full flex-none">
         <div class="space-y-6">
 
           {% if space_content %}
@@ -71,8 +71,9 @@
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
               <!-- Image -->
               <a href="#" class="shrink-0 md:order-1">
-                <img class="w-20 dark:hidden" src="/content/{{loop_item.path}}" alt="image" />
-                <img class="hidden w-20 dark:block" src="/content/{{loop_item.path}}" alt="image" />
+                {% set widget_id = loop_uuid %}
+                <img class="w-96" src="/content/{{loop_item.path}}" alt="image" id="image_{{loop_uuid}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;" />
+                {% set cur_data = {'image': loop_item.filename} %}
               </a>
 
               <!-- Priority -->
@@ -137,20 +138,20 @@
                   {% include 'component/site_render/rating/rating_stars.html.j2' %}
 
                   <!-- Control: Edit Data -->
-                  <button type="button" onclick="document.getElementById('add_a_label_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
+                  <!-- <button type="button" onclick="document.getElementById('add_a_label_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
                     <span class="pe-1">
                       {{icons['edit'].html|safe}}
                     </span>
                     Edit Data
-                  </button>
+                  </button> -->
 
                   <!-- Control: Delete -->
-                  <button type="button" onclick="document.getElementById('delete_this_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                  <!-- <button type="button" onclick="document.getElementById('delete_this_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
                     <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                     </svg>
                     Delete Content
-                  </button>
+                  </button> -->
 
                 </div>
 
@@ -206,7 +207,11 @@
 
               </div>
             </div>
-          </content-chunk>
+
+            <div class="block">
+              {% include 'component/site_editor/control_panel/image_cropper_content_admin_view.html.j2' %}
+            </div>
+        </content-chunk>
 
           {% endif %}
           {% endfor %}

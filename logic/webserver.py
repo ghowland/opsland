@@ -66,6 +66,7 @@ APP = FastAPI()
 APP.mount("/static", StaticFiles(directory="web/static"), name="static")
 APP.mount("/uploads", StaticFiles(directory="../uploads/"), name="uploads")
 APP.mount("/content", StaticFiles(directory="../content/"), name="content")
+APP.mount("/derived", StaticFiles(directory="../derived/"), name="derived")
 
 # Number of Async thread works for FastAPI
 NUM_WORKERS = 4
@@ -174,6 +175,23 @@ def Upload_CreateUploadFileMulti(files: List[UploadFile] = File(...)):
 async def Upload_CreateUploadFile(file: UploadFile = File(...)):
   #TODO:HARDCODE: Put into config and use from there
   UPLOAD_PATH = '/mnt/d/_OpsLand/uploads/'
+
+  # For now, we will allow only unique names, and we will overwrite on getting them again, so it is just a file system storage
+  #TODO: Figure out the best way to manage this, we want controls and audits on the files
+  #TODO: Could AI to classify the images, and there should be services for that
+  save_path = UPLOAD_PATH + file.filename
+
+  with open(save_path, "wb") as buffer:
+    shutil.copyfileobj(file.file, buffer)
+
+  return {"filename": file.filename}
+
+
+# UPLOAD: Single File
+@APP.post("/upload_single_derived")
+async def Upload_CreateUploadFile(file: UploadFile = File(...)):
+  #TODO:HARDCODE: Put into config and use from there
+  UPLOAD_PATH = '/mnt/d/_OpsLand/derived/'
 
   # For now, we will allow only unique names, and we will overwrite on getting them again, so it is just a file system storage
   #TODO: Figure out the best way to manage this, we want controls and audits on the files

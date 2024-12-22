@@ -195,6 +195,14 @@ execute:
         execute.api.upload_refresh:
           existing: []
 
+    # Derived Content Refresh    
+    content_derived_refresh:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/content_derived_refresh_{uuid}.json content_derived_refresh
+      input_path: /tmp/opsland/content_derived_refresh_{uuid}.json
+      input:
+        execute.api.content_derived_refresh:
+          existing: []
+
     # Data for the `select` widgets
     space_style_select_data:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_style_select_data
@@ -431,6 +439,9 @@ http:
     api/upload_refresh:
       execute: execute.api.upload_refresh
     
+    api/site_content_derived:
+      execute: execute.api.site_content_derived
+    
     api/site_content_admin:
       execute: execute.api.site_content_admin
     
@@ -476,6 +487,8 @@ http:
       execute: execute.api.space_widget_tags
     get/upload_refresh:
       execute: execute.api.upload_refresh
+    get/content_derived_refresh:
+      execute: execute.api.content_derived_refresh
     get/table_data_refresh:
       execute: execute.api.table_data_refresh
     get/space_style_select_data:
@@ -586,6 +599,9 @@ http:
 
         execute.api.upload_refresh:
           files: []
+        
+        execute.api.content_derived_refresh:
+          content_derived: []
         
         execute.api.table_data_refresh:
           tables: []
