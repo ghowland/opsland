@@ -14,11 +14,12 @@
   {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
 
   
-  <label for="__control.image_cropper.{{widget_id}}.name" class="text-sm font-medium text-gray-900">Name</label>
+  <!-- <label for="__control.image_cropper.{{widget_id}}.name" class="text-sm font-medium text-gray-900">Name</label>
   <div class="flex">
     <input value="{{cur_data.image.split('/')[-1][:-4]}}_crop" placeholder="Name" type="text" id="__control.image_cropper.{{widget_id}}.name" class="control_input bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 flex-1 text-sm border-gray-300">
-  </div>
+  </div> -->
   
+
   <label for="__control.image_cropper.{{widget_id}}.parent" class="text-sm font-medium text-gray-900">Parent</label>
   <div class="flex">
     <input value="{{loop_uuid}}" placeholder="Name" type="text" id="__control.image_cropper.{{widget_id}}.parent" class="control_input bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 flex-1 text-sm border-gray-300">
@@ -60,19 +61,19 @@
     // Destroy if exists, and recreate with updated options
     if (Cropper_{{widget_id}} != undefined) Cropper_{{widget_id}}.destroy()
 
-    var img_boundary = document.getElementById('image_{{widget_id}}').getBoundingClientRect();
+    var img_boundary = document.getElementById('image_{{widget_id}}').getBoundingClientRect()
 
     var opts = Cropper_Opts_{{widget_id}}
     opts.boundary = { width: img_boundary.width, height: img_boundary.height }
 
-    Cropper_{{widget_id}} = new Croppie(document.getElementById('image_{{widget_id}}'), opts);
+    Cropper_{{widget_id}} = new Croppie(document.getElementById('image_{{widget_id}}'), opts)
     Cropper_Last = Cropper_{{widget_id}}
 
     Cropper_IgnoreNext_{{widget_id}} = 2
 
     // Add our update
     var parentElement = FindAncestor(document.getElementById('image_{{widget_id}}'), 'croppie-container')
-    parentElement.addEventListener('update', CropImage_ChangeSize_UpdateEvent_{{widget_id}});
+    parentElement.addEventListener('update', CropImage_ChangeSize_UpdateEvent_{{widget_id}})
 
     var el = document.getElementById('cropper_control_panel_{{widget_id}}')
     if (el.classList.contains('hidden')) { el.classList.toggle('hidden') }
@@ -81,17 +82,19 @@
   // Crop
   function Crop_Image_Now_{{widget_id}}() {
     Cropper_{{widget_id}}.result({ type: 'blob', format: 'png' }).then(function(blob) {
-      var file_name = document.getElementById('__control.image_cropper.{{widget_id}}.name').value
+      var parent = document.getElementById('__control.image_cropper.{{widget_id}}.parent').value
 
       const formData = new FormData();
-      formData.append("file", blob, file_name + '.png');
+      formData.append("file", blob, parent);
 
+      // Upload
       fetch('/upload_single_derived', {
         method: 'POST',
         body: formData,
-      }).then(() => {setTimeout(UploadRefresh, 1500)})
+      }).then(() => {setTimeout(RefreshContentDerived, 1500)})
     });
 
+    // Destroy the Crop
     Cropper_{{widget_id}}.destroy()
     Cropper_{{widget_id}} = undefined
 
@@ -99,8 +102,13 @@
     if (!el.classList.contains('hidden')) { el.classList.toggle('hidden') }
   }
 
-  function UploadRefresh() {
+  function RefreshContentDerived() {
     htmx.ajax('GET', '/get/content_derived_refresh', {'target': '#upload_result'})
+    setTimeout(RefreshContent, 1000)
+  }
+
+  function RefreshContent() {
+    htmx.ajax('GET', '/get/site_content_register', {'target': '#upload_result'})
   }
 
   // Change Width

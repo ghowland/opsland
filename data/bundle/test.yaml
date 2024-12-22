@@ -195,7 +195,7 @@ execute:
         execute.api.upload_refresh:
           existing: []
 
-    # Derived Content Refresh    
+    # Derived Content Refresh
     content_derived_refresh:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/content_derived_refresh_{uuid}.json content_derived_refresh
       input_path: /tmp/opsland/content_derived_refresh_{uuid}.json
@@ -217,11 +217,13 @@ execute:
 
     # Cache Content Data
     space_content_data:
-      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py space_content_data    
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_content_data_{uuid}.json space_content_data
       input_path: /tmp/opsland/space_content_data_{uuid}.json
       input:
         execute.api.upload_refresh:
           existing: []
+        execute.api.content_derived_refresh:
+          derived: []
 
     # Cache Content Data
     site_content_admin:
@@ -240,6 +242,8 @@ execute:
       input:
         execute.api.site_content_register:
           existing: []
+        execute.api.content_derived_refresh:
+          derived: []
         execute.api.upload_refresh:
           files: []
 
@@ -439,6 +443,7 @@ http:
     api/upload_refresh:
       execute: execute.api.upload_refresh
     
+    # Derived Content
     api/site_content_derived:
       execute: execute.api.site_content_derived
     
@@ -452,23 +457,14 @@ http:
       cache:
         execute.api.site_content_register:
           space_content: []
+        execute.api.content_derived_refresh:
+          derived: []
 
     # Upload Content - Rerender
     api/content_admin:
       template: component/site_content_admin.html.j2
       _import_static_data: 
         - space_page_base
-
-    # Derived Content
-    api/site_content_derived:
-      execute: execute.api.site_content_derived
-
-      # cache:
-      #   execute.api.site_content_derived:
-      #     space_content_derived: []
-
-      #   execute.api.site_content_register:
-      #     space_content: []
 
     # Derived Content - Rerender
     api/content_admin_view:
@@ -497,6 +493,8 @@ http:
       execute: execute.api.cache_icons
     get/space_content_data:
       execute: execute.api.space_content_data
+    get/site_content_register:
+      execute: execute.api.site_content_register
       
 
     # Content Admin

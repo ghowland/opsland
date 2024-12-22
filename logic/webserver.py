@@ -36,6 +36,8 @@ from logic import utility_jinja
 # This is where we render the pages
 from logic import webserver_render
 
+from logic import utility
+
 
 # Globals to connect to other OpsLand components
 THREAD_MANAGER = None
@@ -187,21 +189,25 @@ async def Upload_CreateUploadFile(file: UploadFile = File(...)):
   return {"filename": file.filename}
 
 
-# UPLOAD: Single File
+# UPLOAD: Single File - Derived (Cropped)
 @APP.post("/upload_single_derived")
 async def Upload_CreateUploadFile(file: UploadFile = File(...)):
   #TODO:HARDCODE: Put into config and use from there
   UPLOAD_PATH = '/mnt/d/_OpsLand/derived/'
 
+  # filename = file.filename
+  filename = f'{file.filename}__{utility.GetUUID()}.png'
+
   # For now, we will allow only unique names, and we will overwrite on getting them again, so it is just a file system storage
   #TODO: Figure out the best way to manage this, we want controls and audits on the files
   #TODO: Could AI to classify the images, and there should be services for that
-  save_path = UPLOAD_PATH + file.filename
+  # save_path = UPLOAD_PATH + file.filename
+  save_path = UPLOAD_PATH + filename
 
   with open(save_path, "wb") as buffer:
     shutil.copyfileobj(file.file, buffer)
 
-  return {"filename": file.filename}
+  return {"filename": filename}
 
 
 # -- Handle Every HTTP Method and all paths with per-method handler --

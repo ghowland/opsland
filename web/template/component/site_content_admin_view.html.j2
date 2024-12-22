@@ -9,6 +9,9 @@
   {% set cur_content = {} %}
 {% endif %}
 
+{% set cur_content = {} %}
+
+{% set cur_style = space_style['merged']['default'] %}
 
 <h2 class="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-blue-500 p-6">View Content: {{cur_content.filename}}</h2>
 
@@ -72,8 +75,8 @@
               <!-- Image -->
               <a href="#" class="shrink-0 md:order-1">
                 {% set widget_id = loop_uuid %}
+                {% set cur_data = {'image': loop_item.filename, 'parent_uuid': loop_item.parent_uuid} %}
                 {% include 'component/site_content_admin_view_image.html.j2' %}
-                {% set cur_data = {'image': loop_item.filename} %}
               </a>
 
               <!-- Priority -->
@@ -224,6 +227,173 @@
       </div>
 
     </div>
+
+
+
+    <!-- Derived Content -->
+    <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8" id="content-search-list">
+      <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+        <div class="space-y-6">
+
+          {% if space_content %}
+          {% for loop_uuid, loop_item in space_content.items() %}
+          {% if not loop_uuid.startswith('__') and loop_item.parent_uuid == cur_request_id %}
+
+          <content-chunk class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm block">
+            <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+              <!-- Image -->
+              <a href="/content_view?id={{loop_uuid}}" class="shrink-0 md:order-1">
+                {% if loop_item.parent_uuid %}
+                  <img class="w-20" src="/derived/{{loop_item.path}}" alt="image" />
+                {% else %}
+                  <img class="w-20" src="/content/{{loop_item.path}}" alt="image" />
+                {% endif %}
+              </a>
+
+              <!-- Priority -->
+              <div class="flex items-center justify-between md:order-3 md:justify-end">
+                <div class="flex items-center">
+
+                  <!-- Priority int spinner -->
+                  {% set parent_data0 = cur_data %}
+                  {% set cur_data = {'label': 'Priority', 'value': loop_item.priority, 'element_id': '__set.' + loop_item.uuid|string + '.priority' } %}
+                  {% include 'component/site_render/form/int/int_up_down.html.j2' %}
+                  {% set cur_data = parent_data0 %}
+
+                </div>
+                <div class="text-end md:order-4 md:w-32 inline-flex">
+                  <!-- <p class="text-base font-bold text-gray-900">${{loop_item.cost}}</p> -->
+                  <div class="mt-2 ms-8 font-bold">
+                    $
+                  </div>
+                  <div>
+                    {% set parent_data0 = cur_data %}
+                    {% set cur_data = {'label': 'Cost', 'value': loop_item.cost, 'element_id': '__set.' + loop_item.uuid|string + '.cost' } %}
+                    {% include 'component/site_render/form/int/int.html.j2' %}
+                    {% set cur_data = parent_data0 %}  
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
+                <!-- Labels: Strict:  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
+                {% for label in loop_item.labels %}
+                  {% if label.startswith('gen:') %}
+                    {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100', 'allow_delete': False } %}
+
+                  {% elif label.startswith('custom:') %}
+                    {% set cur_item = {'value': label.replace('custom:', ''), 'text_color': 'text-blue-800', 'bg_color': 'bg-blue-100', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': label } %}
+
+                  {% elif label.startswith('site:') %}
+                    {% set cur_item = {'value': label.replace('site:', ''), 'text_color': 'text-green-800', 'bg_color': 'bg-green-100', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': label } %}
+
+                  {% else %}
+                    {% set cur_item = {'value': label, 'text_color': 'text-gray-800', 'bg_color': 'bg-gray-100', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': label } %}
+
+                  {% endif %}
+
+                  {% include 'component/site_render/badge/badge_chip.html.j2' %}
+                {% endfor %}
+
+                <!-- Tags: Loose:  List of strings -->
+                {% for tag in loop_item.tags %}
+                  {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True, 'delete_command': '__delete_tag.'+loop_uuid, 'delete_field': tag} %}
+                  {% include 'component/site_render/badge/badge_chip.html.j2' %}
+                {% endfor %}
+
+                {% set cur_item = {'value': loop_item.filename, 'text_color': 'text-slate-50', 'bg_color': 'bg-slate-600', 'allow_delete': False} %}
+                {% include 'component/site_render/badge/badge_chip.html.j2' %}
+
+                <!-- Rating & Control Button Line -->
+                <div class="flex items-center gap-4">
+                  <!-- Rating -->
+                  {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count, 'show_count': False } %}
+                  {% include 'component/site_render/rating/rating_stars.html.j2' %}
+
+                  <!-- Control: Edit Data -->
+                  <button type="button" onclick="document.getElementById('add_a_label_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
+                    <span class="pe-1">
+                      {{icons['edit'].html|safe}}
+                    </span>
+                    Edit Data
+                  </button>
+
+                  <!-- Control: Delete -->
+                  <button type="button" onclick="document.getElementById('delete_this_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                    <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                    </svg>
+                    Delete Content
+                  </button>
+
+                </div>
+
+                <!-- Add Labels -->
+                <div id="add_a_label_{{ loop_item.uuid }}" class="hidden">
+
+                  <div class="block ps-2">
+                    <div>
+                      {% set label = 'Set Ratings' %}
+                      {% set element_id = '__set.' + loop_item.uuid|string + '.rating' %}
+                      {% set select_data = select.rating_score %}
+                      {% set cur_value = loop_item.rating|string %}
+                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                    </div>
+                  </div>
+
+                  <div class="block ps-2">
+                    <div>
+                      {% set label = 'Add Site Label' %}
+                      {% set element_id = '__add.' + loop_item.uuid|string + '.label_site' %}
+                      {% set select_data = select.label_site %}
+                      {% set cur_value = 0 %}
+                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                    </div>
+                  </div>
+
+                  <div class="block ps-2">
+                    <div>
+                      {% set label = 'Add Custom Label' %}
+                      {% set element_id = '__add.' + loop_item.uuid|string + '.label_custom' %}
+                      {% set select_data = select.label_custom %}
+                      {% set cur_value = 0 %}
+                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                    </div>
+                  </div>
+                  
+                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Set Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
+                  {% include 'component/site_render/form/list/text/text_list_simple.html.j2' %}
+
+
+                </div>
+
+                <!-- Delete this Item -->
+                <div id="delete_this_{{ loop_item.uuid }}" class="hidden">
+                  Confirm Delete: 
+                  <button type="button" onclick="SetWidgetOption('__delete_content.{{loop_uuid}}', 'true'); RenderWidget('delete', false)" class="inline-flex items-center text-sm font-medium text-red-100 bg-red-800 m-2 p-2 rounded hover:bg-red-600">
+                    <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                    </svg>
+                    Delete this Item
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </content-chunk>
+
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+
+        </div>
+
+      </div>
+
+
+    </div>    
+
   </div>
 </section>
 
