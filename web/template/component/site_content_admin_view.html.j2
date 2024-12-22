@@ -72,7 +72,7 @@
               <!-- Image -->
               <a href="#" class="shrink-0 md:order-1">
                 {% set widget_id = loop_uuid %}
-                <img class="w-96" src="/content/{{loop_item.path}}" alt="image" id="image_{{loop_uuid}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;" />
+                {% include 'component/site_content_admin_view_image.html.j2' %}
                 {% set cur_data = {'image': loop_item.filename} %}
               </a>
 
