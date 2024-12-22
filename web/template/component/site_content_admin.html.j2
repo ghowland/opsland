@@ -122,7 +122,7 @@
                   {% include 'component/site_render/badge/badge_chip.html.j2' %}
                 {% endfor %}
 
-                {% set cur_item = {'value': loop_item.filename, 'text_color': 'text-slate-50', 'bg_color': 'bg-slate-600', 'allow_delete': False} %}
+                {% set cur_item = {'value': loop_item.filename[:40], 'text_color': 'text-slate-50', 'bg_color': 'bg-slate-600', 'allow_delete': False} %}
                 {% include 'component/site_render/badge/badge_chip.html.j2' %}
 
                 <!-- Rating & Control Button Line -->
