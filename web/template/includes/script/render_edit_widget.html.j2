@@ -2,11 +2,10 @@
   // Global Widget Options for collecting data
   var WidgetOptionsOriginal = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'}
   var WidgetOptions
-  ResetWidgetOptions()
-
   // Request data we received
   var RequestInput = JSON.parse('{{ request | tojson }}')
   console.log(RequestInput)
+  ResetWidgetOptions()
 
   function RenderWidget(command, do_toggle_modal) {
     // Set a command
@@ -36,11 +35,10 @@
 
     // If we had request inputs, pass them through
     if (RequestInput != undefined) {
-      WidgetOptions['request_input'] = {}
-      Object.keys(RequestInput).forEach(key => {
-        WidgetOptions['request_input'][key] = RequestInput[key]
-      });
+      WidgetOptions['request_input'] = Object(RequestInput)
     }    
+
+    // alert(JSON.stringify(WidgetOptions))
   }
 
   function MouseDownEdit(evt, widget_id)

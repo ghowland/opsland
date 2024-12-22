@@ -1,8 +1,14 @@
 {% if request.id %}
-  {% set cur_content = space_content[request.id] %}
+  {% set cur_request_id = request.id %}
+  {% set cur_content = space_content[cur_request_id] %}
+{% elif space_content_derived.request_input and space_content_derived.request_input.id %}
+  {% set cur_request_id = space_content_derived.request_input.id %}
+  {% set cur_content = space_content[cur_request_id] %}
 {% else %}
+  {% set cur_request_id = None %}
   {% set cur_content = {} %}
 {% endif %}
+
 
 <h2 class="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-blue-500 p-6">View Content: {{cur_content.filename}}</h2>
 
@@ -59,7 +65,7 @@
 
           {% if space_content %}
           {% for loop_uuid, loop_item in space_content.items() %}
-          {% if not loop_uuid.startswith('__') and loop_uuid == request.id %}
+          {% if not loop_uuid.startswith('__') and loop_uuid == cur_request_id %}
 
           <content-chunk class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm block">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
@@ -204,6 +210,8 @@
 
           {% endif %}
           {% endfor %}
+          {% else %}
+            Couldn't find any content.
           {% endif %}
 
         </div>

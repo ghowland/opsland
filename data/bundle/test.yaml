@@ -358,7 +358,6 @@ http:
       template: component/site_page_full.html.j2
       execute: execute.api.site_page
     
-
     # New: Re-render the Sidebar after a change
     api/space_editor_sidebar:
       template: component/site_editor/widget_page_edit_sidebar_widget.html.j2
@@ -390,7 +389,6 @@ http:
 
         execute.api.space_style_select_data:
           select: []
-
 
     # New: Re-render the Full Page after a change
     api/space_editor_render:
@@ -454,12 +452,12 @@ http:
     api/site_content_derived:
       execute: execute.api.site_content_derived
 
-      cache:
-        execute.api.site_content_derived:
-          space_content_derived: []
+      # cache:
+      #   execute.api.site_content_derived:
+      #     space_content_derived: []
 
-        execute.api.site_content_register:
-          space_content: []
+      #   execute.api.site_content_register:
+      #     space_content: []
 
     # Derived Content - Rerender
     api/content_admin_view:
