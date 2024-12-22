@@ -71,10 +71,15 @@ def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_d
 
   # If we got any output, parse it
   if output:
-    payload = json.loads(output)
+    try:
+      payload = json.loads(output)
+    except json.decoder.JSONDecodeError as e:
+      LOG.info(f'Output cant be parsed.  Returning empty dict: Command: {command_unique}\n\nOutput: {output}\n\nException: {e}\n\n')
+      payload = {}
+
   # Else, we didnt, so just give an empty string
   else:
-    LOG.info(f'No output available.  Returning empty string: {output}  Command: {command_unique}')
+    LOG.info(f'No output available.  Returning empty dict: {output}  Command: {command_unique}')
     payload = {}
 
   if type(payload) == dict:

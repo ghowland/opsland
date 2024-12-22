@@ -1,7 +1,12 @@
 <script>
   // Global Widget Options for collecting data
-  var WidgetOptionsOriginal = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'};
-  var WidgetOptions = JSON.parse(JSON.stringify(WidgetOptionsOriginal))
+  var WidgetOptionsOriginal = {'site_page_uri': '{{uri}}', 'uri': '{{uri}}'}
+  var WidgetOptions
+  ResetWidgetOptions()
+
+  // Request data we received
+  var RequestInput = JSON.parse('{{ request | tojson }}')
+  console.log(RequestInput)
 
   function RenderWidget(command, do_toggle_modal) {
     // Set a command
@@ -9,20 +14,33 @@
     else SetWidgetOption('__command', 'set')
 
     ScrapeData()
-
+    
     // Submit the scrapped data and anything we set manually
     htmx.ajax('POST', RenderWidgetApiSubmit, {'target': '#crud_model_target', 'values': WidgetOptions}).then(() => {
       if (do_toggle_modal != false) { ToggleEditModal() }
     });
   
-    // Reset our values at the end.  We want clean API payloads, not gathering cruft
-    WidgetOptions = JSON.parse(JSON.stringify(WidgetOptionsOriginal))
+    ResetWidgetOptions()
 
     // Clear any command and run again, which only refreshes the sidebar.  Had to do this in 2 passes because I'm using single templates and single endpoint targets
     if (RenderWidgetApiRerender != null) {
       SetWidgetOption('__command', 'none')
       htmx.ajax('POST', RenderWidgetApiRerender, {'target': '#page_render', 'values': WidgetOptions})
     }
+  }
+
+  function ResetWidgetOptions()
+  {
+    // Reset our values at the end.  We want clean API payloads, not gathering cruft
+    WidgetOptions = JSON.parse(JSON.stringify(WidgetOptionsOriginal))
+
+    // If we had request inputs, pass them through
+    if (RequestInput != undefined) {
+      WidgetOptions['request_input'] = {}
+      Object.keys(RequestInput).forEach(key => {
+        WidgetOptions['request_input'][key] = RequestInput[key]
+      });
+    }    
   }
 
   function MouseDownEdit(evt, widget_id)
