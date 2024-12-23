@@ -109,6 +109,11 @@
 
   function RefreshContent() {
     htmx.ajax('GET', '/get/site_content_register', {'target': '#upload_result'})
+    setTimeout(ReloadPage, 500)
+  }
+
+  function ReloadPage() {
+    window.location.reload()
   }
 
   // Change Width

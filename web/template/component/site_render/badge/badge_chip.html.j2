@@ -5,8 +5,14 @@
   rounded
   {{cur_item.text_color}}
   {{cur_item.bg_color}}
+  {% if cur_item.hover_bg_color %}hover:{{cur_item.hover_bg_color}}{% endif %}
 ">
-  {{ cur_item.value }}
+  {% if cur_item.url %}
+    <a href="{{ cur_item.url }}">{{ cur_item.value }}</a>
+  {% else %}
+    {{ cur_item.value }}
+  {% endif %}
+
   {% if cur_item.allow_delete %}
   <button type="button" 
           onclick="SetWidgetOption('{{cur_item.delete_command}}', '{{cur_item.delete_field}}'); RenderWidget('delete', false)" 

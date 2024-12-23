@@ -63,11 +63,7 @@
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
               <!-- Image -->
               <a href="/content_view?id={{loop_uuid}}" class="shrink-0 md:order-1">
-                {% if loop_item.parent_uuid %}
-                  <img class="w-20" src="/derived/{{loop_item.path}}" alt="image" />
-                {% else %}
-                  <img class="w-20" src="/content/{{loop_item.path}}" alt="image" />
-                {% endif %}
+                <img class="w-20" src="/{{loop_item.path}}" alt="image" />
               </a>
 
               <!-- Priority -->
@@ -99,7 +95,10 @@
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
                 <!-- Labels: Strict:  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
                 {% for label in loop_item.labels %}
-                  {% if label.startswith('gen:') %}
+                  {% if label == 'gen:derived' %}
+                    {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-purple-800', 'bg_color': 'bg-purple-100', 'allow_delete': False, 'url': '/content_view?id=' + loop_item.parent_uuid, 'hover_bg_color': 'bg-blue-100',  } %}
+
+                  {% elif label.startswith('gen:') %}
                     {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100', 'allow_delete': False } %}
 
                   {% elif label.startswith('custom:') %}

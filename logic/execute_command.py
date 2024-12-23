@@ -92,8 +92,8 @@ def ExecuteCommand(config, command, bundle_name, bundle, set_cache_key, update_d
   # Convert any forward slashes to dots, so we dont create new directories
   set_cache_key = set_cache_key.replace('/', '.')
 
-  # Set the cache, if we have a valid payload.  Dont save empty, thats our failure state
-  if payload:
+  # Set the cache, the command succeeded and we have a valid payload.  Dont save empty, thats our failure state
+  if status == 0 and payload:
     config.cache.Set(bundle_name, set_cache_key, payload)
 
   # # Remove the temp file

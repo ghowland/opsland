@@ -243,11 +243,7 @@
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
               <!-- Image -->
               <a href="/content_view?id={{loop_uuid}}" class="shrink-0 md:order-1">
-                {% if loop_item.parent_uuid %}
-                  <img class="w-20" src="/derived/{{loop_item.path}}" alt="image" />
-                {% else %}
-                  <img class="w-20" src="/content/{{loop_item.path}}" alt="image" />
-                {% endif %}
+                  <img class="w-20" src="/{{loop_item.path}}" alt="image" />
               </a>
 
               <!-- Priority -->

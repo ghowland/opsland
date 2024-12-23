@@ -1,5 +1,1 @@
-{% if loop_item.parent_uuid %}
-  <img class="w-full" src="/derived/{{loop_item.path}}" alt="image" id="image_{{loop_uuid}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;" />
-{% else %}
-  <img class="w-full" src="/content/{{loop_item.path}}" alt="image" id="image_{{loop_uuid}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;" />
-{% endif %}
+<img class="w-full" src="/{{loop_item.path}}" alt="image" id="image_{{loop_uuid}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;" />
