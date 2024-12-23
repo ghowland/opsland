@@ -1,0 +1,33 @@
+{% set cur_data = {'title': 'Pages'}%}
+
+{% include 'includes/page/page_start_minimal.html.j2' %}
+
+<div class="p-12">
+
+
+{% for bundle, bundle_data in pages.items() %}
+<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Page Bundle: {{ bundle }}</h1>
+<h2 class="mb-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white">Method: Endpoint:</h2>
+
+  {% for method_key, method_data in bundle_data.http.items() %}
+    {% for key, value in method_data.items() %}
+    <!-- { % if key.startswith('execute.api.space_page_data.') % } -->
+      <p class="p-2">
+        <span class="font-bold dark:text-white text-blue-600">{{method_key}}: {{key}}:</span>
+        {% if value.template %} <div class="ms-8"><strong>Template:</strong> {{value.template}}</div>{% endif %}
+        {% if value.execute %} <div class="ms-8"><strong>Execute:</strong> {{value.execute}}</div>{% endif %}
+        {% if value.cache %} <div class="ms-8"><strong>Cache:</strong> 
+          {% for key2, value2 in value.cache.items() %}
+            <div class="ms-8">{{key2}} = <em>{{value2}}</em></div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </p>
+    <!-- { % endif % } -->
+    {% endfor %}
+  {% endfor %}
+{% endfor %}
+
+</div>
+
+{% include 'includes/page/page_end_with_footer.html.j2' %}

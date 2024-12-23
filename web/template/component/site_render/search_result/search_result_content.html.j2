@@ -29,26 +29,29 @@
 
     <!-- PRODUCT CARDS -->
     <div class="grid rounded-lg border bg-white shadow-sm *:border-gray-200 dark:border-gray-700 dark:bg-gray-800 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-
-      {% for file in files %}
+      {% if space_content %}
+      {% for loop_uuid, loop_item in space_content.items() %}
+      {% if not loop_uuid.startswith('_') %}
       <content-chunk>
         <div class="space-y-6 overflow-hidden border-b border-e-0 p-6 text-center dark:border-gray-700 lg:border-e lg:border-gray-200">
           <div class="h-44 flex justify-center">
             <a href="#">
-              <img class="h-auto max-h-full rounded-md border-4 border-gray-300 hover:border-gray-800" src="/uploads/thumbnail/{{file.path}}" alt="{{file.path}}" 
-                onclick="document.getElementById('{{content_input_id}}').value = '/uploads/{{file.path}}'; RenderWidget('set', false); return true;"
+              <img class="h-auto max-h-full rounded-md border-4 border-gray-300 hover:border-gray-800" src="/{{loop_item.path}}" alt="{{loop_item.path}}" 
+                onclick="document.getElementById('{{content_input_id}}').value = '/uploads/{{loop_item.path}}'; RenderWidget('set', false); return true;"
               />
             </a>
           </div>
 
           <div>
-            <p class="mb-2 font-medium uppercase leading-tight text-primary-700">{{file.size}}</p>
-            <a href="#" class="text-xl font-semibold leading-tight text-gray-900 hover:underline">{{file.path}}</a>
+            <p class="mb-2 font-medium uppercase leading-tight text-primary-700">{{loop_item.size}}</p>
+            <a href="#" class="text-xl font-semibold leading-tight text-gray-900 hover:underline">{{loop_item.path}}</a>
           </div>
 
         </div>
       </content-chunk>
+      {% endif %}
       {% endfor %}
+      {% endif %}
 
     </div>
 

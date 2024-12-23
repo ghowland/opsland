@@ -146,6 +146,16 @@ async def Web_GET(request: Request):
   return TEMPLATES.TemplateResponse(name='pages/opsland_data.html.j2', context=data, request=request)
 
 
+# OpsLand Cache Data printed out for manual inspection
+@APP.get("/opsland/pages", response_class=HTMLResponse)
+async def Web_GET(request: Request):
+  """Returns all the data for the Bundles"""
+
+  data = {'pages':CONFIG.data}
+
+  return TEMPLATES.TemplateResponse(name='pages/opsland_pages.html.j2', context=data, request=request)
+
+
 # UPLOAD: Multiple Files
 @APP.post("/upload_multi")
 def Upload_CreateUploadFileMulti(files: List[UploadFile] = File(...)):

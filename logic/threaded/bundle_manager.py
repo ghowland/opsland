@@ -61,6 +61,8 @@ class BundleManager(thread_base.ThreadBase):
 
             # Else, update our dictionary with it
             else:
+              LOG.info(f'Bundle: Import Static Data: {method_key}: {endpoint_uri}: {', '.join([x.replace('execute.api.', '') for x in list(found_static['cache'].keys())])}')
+
               #TODO: Merge the dictionaries per level.  For now just straigth update which blows away peer data in deeper areas, so its not an nice overlay
               endpoint_data.update(found_static)
 

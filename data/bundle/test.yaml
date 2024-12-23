@@ -321,6 +321,34 @@ static_data:
       execute.api.site_content_derived:
         space_content_derived: []
 
+  space_api_base:
+    cache:
+      execute.api.space_page_data.{site_page_uri}:
+        site_page: []
+      execute.api.space_widget_spec:
+        widget_specs: []
+      execute.api.space_map_widget_html:
+        map_widget_html: []
+      execute.api.space_widget_tags:
+        site_page_tags: []
+      execute.api.space_style:
+        space_style: []
+      execute.api.upload_refresh:
+        files: []
+      execute.api.table_data_refresh:
+        tables: []
+      execute.api.cache_icons:
+        icons: []
+      execute.api.space_style_select_data:
+        select: []
+      execute.api.space_content_data:
+        content: []
+      execute.api.site_content_register:
+        space_content: []
+      execute.api.site_content_derived:
+        space_content_derived: []
+
+
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
   # POST
@@ -374,63 +402,67 @@ http:
     api/space_editor_sidebar:
       template: component/site_editor/widget_page_edit_sidebar_widget.html.j2
       execute: execute.api.space_page_data
+      _import_static_data: 
+        - space_api_base
 
-      cache:
-        execute.api.space_page_data.{site_page_uri}:
-          site_page: []
+      # cache:
+      #   execute.api.space_page_data.{site_page_uri}:
+      #     site_page: []
 
-        # space_widget_spec
-        execute.api.space_widget_spec:
-          widget_specs: []
+      #   # space_widget_spec
+      #   execute.api.space_widget_spec:
+      #     widget_specs: []
 
-        # space_map_widget_html
-        execute.api.space_map_widget_html:
-          map_widget_html: []
+      #   # space_map_widget_html
+      #   execute.api.space_map_widget_html:
+      #     map_widget_html: []
 
-        execute.api.space_style:
-          space_style: []
+      #   execute.api.space_style:
+      #     space_style: []
 
-        execute.api.upload_refresh:
-          files: []
+      #   execute.api.upload_refresh:
+      #     files: []
                 
-        execute.api.table_data_refresh:
-          tables: []
+      #   execute.api.table_data_refresh:
+      #     tables: []
 
-        execute.api.cache_icons:
-          icons: []
+      #   execute.api.cache_icons:
+      #     icons: []
 
-        execute.api.space_style_select_data:
-          select: []
+      #   execute.api.space_style_select_data:
+      #     select: []
 
     # New: Re-render the Full Page after a change
     api/space_editor_render:
       template: component/site_render/page_render.html.j2
       execute: execute.api.space_page_data
+      _import_static_data: 
+        - space_api_base
 
-      cache:
-        execute.api.space_page_data.{site_page_uri}:
-          site_page: []
+      # cache:
+      #   execute.api.space_page_data.{site_page_uri}:
+      #     site_page: []
 
-        execute.api.space_widget_spec:
-          widget_specs: []
+      #   execute.api.space_widget_spec:
+      #     widget_specs: []
         
-        execute.api.space_map_widget_html:
-          map_widget_html: []
+      #   execute.api.space_map_widget_html:
+      #     map_widget_html: []
 
-        execute.api.space_style:
-          space_style: []
+      #   execute.api.space_style:
+      #     space_style: []
 
-        execute.api.upload_refresh:
-          files: []
+      #   execute.api.upload_refresh:
+      #     files: []
         
-        execute.api.table_data_refresh:
-          tables: []
+      #   execute.api.table_data_refresh:
+      #     tables: []
 
-        execute.api.cache_icons:
-          icons: []
+      #   execute.api.cache_icons:
+      #     icons: []
         
-        execute.api.space_style_select_data:
-          select: []
+      #   execute.api.space_style_select_data:
+      #     select: []
 
     api/space_style:
       template: component/site_style.html.j2
