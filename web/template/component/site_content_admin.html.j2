@@ -94,35 +94,9 @@
 
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
                 <!-- Labels: Strict:  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
-                {% for label in loop_item.labels %}
-                  {% if label == 'gen:derived' %}
-                    {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-purple-800', 'bg_color': 'bg-purple-100', 'allow_delete': False, 'url': '/content_view?id=' + loop_item.parent_uuid, 'hover_bg_color': 'bg-blue-100',  } %}
-
-                  {% elif label.startswith('gen:') %}
-                    {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100', 'allow_delete': False } %}
-
-                  {% elif label.startswith('custom:') %}
-                    {% set cur_item = {'value': label.replace('custom:', ''), 'text_color': 'text-blue-800', 'bg_color': 'bg-blue-100', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': label } %}
-
-                  {% elif label.startswith('site:') %}
-                    {% set cur_item = {'value': label.replace('site:', ''), 'text_color': 'text-green-800', 'bg_color': 'bg-green-100', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': label } %}
-
-                  {% else %}
-                    {% set cur_item = {'value': label, 'text_color': 'text-gray-800', 'bg_color': 'bg-gray-100', 'allow_delete': True, 'delete_command': '__delete_label.'+loop_uuid, 'delete_field': label } %}
-
-                  {% endif %}
-
-                  {% include 'component/site_render/badge/badge_chip.html.j2' %}
-                {% endfor %}
-
-                <!-- Tags: Loose:  List of strings -->
-                {% for tag in loop_item.tags %}
-                  {% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True, 'delete_command': '__delete_tag.'+loop_uuid, 'delete_field': tag} %}
-                  {% include 'component/site_render/badge/badge_chip.html.j2' %}
-                {% endfor %}
-
-                {% set cur_item = {'value': loop_item.filename[:40], 'text_color': 'text-slate-50', 'bg_color': 'bg-slate-600', 'allow_delete': False} %}
-                {% include 'component/site_render/badge/badge_chip.html.j2' %}
+                {% set cur_item = loop_item %}
+                {% set cur_item_uuid = loop_item %}
+                {% include 'component/site_render/content/labels.html.j2' %}
 
                 <!-- Rating & Control Button Line -->
                 <div class="flex items-center gap-4">

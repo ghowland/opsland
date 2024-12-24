@@ -1,0 +1,29 @@
+{% for label in cur_item.labels %}
+{% if label == 'gen:derived' %}
+  {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-purple-800', 'bg_color': 'bg-purple-100', 'allow_delete': False, 'url': '/content_view?id=' + cur_item.parent_uuid, 'hover_bg_color': 'bg-blue-100',  } %}
+
+{% elif label.startswith('gen:') %}
+  {% set cur_item = {'value': label.replace('gen:', ''), 'text_color': 'text-red-800', 'bg_color': 'bg-red-100', 'allow_delete': False } %}
+
+{% elif label.startswith('custom:') %}
+  {% set cur_item = {'value': label.replace('custom:', ''), 'text_color': 'text-blue-800', 'bg_color': 'bg-blue-100', 'allow_delete': True, 'delete_command': '__delete_label.'+cur_item_uuid, 'delete_field': label } %}
+
+{% elif label.startswith('site:') %}
+  {% set cur_item = {'value': label.replace('site:', ''), 'text_color': 'text-green-800', 'bg_color': 'bg-green-100', 'allow_delete': True, 'delete_command': '__delete_label.'+cur_item_uuid, 'delete_field': label } %}
+
+{% else %}
+  {% set cur_item = {'value': label, 'text_color': 'text-gray-800', 'bg_color': 'bg-gray-100', 'allow_delete': True, 'delete_command': '__delete_label.'+cur_item_uuid, 'delete_field': label } %}
+
+{% endif %}
+
+{% include 'component/site_render/badge/badge_chip.html.j2' %}
+{% endfor %}
+
+<!-- Tags: Loose:  List of strings -->
+{% for tag in cur_item.tags %}
+{% set cur_item = {'value': tag, 'text_color': 'text-stone-50', 'bg_color': 'bg-stone-600', 'allow_delete': True, 'delete_command': '__delete_tag.'+cur_item_uuid, 'delete_field': tag} %}
+{% include 'component/site_render/badge/badge_chip.html.j2' %}
+{% endfor %}
+
+{% set cur_item = {'value': cur_item.filename[:16], 'text_color': 'text-slate-50', 'bg_color': 'bg-slate-600', 'allow_delete': False} %}
+{% include 'component/site_render/badge/badge_chip.html.j2' %}

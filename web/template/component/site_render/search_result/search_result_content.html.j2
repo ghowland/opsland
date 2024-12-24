@@ -43,8 +43,9 @@
           </div>
 
           <div>
-            <p class="mb-2 font-medium uppercase leading-tight text-primary-700">{{loop_item.size}}</p>
-            <a href="#" class="text-xl font-semibold leading-tight text-gray-900 hover:underline">{{loop_item.path}}</a>
+            {% set cur_item = loop_item %}
+            {% set cur_item_uuid = loop_item %}
+            {% include 'component/site_render/content/labels.html.j2' %}
           </div>
 
         </div>
