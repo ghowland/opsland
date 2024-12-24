@@ -62,6 +62,8 @@ ENVIRONMENT = Environment(loader=FileSystemLoader("web/template"),
 # Jinja template path
 TEMPLATES = Jinja2Templates(directory="web/template", context_processors=None, env=ENVIRONMENT)
 TEMPLATES.env.globals['from_json'] = jinja_extension.from_json
+TEMPLATES.env.globals['content_search_single'] = jinja_extension.content_search_single
+
 
 # Add custom functions and filters to our Jinja
 utility_jinja.AddJinjaUtilities(TEMPLATES)

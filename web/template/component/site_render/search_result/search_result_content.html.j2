@@ -25,6 +25,38 @@
   </form>
 </div>
 
+
+{% set label = 'Site Label' %}
+{% set element_id = '__none.site_label' %}
+{% set select_data = select.label_site %}
+{% set cur_value = '' %}
+{% set update_content = "'" + element_id + "', '" + search_input_target + "', 'site:'" %}
+{% set select_on_change = 'console.log(' + update_content + '); UpdateImageContentJson(' + update_content + '); RenderWidget(\'set\', false); return false;' %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+{% set select_on_change = '' %}
+
+{% set label = 'Image Format' %}
+{% set element_id = '__none.image_format' %}
+{% set select_data = select.image_format %}
+{% set cur_value = '' %}
+{% set update_content = "'" + element_id + "', '" + search_input_target + "', 'gen:'" %}
+{% set select_on_change = 'console.log(' + update_content + '); UpdateImageContentJson(' + update_content + '); RenderWidget(\'set\', false); return false;' %}
+{% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+{% set select_on_change = '' %}
+
+<script>
+  function UpdateImageContentJson(element_id, input_target, prefix) {
+    var el = document.getElementById(element_id)
+    var update_value = el.value
+
+    var target = document.getElementById(input_target)
+
+    var payload = {'label': prefix + update_value}
+
+    target.value = JSON.stringify(payload)
+  }
+</script>
+
 <div class="mx-auto max-w-screen-xl px-4 2xl:px-0" id="content-search-list">
 
     <!-- PRODUCT CARDS -->
@@ -44,7 +76,7 @@
 
           <div>
             {% set cur_item = loop_item %}
-            {% set cur_item_uuid = loop_item %}
+            {% set cur_item_uuid = loop_uuid %}
             {% include 'component/site_render/content/labels.html.j2' %}
           </div>
 

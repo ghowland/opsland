@@ -10,10 +10,10 @@
   {% include 'component/site_render/page_render_widget_inner.html.j2' %}
 {% endfor %}
 
-{% set cur_item = from_json(cur_data.image) %}
-{% set image_uuid = cur_item.uuid[0] %}
+{% set cur_item_source = from_json(cur_data.image) %}
+{% set cur_item = content_search_single(space_content, cur_item_source) %}
 
-  <img src="{{space_content[image_uuid].path}}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" __off__oncontextmenu="Cropper_Init_{{widget_id}}(); return false;"
+  <img src="{{ cur_item.path }}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" __off__oncontextmenu="Cropper_Init_{{widget_id}}(); return false;"
   class="
   {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
   {% else %}                                             {{cur_style['__style.image.width']}}   {% endif %}
