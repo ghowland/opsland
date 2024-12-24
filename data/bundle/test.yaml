@@ -256,18 +256,25 @@ execute:
           existing: []
         execute.api.site_content_register:
           content: []
-
-    # space_edit_widget:
-    #   command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_edit_widget_{uuid}.json space_edit_widget
-    #   input_path: /tmp/opsland/space_edit_widget_{uuid}.json
-    #   input:
-    #     # Pass through our request data
-    #     request:
-    #       record_id: [uri]
-
-    #     execute.api.space_page_data.{request.site_page_uri}:
-    #       last_version: []
-        
+    
+    # Site Domains
+    site_domain:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_domain_{uuid}.json site_domain
+      input_path: /tmp/opsland/site_domain_{uuid}.json
+      input:
+        execute.api.site_domain:
+          existing: []
+    
+    # Site Domain Pages
+    site_domain_page:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/site_domain_page_{uuid}.json site_domain_page
+      input_path: /tmp/opsland/site_domain_page_{uuid}.json
+      input:
+        execute.api.site_domain_page:
+          existing: []
+        execute.api.site_domain:
+          domains: []
+    
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
@@ -320,6 +327,10 @@ static_data:
         space_content: []
       execute.api.site_content_derived:
         space_content_derived: []
+      execute.api.site_domain:
+        space_domains: []
+      execute.api.site_domain_page:
+        space_pages: []
 
   space_api_base:
     cache:
@@ -347,6 +358,10 @@ static_data:
         space_content: []
       execute.api.site_content_derived:
         space_content_derived: []
+      execute.api.site_domain:
+        space_domains: []
+      execute.api.site_domain_page:
+        space_pages: []
 
 
 # HTTP Routing and Rendering.  All paths overlay over the `root`
@@ -504,6 +519,27 @@ http:
       _import_static_data: 
         - space_page_base
 
+
+    # Site Domains - Data
+    api/site_domain:
+      execute: execute.api.site_domain
+
+    # Site Domain Pages - Data
+    api/site_domain_page_data:
+      execute: execute.api.site_domain_page
+
+    # Site Domains - Reload page
+    api/site_domain_reload:
+      template: component/site_domain_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Site Domain Pages - Reload page
+    api/site_domain_page_data_reload:
+      template: component/site_domain_page_admin.html.j2
+      _import_static_data: 
+        - space_page_base      
+
   # GET
   get:
     # Refresh these to update static content
@@ -527,7 +563,20 @@ http:
       execute: execute.api.space_content_data
     get/site_content_register:
       execute: execute.api.site_content_register
-      
+    
+
+    # Site Domains
+    site_domain:
+      template: pages/site_domain.html.j2
+      _import_static_data: 
+        - space_page_base
+    
+    # Site Domain Pages
+    site_domain_page:
+      template: pages/site_domain_page.html.j2
+      _import_static_data: 
+        - space_page_base
+
 
     # Content Admin
     content_admin:
