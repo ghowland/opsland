@@ -37,6 +37,7 @@ from logic import utility_jinja
 from logic import webserver_render
 
 from logic import utility
+from logic import jinja_extension
 
 
 # Globals to connect to other OpsLand components
@@ -58,7 +59,9 @@ ENVIRONMENT = Environment(loader=FileSystemLoader("web/template"),
                           autoescape=select_autoescape(("html", "jinja2", "j2")),
                           extensions=[])
 
+# Jinja template path
 TEMPLATES = Jinja2Templates(directory="web/template", context_processors=None, env=ENVIRONMENT)
+TEMPLATES.env.globals['from_json'] = jinja_extension.from_json
 
 # Add custom functions and filters to our Jinja
 utility_jinja.AddJinjaUtilities(TEMPLATES)

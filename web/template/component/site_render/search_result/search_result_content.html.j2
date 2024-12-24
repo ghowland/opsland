@@ -37,7 +37,7 @@
           <div class="h-44 flex justify-center">
             <a href="#">
               <img class="h-auto max-h-full rounded-md border-4 border-gray-300 hover:border-gray-800" src="/{{loop_item.path}}" alt="{{loop_item.path}}" 
-                onclick="document.getElementById('{{content_input_id}}').value = '{{loop_uuid}}'; RenderWidget('set', false); return true;"
+                onclick="document.getElementById('{{content_input_id}}').value = JSON.stringify({'uuid': ['{{loop_uuid}}'] }); RenderWidget('set', false); return true;"
               />
             </a>
           </div>
