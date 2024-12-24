@@ -10,7 +10,7 @@
   {% include 'component/site_render/page_render_widget_inner.html.j2' %}
 {% endfor %}
 
-  <img src="{{cur_data.image}}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;"
+  <img src="{{space_content[cur_data.image].path}}" alt="{{cur_data.alt}}" id="image_{{widget_id}}" oncontextmenu="Cropper_Init_{{widget_id}}(); return false;"
   class="
   {% if cur_data.width and cur_data.width != 'parent' %} {{cur_data.width}}
   {% else %}                                             {{cur_style['__style.image.width']}}   {% endif %}
