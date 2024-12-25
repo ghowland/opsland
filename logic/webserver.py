@@ -125,6 +125,7 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
       # This is the path we test with, which we remove the root mount path
       test_path = path.replace(bundle['root'], '', 1)
 
+    # Look for static Method/URI below
     http_data_methods = bundle['http']
 
     # Skip because we dont have the method
@@ -135,15 +136,22 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
 
     # Skip because we dont have the path
     if test_path not in http_data:
+      # Look to see if this is a dynamic domain page
       for config_domain_name, config_domain_data in bundle['domain_dynamic_config'].items():
+        # LOG.info(f'Testing: {config_domain_name} == {domain}')
         if config_domain_name == domain:
           
-          #TODO: Check the domain paths from our cache for this domain, and see if there is a match.  If not, return /404 page info
+          # #TODO: Check the domain paths from our cache for this domain, and see if there is a match.  If not, return /404 page info
+          data_value = CONFIG.cache.Get(bundle_path, 'space_page_data')
 
-          LOG.info(f'Domain matched: {config_domain_data}')
+          LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}  Value: {data_value}')
 
+          # We matched, so dont check any more domains
+          return (bundle_path, bundle, config_domain_data)
+      
+      # We didnt find the page, and we dont have dynamic matches, so skip this bundle now
       continue
-    
+
     # Return the static path
     return (bundle_path, bundle, http_data[test_path])
 
