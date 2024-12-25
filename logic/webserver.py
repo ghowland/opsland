@@ -109,7 +109,7 @@ def Shutdown():
   os.kill(os.getpid(), signal.SIGTERM)
 
 
-def GetBundlePathData(method, path):
+def GetBundlePathData(method, path, domain=None, domain_path=None):
   """Returns a dict with the path_data, or None of not found for this method and path"""
   global CONFIG
 
@@ -127,14 +127,24 @@ def GetBundlePathData(method, path):
 
     http_data_methods = bundle['http']
 
+    # Skip because we dont have the method
     if method not in http_data_methods:
       continue
     
     http_data = http_data_methods[method]
 
+    # Skip because we dont have the path
     if test_path not in http_data:
+      for config_domain_name, config_domain_data in bundle['domain_dynamic_config'].items():
+        if config_domain_name == domain:
+          
+          #TODO: Check the domain paths from our cache for this domain, and see if there is a match.  If not, return /404 page info
+
+          LOG.info(f'Domain matched: {config_domain_data}')
+
       continue
     
+    # Return the static path
     return (bundle_path, bundle, http_data[test_path])
 
   # Couldnt find a Bundle for a page
@@ -232,7 +242,16 @@ async def Upload_CreateUploadFile(file: UploadFile = File(...)):
 @APP.get("/{full_path:path}", response_class=HTMLResponse)
 async def Web_GET(request: Request, full_path: str):
   """Matches all paths for Method GET, and then we route ourselves"""
-  (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path)
+  domain = str(request.base_url)
+  domain_path = str(request.url.path)
+
+  domain = domain.replace('https://', '').replace('http://', '').replace('/', '')
+  if ':' in domain: domain = domain.split(':')[0]
+
+  LOG.info(f'Domain: {domain}  Path: {domain_path}')
+
+  # Get the bundle match
+  (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path, domain, domain_path)
   if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
   data = dict(request.query_params._dict)

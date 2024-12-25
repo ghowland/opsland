@@ -48,6 +48,7 @@ class BundleManager(thread_base.ThreadBase):
 
   def _ProcessBundleData(self, bundle_data):
     """Go through the bundle data, and perform any processing steps.  ex: `_import_static_data`"""
+    # Import static data into HTTP static endpoints
     for method_key, method_data in bundle_data['http'].items():
       for endpoint_uri, endpoint_data in method_data.items():
         if '_import_static_data' in endpoint_data:
@@ -65,6 +66,25 @@ class BundleManager(thread_base.ThreadBase):
 
               #TODO: Merge the dictionaries per level.  For now just straigth update which blows away peer data in deeper areas, so its not an nice overlay
               endpoint_data.update(found_static)
+    
+    # Import static data into the `domain_dynamic_config` domains
+    if 'domain_dynamic_config' in bundle_data:
+      for domain_name, domain_data in bundle_data['domain_dynamic_config'].items():
+        if '_import_static_data' in domain_data:
+          for static_import in domain_data['_import_static_data']:
+            found_static = bundle_data['static_data'].get(static_import, None)
+
+            # If we dont have this, its a configuration error
+            if found_static == None:
+              LOG.error(f'Missing Static Data import: {static_import}')
+              continue
+
+            # Else, update our dictionary with it
+            else:
+              LOG.info(f'Bundle: Import Static Data: {domain_name}: {', '.join([x.replace('execute.api.', '') for x in list(found_static['cache'].keys())])}')
+
+              #TODO: Merge the dictionaries per level.  For now just straigth update which blows away peer data in deeper areas, so its not an nice overlay
+              domain_data.update(found_static)
 
 
   def ExecuteTask(self, task):
