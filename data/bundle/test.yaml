@@ -364,6 +364,13 @@ static_data:
         space_pages: []
 
 
+# Dynamig Page config
+dynamic_page:
+  template: pages/site_page_render.html.j2
+  _import_static_data: 
+    - space_page_base
+
+
 # HTTP Routing and Rendering.  All paths overlay over the `root`
 http:
   # POST

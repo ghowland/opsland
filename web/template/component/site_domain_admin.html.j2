@@ -54,7 +54,6 @@
 
     RenderWidget('set', false)
   }
-  
 </script>
 
     <!-- Main Column -->
@@ -63,6 +62,7 @@
         <div class="space-y-6">
 
 
+          <!-- Add New Domain: Always Present -->
           <content-chunk class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm block">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
@@ -78,20 +78,20 @@
                 <div class="flex items-center gap-4">
 
                   <!-- Control: Edit Data -->
-                  <button type="button" onclick="document.getElementById('add_a_label_new').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
+                  <!-- <button type="button" onclick="document.getElementById('add_a_label_new').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
                     <span class="pe-1">
                       {{icons['edit'].html|safe}}
                     </span>
                     Edit Data
-                  </button>
+                  </button> -->
 
                   <!-- Control: Delete -->
-                  <button type="button" onclick="document.getElementById('delete_this_new').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                  <!-- <button type="button" onclick="document.getElementById('delete_this_new').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
                     <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                     </svg>
                     Delete Content
-                  </button>
+                  </button> -->
 
                 </div>
 
@@ -127,7 +127,7 @@
                 <!-- Delete this Item -->
                 <div id="delete_this_new" class="hidden">
                   Confirm Delete: 
-                  <button type="button" onclick="SetWidgetOption('__delete_content.{{loop_uuid}}', 'true'); RenderWidget('delete', false)" class="inline-flex items-center text-sm font-medium text-red-100 bg-red-800 m-2 p-2 rounded hover:bg-red-600">
+                  <button type="button" onclick="SetWidgetOption('__delete_domain.{{loop_uuid}}', 'true'); RenderWidget('delete', false)" class="inline-flex items-center text-sm font-medium text-red-100 bg-red-800 m-2 p-2 rounded hover:bg-red-600">
                     <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                     </svg>
@@ -142,56 +142,46 @@
 
           {% if space_domains %}
           {% for loop_uuid, loop_item in space_domains.items() %}
-          {% set show_derived = 1 %}
-          {% if not loop_uuid.startswith('__') and (show_derived or not loop_item.parent_uuid) %}
+          {% if not loop_uuid.startswith('__') %}
 
           <content-chunk class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm block">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-              <!-- Image -->
-              <a href="/content_view?id={{loop_uuid}}" class="shrink-0 md:order-1">
-                <img class="w-20" src="/{{loop_item.path}}" alt="image" />
-              </a>
-
-              <!-- Priority -->
-              <div class="flex items-center justify-between md:order-3 md:justify-end">
-                <div class="flex items-center">
-
-                  <!-- Priority int spinner -->
-                  {% set parent_data0 = cur_data %}
-                  {% set cur_data = {'label': 'Priority', 'value': loop_item.priority, 'element_id': '__set.' + loop_item.uuid|string + '.priority' } %}
-                  {% include 'component/site_render/form/int/int_up_down.html.j2' %}
-                  {% set cur_data = parent_data0 %}
-
-                </div>
-                <div class="text-end md:order-4 md:w-32 inline-flex">
-                  <!-- <p class="text-base font-bold text-gray-900">${{loop_item.cost}}</p> -->
-                  <div class="mt-2 ms-8 font-bold">
-                    $
-                  </div>
-                  <div>
-                    {% set parent_data0 = cur_data %}
-                    {% set cur_data = {'label': 'Cost', 'value': loop_item.cost, 'element_id': '__set.' + loop_item.uuid|string + '.cost' } %}
-                    {% include 'component/site_render/form/int/int.html.j2' %}
-                    {% set cur_data = parent_data0 %}  
-                  </div>
-                </div>
-              </div>
-
-
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                <!-- Labels: Strict:  Limited data associated with a string and data-domain (ex: site, custom, gen, etc) -->
-                {% set cur_item = loop_item %}
-                {% set cur_item_uuid = loop_uuid %}
-                {% include 'component/site_render/content/labels.html.j2' %}
 
-                <!-- Rating & Control Button Line -->
+                <div class="p-2">
+                  {{ loop_item.name }}
+                </div>
+
+                {% set cur_data = {'element_id': '__add_new_page.' + loop_uuid, 'label': 'Add Page Path'} %}
+                {% include 'component/site_render/form/text/text_dynamic.html.j2' %}
+
+                <button type="button" onclick="AddNewDomain()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                  Add Page Path
+                </button>
+
+                {% for path in loop_item.paths %}
+                <div class="p-2 border-2 rounded">
+                    <button type="button" onclick="document.getElementById('delete_path_confirm_{{loop_uuid}}.{{path}}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                      <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                      </svg>
+                    </button>  
+                    <a href="http://{{loop_item.name}}:4040{{path}}">Path: {{path}}</a>
+                    <button type="button" id="delete_path_confirm_{{loop_uuid}}.{{path}}" onclick="SetWidgetOption('__delete_domain_path.{{loop_uuid}}.{{path}}', 'true'); RenderWidget('delete', false)" class="hidden inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                      <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                      </svg>
+                      Confirm Delete
+                    </button>  
+                </div>
+
+                {% endfor %}
+
+                <!-- Control Button Line -->
                 <div class="flex items-center gap-4">
-                  <!-- Rating -->
-                  {% set cur_item = {'value': loop_item.rating, 'count': loop_item.rating_count, 'show_count': False } %}
-                  {% include 'component/site_render/rating/rating_stars.html.j2' %}
 
                   <!-- Control: Edit Data -->
-                  <button type="button" onclick="document.getElementById('add_a_label_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
+                  <button type="button" onclick="document.getElementById('add_a_label_{{loop_uuid}}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline">
                     <span class="pe-1">
                       {{icons['edit'].html|safe}}
                     </span>
@@ -199,7 +189,7 @@
                   </button>
 
                   <!-- Control: Delete -->
-                  <button type="button" onclick="document.getElementById('delete_this_{{ loop_item.uuid }}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                  <button type="button" onclick="document.getElementById('delete_this_{{loop_uuid}}').classList.toggle('hidden')" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
                     <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                     </svg>
@@ -209,48 +199,38 @@
                 </div>
 
                 <!-- Add Labels -->
-                <div id="add_a_label_{{ loop_item.uuid }}" class="hidden">
+                <div id="add_a_label_{{loop_uuid}}" class="hidden">
 
-                  <div class="block ps-2">
-                    <div>
-                      {% set label = 'Set Ratings' %}
-                      {% set element_id = '__set.' + loop_item.uuid|string + '.rating' %}
-                      {% set select_data = select.rating_score %}
-                      {% set cur_value = loop_item.rating|string %}
-                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
-                    </div>
-                  </div>
-
-                  <div class="block ps-2">
+                  <!-- <div class="block ps-2">
                     <div>
                       {% set label = 'Add Site Label' %}
-                      {% set element_id = '__add.' + loop_item.uuid|string + '.label_site' %}
+                      {% set element_id = '__add.new.label_site' %}
                       {% set select_data = select.label_site %}
                       {% set cur_value = 0 %}
-                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                      { % include 'component/site_editor/generic_widget/widget_select_data.html.j2' % }
                     </div>
                   </div>
 
                   <div class="block ps-2">
                     <div>
                       {% set label = 'Add Custom Label' %}
-                      {% set element_id = '__add.' + loop_item.uuid|string + '.label_custom' %}
+                      {% set element_id = '__add.new.label_custom' %}
                       {% set select_data = select.label_custom %}
                       {% set cur_value = 0 %}
-                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                      { % include 'component/site_editor/generic_widget/widget_select_data.html.j2' % }
                     </div>
-                  </div>
+                  </div> -->
                   
-                  {% set cur_item = {'data': loop_item.tags, 'element_prefix': '__custom_tag.' + loop_item.uuid|string, 'label': 'Set Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
-                  {% include 'component/site_render/form/list/text/text_list_simple.html.j2' %}
+                  <!-- {% set cur_item = {'data': [], 'element_prefix': '__custom_tag.new', 'label': 'Set Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
+                  { % include 'component/site_render/form/list/text/text_list_simple.html.j2' % } -->
 
 
                 </div>
 
                 <!-- Delete this Item -->
-                <div id="delete_this_{{ loop_item.uuid }}" class="hidden">
+                <div id="delete_this_{{loop_uuid}}" class="hidden">
                   Confirm Delete: 
-                  <button type="button" onclick="SetWidgetOption('__delete_content.{{loop_uuid}}', 'true'); RenderWidget('delete', false)" class="inline-flex items-center text-sm font-medium text-red-100 bg-red-800 m-2 p-2 rounded hover:bg-red-600">
+                  <button type="button" onclick="SetWidgetOption('__delete_domain.{{loop_uuid}}', 'true'); RenderWidget('delete', false)" class="inline-flex items-center text-sm font-medium text-red-100 bg-red-800 m-2 p-2 rounded hover:bg-red-600">
                     <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                     </svg>
