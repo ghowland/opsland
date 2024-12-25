@@ -47,6 +47,16 @@
     </form>
 
 
+<script>
+  function AddNewDomain() {
+    // var el = document.getElementById('__add.new.domain_name')
+    // console.log(el.value);
+
+    RenderWidget('set', false)
+  }
+  
+</script>
+
     <!-- Main Column -->
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8" id="content-search-list">
       <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
@@ -59,6 +69,10 @@
 
                 {% set cur_data = {'element_id': '__add.new.domain_name', 'label': 'Add Domain Name'} %}
                 {% include 'component/site_render/form/text/text_dynamic.html.j2' %}
+
+                <button type="button" onclick="AddNewDomain()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                  Add New Domain
+                </button>
 
                 <!-- Control Button Line -->
                 <div class="flex items-center gap-4">
@@ -84,13 +98,13 @@
                 <!-- Add Labels -->
                 <div id="add_a_label_new" class="hidden">
 
-                  <div class="block ps-2">
+                  <!-- <div class="block ps-2">
                     <div>
                       {% set label = 'Add Site Label' %}
                       {% set element_id = '__add.new.label_site' %}
                       {% set select_data = select.label_site %}
                       {% set cur_value = 0 %}
-                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                      { % include 'component/site_editor/generic_widget/widget_select_data.html.j2' % }
                     </div>
                   </div>
 
@@ -100,12 +114,12 @@
                       {% set element_id = '__add.new.label_custom' %}
                       {% set select_data = select.label_custom %}
                       {% set cur_value = 0 %}
-                      {% include 'component/site_editor/generic_widget/widget_select_data.html.j2' %}
+                      { % include 'component/site_editor/generic_widget/widget_select_data.html.j2' % }
                     </div>
-                  </div>
+                  </div> -->
                   
-                  {% set cur_item = {'data': [], 'element_prefix': '__custom_tag.new', 'label': 'Set Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
-                  {% include 'component/site_render/form/list/text/text_list_simple.html.j2' %}
+                  <!-- {% set cur_item = {'data': [], 'element_prefix': '__custom_tag.new', 'label': 'Set Custom Tags', 'allow_new': True, 'allow_delete': True, 'placeholder': 'Custom tag text...', 'label_add_class': 'ps-9 pt-1'} %}
+                  { % include 'component/site_render/form/list/text/text_list_simple.html.j2' % } -->
 
 
                 </div>
