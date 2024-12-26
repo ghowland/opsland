@@ -165,16 +165,16 @@ def ProcessPayloadData(config, bundle_name, bundle, path_data, payload_in, reque
   return payload
 
 
-def ExecuteStoredCommand(config, bundle_name, bundle, execute_name, update_data):
+def ExecuteStoredCommand(config, bundle_name, bundle, execute_name_to_cache_key, update_data):
   """Execute a command from the Bundle Spec"""
-  parts = execute_name.split('.')
+  parts = execute_name_to_cache_key.split('.')
 
   execute_data = config.data[bundle_name]['execute'][parts[1]][parts[2]]
 
-  # LOG.info(f'Exec Stored Command: {execute_name}   Data: {execute_data}')
+  LOG.info(f'Exec Stored Command: {execute_name_to_cache_key}   Data: {execute_data}')
 
   # Execute the command
-  result = execute_command.ExecuteCommand(config, execute_data, bundle_name, bundle, execute_name, update_data=update_data)
+  result = execute_command.ExecuteCommand(config, execute_data, bundle_name, bundle, execute_name_to_cache_key, update_data=update_data)
 
   # LOG.info(f'Exec Stored Command: {execute_name}   Result: {result}')
 
@@ -259,14 +259,17 @@ def UnenhanceUriWithDomain(enchanced_uri):
   return (domain, domain_path)
 
 
-def RenderPathData(request, config, uri, bundle_name, bundle, path_data, domain, domain_path, request_headers=None, request_data=None):
+def RenderPathData(request, config, uri, bundle_name, bundle, path_data, domain, domain_path, is_domain_path_dynamic, request_headers=None, request_data=None):
   """Render the Path Data"""
   # Our starting payload
   payload = {'request': {}, 'header': {}, 'session': {}}
 
-  # Rewrite the URI as the wonkey domain/domain_path for transit and cache key storage
+  #HACK: Capture the raw URI, we are about to change the current one to minimize code change
   uri_raw = uri
-  uri = EnhanceUriWithDomain(uri, domain, domain_path)
+
+  # Rewrite the URI as the wonkey domain/domain_path for transit and cache key storage
+  if is_domain_path_dynamic:
+    uri = EnhanceUriWithDomain(uri, domain, domain_path)
 
   # Check if this user is authed, if our bundle has auth
   if 'auth' in bundle and 'cookie' in bundle['auth']:
@@ -292,6 +295,9 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, domain,
     # Format the cache key with the data
     cache_key = utility.FormatTextFromDictKeys(cache_key, request_data)
     # LOG.debug(f'Get from cache_key: {cache_key}')
+
+    # Any cache key that needs the `{current_page}` will get the wonky domain/path uri
+    cache_key = cache_key.replace('{current_page}', uri)
 
     # Process each of our items
     for (payload_key, data_key_list) in payload_data.items():

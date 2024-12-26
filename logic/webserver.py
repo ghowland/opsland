@@ -174,13 +174,13 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
           # LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}  Value: {pprint.pformat(return_data)}')
 
           # We matched, so dont check any more domains
-          return (bundle_path, bundle, return_data)
+          return (bundle_path, bundle, return_data, True)
       
       # We didnt find the page, and we dont have dynamic matches, so skip this bundle now
       continue
 
     # Return the static path
-    return (bundle_path, bundle, http_data[test_path])
+    return (bundle_path, bundle, http_data[test_path], False)
 
   # Couldnt find a Bundle for a page
   return (None, None, None)
@@ -293,15 +293,15 @@ async def Web_GET(request: Request, full_path: str):
   (domain, domain_path) = GetDomainAndPath(request)
 
   # Get the bundle match
-  (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path, domain, domain_path)
+  (bundle_name, bundle, path_data, is_dynamic) = GetBundlePathData('get', full_path, domain, domain_path)
   if path_data == None: return webserver_render.PageMissing(request, bundle, CONFIG)
 
   data = dict(request.query_params._dict)
   headers = dict(request.headers)
 
-  LOG.debug(f'GET: {full_path}  Args: {data}')#  Headers: {headers}')
+  LOG.info(f'GET: {full_path}  Args: {data}  Is Dynamic: {is_dynamic}')#  Headers: {headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, domain, domain_path, request_headers=headers, request_data=data)
+  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, domain, domain_path, is_dynamic, request_headers=headers, request_data=data)
 
 
 # POST
@@ -313,12 +313,12 @@ async def Web_POST(request: Request, full_path: str):
   request_data = dict(await request.form())
   request_headers = dict(request.headers)
 
-  (bundle_name, bundle, path_data) = GetBundlePathData('post', full_path)
+  (bundle_name, bundle, path_data, is_dynamic) = GetBundlePathData('post', full_path, domain, domain_path)
   if path_data == None: return Response(status_code=404, content={'error': 'URI not found'})
 
-  # LOG.debug(f'POST: {full_path}  Data: {request_data}')#  Headers: {request_headers}')
+  LOG.info(f'POST: {full_path}  Is Dynamic: {is_dynamic}')#  Data: {request_data}')#  Headers: {request_headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, domain, domain_path, request_data=request_data, request_headers=request_headers)
+  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, domain, domain_path, is_dynamic, request_data=request_data, request_headers=request_headers)
 
 
 # PUT

@@ -329,8 +329,8 @@ static_data:
         space_content_derived: []
       execute.api.site_domain:
         space_domains: []
-      execute.api.site_domain_page:
-        space_pages: []
+      # execute.api.site_domain_page:
+      #   space_pages: []
 
   space_api_base:
     cache:
@@ -360,8 +360,8 @@ static_data:
         space_content_derived: []
       execute.api.site_domain:
         space_domains: []
-      execute.api.site_domain_page:
-        space_pages: []
+      # execute.api.site_domain_page:
+      #   space_pages: []
 
   # Dynamic pages need to replace their `space_page_data`
   space_page_dynamic:
@@ -392,13 +392,11 @@ static_data:
         space_content_derived: []
       execute.api.site_domain:
         space_domains: []
-      execute.api.site_domain_page:
-        space_pages: []
 
   # API Dynamic
   space_api_dynamic:
     cache:
-      execute.api.space_page_data.{current_page}:
+      execute.api.space_page_data.{site_page_uri}:
         site_page: []
       execute.api.space_widget_spec:
         widget_specs: []
@@ -424,8 +422,6 @@ static_data:
         space_content_derived: []
       execute.api.site_domain:
         space_domains: []
-      execute.api.site_domain_page:
-        space_pages: []
 
 # Domain Dynamic Page config
 domain_dynamic_config:
