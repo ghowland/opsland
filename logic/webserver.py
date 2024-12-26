@@ -145,7 +145,7 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
           # #TODO: Check the domain paths from our cache for this domain, and see if there is a match.  If not, return /404 page info
           all_domains = CONFIG.cache.Get(bundle_path, 'execute.api.site_domain')
 
-          LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}  Data Domains: {all_domains}')
+          LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}')#  Data Domains: {all_domains}')
 
           # Clone the dict, so we dont change the original
           return_data = dict(config_domain_data)
@@ -155,17 +155,18 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
           if 'execute.api.space_page_data.{current_page}' in return_data['cache']:
             # Change the page name
             # page_key = f'''execute.api.space_page_data.{domain.replace('.', '__')}_{domain_path.replace('/', '__')}'''
-            page_key = f'''execute.api.space_page_data.{test_path}'''
+
+            # Make the wonkey Domain/Path key we use to lookup now on First Load, which we also use on API, making them match
+            page_cache_key = webserver_render.EnhanceUriWithDomain(test_path, domain, domain_path)
+
+            page_key = f'''execute.api.space_page_data.{page_cache_key}'''
 
             page_data = CONFIG.cache.Get(bundle_path, page_key)
 
-            LOG.info(f'Found page key: {page_key}  Page Data: {pprint.pformat(page_data)}')
+            LOG.info(f'Found page key: {page_key}')#  Page Data: {pprint.pformat(page_data)}')
 
-            #TODO: Remove if/else, this should just be "= []", as this is the key list, not the data
-            if page_data != None:
-              return_data['cache'][page_key] = return_data['cache']['execute.api.space_page_data.{current_page}']
-            else:
-              return_data['cache'][page_key] = return_data['cache']['execute.api.space_page_data.{current_page}']
+            # Sets a dict that maps variable names to a `key_list`, which is a Python data search sequence-walker
+            return_data['cache'][page_key] = return_data['cache']['execute.api.space_page_data.{current_page}']
             
             # Delete the old one
             del return_data['cache']['execute.api.space_page_data.{current_page}']
@@ -272,17 +273,24 @@ async def Upload_CreateUploadFile(file: UploadFile = File(...)):
 # -- Handle Every HTTP Method and all paths with per-method handler --
 #       We route internally after this, and dont use FastAPI/Starlette routing, because they are code based and we want data based
 
-# GET
-@APP.get("/{full_path:path}", response_class=HTMLResponse)
-async def Web_GET(request: Request, full_path: str):
-  """Matches all paths for Method GET, and then we route ourselves"""
+def GetDomainAndPath(request):
+  """"""
   domain = str(request.base_url)
   domain_path = str(request.url.path)
 
+  # Clean up the domain, strip off any port, and the protocol
   domain = domain.replace('https://', '').replace('http://', '').replace('/', '')
   if ':' in domain: domain = domain.split(':')[0]
 
   LOG.info(f'Domain: {domain}  Path: {domain_path}')
+
+  return (domain, domain_path)
+
+# GET
+@APP.get("/{full_path:path}", response_class=HTMLResponse)
+async def Web_GET(request: Request, full_path: str):
+  """Matches all paths for Method GET, and then we route ourselves"""
+  (domain, domain_path) = GetDomainAndPath(request)
 
   # Get the bundle match
   (bundle_name, bundle, path_data) = GetBundlePathData('get', full_path, domain, domain_path)
@@ -293,13 +301,15 @@ async def Web_GET(request: Request, full_path: str):
 
   LOG.debug(f'GET: {full_path}  Args: {data}')#  Headers: {headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, request_headers=headers, request_data=data)
+  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, domain, domain_path, request_headers=headers, request_data=data)
 
 
 # POST
 @APP.post("/{full_path:path}", response_class=HTMLResponse)
 async def Web_POST(request: Request, full_path: str):
   """Matches all paths for Method POST, and then we route ourselves"""
+  (domain, domain_path) = GetDomainAndPath(request)
+
   request_data = dict(await request.form())
   request_headers = dict(request.headers)
 
@@ -308,7 +318,7 @@ async def Web_POST(request: Request, full_path: str):
 
   # LOG.debug(f'POST: {full_path}  Data: {request_data}')#  Headers: {request_headers}')
 
-  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, request_data=request_data, request_headers=request_headers)
+  return webserver_render.RenderPathData(request, CONFIG, full_path, bundle_name, bundle, path_data, domain, domain_path, request_data=request_data, request_headers=request_headers)
 
 
 # PUT

@@ -44,7 +44,7 @@ def GetLoginSessionFromRequest(config, request):
   return None
 
 
-def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data):
+def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, domain, domain_path):
   # Duplicate to protect top level object
   payload = dict(payload)
 
@@ -67,7 +67,9 @@ def EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request,
   payload['page_nav'] = bundle['nav']
 
   # Get the URI from this request, dont include leading slash to match our bundle config
-  payload['uri'] = request.url.path[1:]
+  #TODO:DUPLICATE?  Is this duped from RenderPage() down below?  I think I already set this accurately there, but here I was fixing the [1:].  Remove that one?  Maybe cleaner only here
+  payload['uri'] = EnhanceUriWithDomain(request.url.path[1:], domain, domain_path)
+  payload['uri_raw'] = request.url.path[1:]
 
   # Start trying to get the `page_group`, if it doesnt exist, get the page.  This is used to set the Nav Bar highlight so you know what section you are in
   payload['page'] = path_data.get('page_group', path_data.get('page', 'Unknown Page'))
@@ -240,10 +242,31 @@ def GetAuthSession(request, config, bundle_name, bundle, headers):
   return session
 
 
-def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request_headers=None, request_data=None):
+def EnhanceUriWithDomain(uri, domain, domain_path):
+  """Encode the domain and domain_path into a wonky string we use in place of the URI, which we decode with UnenhanceUriWithDomain()"""
+  enhanced_uri = f'''{domain.replace('.', '__')},{domain_path.replace('/', '__')}'''
+
+  return enhanced_uri
+
+
+def UnenhanceUriWithDomain(enchanced_uri):
+  """Decodes the wonkey string made by EnhanceUriWithDomain, giving us the tuple: (`domain`, `domain_path`) """
+  (domain_part, path_part) = enchanced_uri.split(',')
+
+  domain = domain_part.replace('__', '.')
+  domain_path = path_part.replace('__', '/')
+
+  return (domain, domain_path)
+
+
+def RenderPathData(request, config, uri, bundle_name, bundle, path_data, domain, domain_path, request_headers=None, request_data=None):
   """Render the Path Data"""
   # Our starting payload
   payload = {'request': {}, 'header': {}, 'session': {}}
+
+  # Rewrite the URI as the wonkey domain/domain_path for transit and cache key storage
+  uri_raw = uri
+  uri = EnhanceUriWithDomain(uri, domain, domain_path)
 
   # Check if this user is authed, if our bundle has auth
   if 'auth' in bundle and 'cookie' in bundle['auth']:
@@ -252,14 +275,17 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
   # If we have request args, assign them into the payload
   if request_data:
     payload['request'] = request_data
-    request_data['uri'] = uri
   else:
-    # Set the URI
-    request_data = {'uri': uri}
-  
+    # We set the URI after this, so empty here
+    request_data = {}
+
+  # Set the URI (wonky domain/path combo) and the `uri_raw` for the static entries.  All API endponits will be static
+  request_data['uri'] = uri
+  request_data['uri_raw'] = uri_raw
+
   # if request_headers: payload['header'] = request_headers
 
-  LOG.info(f'''Path Data Cache: {pprint.pformat(path_data.get('cache', {}))}''')
+  # LOG.info(f'''Path Data Cache: {pprint.pformat(path_data.get('cache', {}))}''')
 
   # Put any cache into our payload
   for (cache_key, payload_data) in path_data.get('cache', {}).items():
@@ -272,7 +298,7 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
       data_value = config.cache.Get(bundle_name, cache_key)
 
       # LOG.info(f'Data Value: {data_value}')
-      LOG.info(f'Add key list: {data_key_list}  From Bundle: {bundle_name}  Cache Key: {cache_key}')
+      # LOG.info(f'Add key list: {data_key_list}  From Bundle: {bundle_name}  Cache Key: {cache_key}')
 
       # If we have a key_list, dive down it and extract our data
       if data_key_list:
@@ -304,7 +330,7 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
 
     payload = ProcessPayloadData(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
 
-    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data)
+    payload = EnhancePagePayload(config, bundle_name, bundle, path_data, payload, request, request_headers, request_data, domain, domain_path)
 
     payload = EnsureBaseDotToUnderscore(payload)
 

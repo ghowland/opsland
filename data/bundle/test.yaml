@@ -430,12 +430,12 @@ static_data:
 # Domain Dynamic Page config
 domain_dynamic_config:
   howland.gem:
-    template: pages/site_page_render.html.j2
+    template: pages/site_page_dynamic.html.j2
     _import_static_data: 
       - space_page_dynamic
   
   takeback.com:
-    template: pages/site_page_render.html.j2
+    template: pages/site_page_dynamic.html.j2
     _import_static_data: 
       - space_page_dynamic
 
