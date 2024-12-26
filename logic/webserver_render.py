@@ -259,6 +259,8 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
   
   # if request_headers: payload['header'] = request_headers
 
+  LOG.info(f'''Path Data Cache: {pprint.pformat(path_data.get('cache', {}))}''')
+
   # Put any cache into our payload
   for (cache_key, payload_data) in path_data.get('cache', {}).items():
     # Format the cache key with the data
@@ -268,6 +270,9 @@ def RenderPathData(request, config, uri, bundle_name, bundle, path_data, request
     # Process each of our items
     for (payload_key, data_key_list) in payload_data.items():
       data_value = config.cache.Get(bundle_name, cache_key)
+
+      # LOG.info(f'Data Value: {data_value}')
+      LOG.info(f'Add key list: {data_key_list}  From Bundle: {bundle_name}  Cache Key: {cache_key}')
 
       # If we have a key_list, dive down it and extract our data
       if data_key_list:

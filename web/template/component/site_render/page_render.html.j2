@@ -1,3 +1,12 @@
+{% if not site_page %}
+  {% set site_page = {
+    'render': ['page_a'], 
+    'widgets': { 
+      'page_a': {'widget': 'default_page', 'include': {'default': ['section_a']}, 'data': {'theme': 'default'} }, 
+      'section_a': {'widget': 'default_section', 'include': {'default': []}, 'data': {'theme': 'default'} } },
+    }
+  %}
+{% endif %}
 
 {% if not space_style %}
   {% set space_style = _context['execute.api.space_style'] %}

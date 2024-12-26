@@ -4,6 +4,7 @@ Webserver using FastAPI
 This module starts and stops the webserver, and so it also invokes ShutdownThreads().
 """
 
+import pprint
 
 # FastAPI
 from typing import Union
@@ -134,7 +135,7 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
     
     http_data = http_data_methods[method]
 
-    # Skip because we dont have the path
+    # Skip because we dont have the path, but check if it's a dynamic page first
     if test_path not in http_data:
       # Look to see if this is a dynamic domain page
       for config_domain_name, config_domain_data in bundle['domain_dynamic_config'].items():
@@ -142,12 +143,37 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
         if config_domain_name == domain:
           
           # #TODO: Check the domain paths from our cache for this domain, and see if there is a match.  If not, return /404 page info
-          data_value = CONFIG.cache.Get(bundle_path, 'space_page_data')
+          all_domains = CONFIG.cache.Get(bundle_path, 'execute.api.site_domain')
 
-          LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}  Value: {data_value}')
+          LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}  Data Domains: {all_domains}')
+
+          # Clone the dict, so we dont change the original
+          return_data = dict(config_domain_data)
+          return_data['cache'] = dict(return_data['cache'])
+
+          # Replace page key
+          if 'execute.api.space_page_data.{current_page}' in return_data['cache']:
+            # Change the page name
+            # page_key = f'''execute.api.space_page_data.{domain.replace('.', '__')}_{domain_path.replace('/', '__')}'''
+            page_key = f'''execute.api.space_page_data.{test_path}'''
+
+            page_data = CONFIG.cache.Get(bundle_path, page_key)
+
+            LOG.info(f'Found page key: {page_key}  Page Data: {pprint.pformat(page_data)}')
+
+            #TODO: Remove if/else, this should just be "= []", as this is the key list, not the data
+            if page_data != None:
+              return_data['cache'][page_key] = return_data['cache']['execute.api.space_page_data.{current_page}']
+            else:
+              return_data['cache'][page_key] = return_data['cache']['execute.api.space_page_data.{current_page}']
+            
+            # Delete the old one
+            del return_data['cache']['execute.api.space_page_data.{current_page}']
+
+          # LOG.info(f'Domain matched: {config_domain_name}: Path: {domain_path}  Value: {pprint.pformat(return_data)}')
 
           # We matched, so dont check any more domains
-          return (bundle_path, bundle, config_domain_data)
+          return (bundle_path, bundle, return_data)
       
       # We didnt find the page, and we dont have dynamic matches, so skip this bundle now
       continue

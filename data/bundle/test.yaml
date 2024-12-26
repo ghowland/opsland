@@ -332,37 +332,6 @@ static_data:
       execute.api.site_domain_page:
         space_pages: []
 
-  space_page_dynamic:
-    cache:
-      execute.api.space_page_data.{site_page_uri}:
-        site_page: []
-      execute.api.space_widget_spec:
-        widget_specs: []
-      execute.api.space_map_widget_html:
-        map_widget_html: []
-      execute.api.space_widget_tags:
-        site_page_tags: []
-      execute.api.space_style:
-        space_style: []
-      execute.api.upload_refresh:
-        files: []
-      execute.api.table_data_refresh:
-        tables: []
-      execute.api.cache_icons:
-        icons: []
-      execute.api.space_style_select_data:
-        select: []
-      execute.api.space_content_data:
-        content: []
-      execute.api.site_content_register:
-        space_content: []
-      execute.api.site_content_derived:
-        space_content_derived: []
-      execute.api.site_domain:
-        space_domains: []
-      execute.api.site_domain_page:
-        space_pages: []
-
   space_api_base:
     cache:
       execute.api.space_page_data.{site_page_uri}:
@@ -394,6 +363,69 @@ static_data:
       execute.api.site_domain_page:
         space_pages: []
 
+  # Dynamic pages need to replace their `space_page_data`
+  space_page_dynamic:
+    cache:
+      execute.api.space_page_data.{current_page}:
+        site_page: []
+      execute.api.space_widget_spec:
+        widget_specs: []
+      execute.api.space_map_widget_html:
+        map_widget_html: []
+      execute.api.space_widget_tags:
+        site_page_tags: []
+      execute.api.space_style:
+        space_style: []
+      execute.api.upload_refresh:
+        files: []
+      execute.api.table_data_refresh:
+        tables: []
+      execute.api.cache_icons:
+        icons: []
+      execute.api.space_style_select_data:
+        select: []
+      execute.api.space_content_data:
+        content: []
+      execute.api.site_content_register:
+        space_content: []
+      execute.api.site_content_derived:
+        space_content_derived: []
+      execute.api.site_domain:
+        space_domains: []
+      execute.api.site_domain_page:
+        space_pages: []
+
+  # API Dynamic
+  space_api_dynamic:
+    cache:
+      execute.api.space_page_data.{current_page}:
+        site_page: []
+      execute.api.space_widget_spec:
+        widget_specs: []
+      execute.api.space_map_widget_html:
+        map_widget_html: []
+      execute.api.space_widget_tags:
+        site_page_tags: []
+      execute.api.space_style:
+        space_style: []
+      execute.api.upload_refresh:
+        files: []
+      execute.api.table_data_refresh:
+        tables: []
+      execute.api.cache_icons:
+        icons: []
+      execute.api.space_style_select_data:
+        select: []
+      execute.api.space_content_data:
+        content: []
+      execute.api.site_content_register:
+        space_content: []
+      execute.api.site_content_derived:
+        space_content_derived: []
+      execute.api.site_domain:
+        space_domains: []
+      execute.api.site_domain_page:
+        space_pages: []
 
 # Domain Dynamic Page config
 domain_dynamic_config:
@@ -456,7 +488,19 @@ http:
     api/site_page_render_full:
       template: component/site_page_full.html.j2
       execute: execute.api.site_page
-    
+
+    api/space_editor_new_edit:
+      template: component/site_editor/widget_page_edit_sidebar_widget.html.j2
+      execute: execute.api.space_page_data
+      _import_static_data: 
+        - space_api_dynamic
+
+    api/space_editor_new_render:
+      template: component/site_render/page_render.html.j2
+      execute: execute.api.space_page_data
+      _import_static_data: 
+        - space_api_dynamic
+
     # New: Re-render the Sidebar after a change
     api/space_editor_sidebar:
       template: component/site_editor/widget_page_edit_sidebar_widget.html.j2
@@ -641,7 +685,6 @@ http:
       template: pages/site_page_render.html.j2
       _import_static_data: 
         - space_page_base
-
 
     # Paths
     site_editor:

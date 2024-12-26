@@ -363,7 +363,7 @@ def GetDataByDictKeyList(source_data, key_list=None, missing_value=None):
     # try:
       cur_data = source_data
       for key in key_list:
-        # LOG.debug(f'Cur Key: {key}  Data: {cur_data}')
+        # LOG.info(f'Cur Key: {key}  Data: {cur_data}')
         if cur_data:
           cur_data = cur_data[key]
         else:
