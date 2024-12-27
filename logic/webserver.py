@@ -183,7 +183,7 @@ def GetBundlePathData(method, path, domain=None, domain_path=None):
     return (bundle_path, bundle, http_data[test_path], False)
 
   # Couldnt find a Bundle for a page
-  return (None, None, None)
+  return (None, None, None, False)
 
 
 # OpsLand Cache Data printed out for manual inspection
