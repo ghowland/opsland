@@ -1,0 +1,16 @@
+{% set cur_data = {'title': 'Product Admin'} %}
+{% set cur_style = space_style.merged.default %}
+
+{% include 'includes/page/page_start_space.html.j2' %}
+
+<div id="page_render">
+  {% include 'component/space_purchase_admin.html.j2' %}
+</div>
+
+<script>
+  var RenderWidgetApiSubmit = '/api/space_purchase'
+  var RenderWidgetApiRerender = '/api/space_purchase_reload'
+</script>
+{% include 'includes/script/render_edit_widget.html.j2' %} 
+
+{% include 'includes/page/page_end_minimal.html.j2' %}

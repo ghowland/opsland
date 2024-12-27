@@ -273,6 +273,30 @@ execute:
         execute.api.site_product:
           existing: []
     
+    # Space User
+    space_user:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_user_{uuid}.json space_user
+      input_path: /tmp/opsland/space_user_{uuid}.json
+      input:
+        execute.api.space_user:
+          existing: []
+    
+    # Space Purchase
+    space_purchase:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_purchase_{uuid}.json space_purchase
+      input_path: /tmp/opsland/space_purchase_{uuid}.json
+      input:
+        execute.api.space_purchase:
+          existing: []
+    
+    # Space Purchase Usage
+    space_purchase_usage:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_purchase_usage_{uuid}.json space_purchase_usage
+      input_path: /tmp/opsland/space_purchase_usage_{uuid}.json
+      input:
+        execute.api.space_purchase_usage:
+          existing: []
+    
 
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
@@ -423,7 +447,13 @@ static_data:
       execute.api.site_domain:
         space_domains: []
       execute.api.site_product:
-        space_products: []
+        space_product: []
+      execute.api.space_user:
+        space_user: []
+      execute.api.space_purchase:
+        space_purchase: []
+      execute.api.space_purchase_usage:
+        space_purchase_usage: []
 
 
 # Domain Dynamic Page config
@@ -621,11 +651,42 @@ http:
     api/site_product:
       execute: execute.api.site_product
 
-    # Site Prodects - Reload page
+    # Site Products - Reload page
     api/site_product_reload:
       template: component/site_product_admin.html.j2
       _import_static_data: 
         - space_page_base
+
+    # Space Users - Data
+    api/space_user:
+      execute: execute.api.space_user
+
+    # Space Users - Reload page
+    api/space_user_reload:
+      template: component/space_user_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Purchase - Data
+    api/space_purchase:
+      execute: execute.api.space_purchase
+
+    # Space Purchase - Reload page
+    api/space_purchase_reload:
+      template: component/space_purchase_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Purchase Usage - Data
+    api/space_purchase_usage:
+      execute: execute.api.space_purchase_usage
+
+    # Space Purchase Usage - Reload page
+    api/space_purchase_usage_reload:
+      template: component/space_purchase_usage_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
 
   # GET
   get:
@@ -661,6 +722,24 @@ http:
     # Site Products
     site_product:
       template: pages/site_product.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space User
+    space_user:
+      template: pages/space_user.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Purchase
+    space_purchase:
+      template: pages/space_purchase.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Purchase Usage
+    space_purchase_usage:
+      template: pages/space_purchase_usage.html.j2
       _import_static_data: 
         - space_page_base
 
