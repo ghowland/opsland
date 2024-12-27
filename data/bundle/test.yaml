@@ -353,6 +353,12 @@ static_data:
         space_domains: []
       execute.api.site_product:
         space_products: []
+      execute.api.space_user:
+        space_user: []
+      execute.api.space_purchase:
+        space_purchase: []
+      execute.api.space_purchase_usage:
+        space_purchase_usage: []
 
   space_api_base:
     cache:
@@ -384,6 +390,12 @@ static_data:
         space_domains: []
       execute.api.site_product:
         space_products: []
+      execute.api.space_user:
+        space_user: []
+      execute.api.space_purchase:
+        space_purchase: []
+      execute.api.space_purchase_usage:
+        space_purchase_usage: []
 
   # Dynamic pages need to replace their `space_page_data`
   space_page_dynamic:
@@ -416,6 +428,12 @@ static_data:
         space_domains: []
       execute.api.site_product:
         space_products: []
+      execute.api.space_user:
+        space_user: []
+      execute.api.space_purchase:
+        space_purchase: []
+      execute.api.space_purchase_usage:
+        space_purchase_usage: []
 
   # API Dynamic
   space_api_dynamic:
