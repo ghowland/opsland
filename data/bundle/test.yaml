@@ -297,7 +297,15 @@ execute:
         execute.api.space_purchase_usage:
           existing: []
     
-
+    # Space Account
+    space_account:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_account_{uuid}.json space_account
+      input_path: /tmp/opsland/space_account_{uuid}.json
+      input:
+        execute.api.space_account:
+          existing: []
+    
+    
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
   site_page.try00: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml
@@ -359,6 +367,9 @@ static_data:
         space_purchase: []
       execute.api.space_purchase_usage:
         space_purchase_usage: []
+      #sec.
+      execute.api.space_account:
+        space_account: []
 
   space_api_base:
     cache:
@@ -396,6 +407,9 @@ static_data:
         space_purchase: []
       execute.api.space_purchase_usage:
         space_purchase_usage: []
+      #sec.
+      execute.api.space_account:
+        space_account: []
 
   # Dynamic pages need to replace their `space_page_data`
   space_page_dynamic:
@@ -434,6 +448,9 @@ static_data:
         space_purchase: []
       execute.api.space_purchase_usage:
         space_purchase_usage: []
+      #sec.
+      execute.api.space_account:
+        space_account: []
 
   # API Dynamic
   space_api_dynamic:
@@ -472,6 +489,9 @@ static_data:
         space_purchase: []
       execute.api.space_purchase_usage:
         space_purchase_usage: []
+      #sec.
+      execute.api.space_account:
+        space_account: []
 
 
 # Domain Dynamic Page config
@@ -705,6 +725,16 @@ http:
       _import_static_data: 
         - space_page_base
 
+    # Space Account - Data
+    api/space_account:
+      execute: execute.api.space_account
+
+    # Space Account - Reload page
+    api/space_account_reload:
+      template: component/space_account_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
 
   # GET
   get:
@@ -758,6 +788,12 @@ http:
     # Space Purchase Usage
     space_purchase_usage:
       template: pages/space_purchase_usage.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Account
+    space_account:
+      template: pages/space_account.html.j2
       _import_static_data: 
         - space_page_base
 
