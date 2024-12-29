@@ -273,6 +273,22 @@ execute:
         execute.api.site_product:
           existing: []
     
+    # Site Product Stock
+    space_product_stock:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_product_stock_{uuid}.json space_product_stock
+      input_path: /tmp/opsland/space_product_stock_{uuid}.json
+      input:
+        execute.api.space_product_stock:
+          existing: []
+    
+    # Vendor
+    space_vendor:
+      command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_vendor_{uuid}.json space_vendor
+      input_path: /tmp/opsland/space_vendor_{uuid}.json
+      input:
+        execute.api.space_vendor:
+          existing: []
+    
     # Space User
     space_user:
       command: /mnt/d/_OpsLand/opsland-example/opsland_example.py -i /tmp/opsland/space_user_{uuid}.json space_user
@@ -305,7 +321,7 @@ execute:
         execute.api.space_account:
           existing: []
     
-    
+
 # Static content we can load into usage, like cache, but we dont store it based on execution, we just load it and reload if updated
 static:
   site_page.try00: /mnt/d/_OpsLand/opsland-example/data/site_page/try00.yaml
@@ -360,7 +376,11 @@ static_data:
       execute.api.site_domain:
         space_domains: []
       execute.api.site_product:
-        space_products: []
+        space_product: []
+      execute.api.space_vendor:
+        space_vendor: []
+      execute.api.space_product_stock:
+        space_product_stock: []
       execute.api.space_user:
         space_user: []
       execute.api.space_purchase:
@@ -400,7 +420,11 @@ static_data:
       execute.api.site_domain:
         space_domains: []
       execute.api.site_product:
-        space_products: []
+        space_product: []
+      execute.api.space_vendor:
+        space_vendor: []
+      execute.api.space_product_stock:
+        space_product_stock: []
       execute.api.space_user:
         space_user: []
       execute.api.space_purchase:
@@ -441,7 +465,11 @@ static_data:
       execute.api.site_domain:
         space_domains: []
       execute.api.site_product:
-        space_products: []
+        space_product: []
+      execute.api.space_vendor:
+        space_vendor: []
+      execute.api.space_product_stock:
+        space_product_stock: []
       execute.api.space_user:
         space_user: []
       execute.api.space_purchase:
@@ -483,6 +511,10 @@ static_data:
         space_domains: []
       execute.api.site_product:
         space_product: []
+      execute.api.space_vendor:
+        space_vendor: []
+      execute.api.space_product_stock:
+        space_product_stock: []
       execute.api.space_user:
         space_user: []
       execute.api.space_purchase:
@@ -735,6 +767,26 @@ http:
       _import_static_data: 
         - space_page_base
 
+    # Space Product Stock - Data
+    api/space_product_stock:
+      execute: execute.api.space_product_stock
+
+    # Space Product Stock - Reload page
+    api/space_product_stock_reload:
+      template: component/space_product_stock_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Vendor - Data
+    api/space_vendor:
+      execute: execute.api.space_vendor
+
+    # Space Vendor - Reload page
+    api/space_vendor_reload:
+      template: component/space_vendor_admin.html.j2
+      _import_static_data: 
+        - space_page_base
+
 
   # GET
   get:
@@ -797,6 +849,17 @@ http:
       _import_static_data: 
         - space_page_base
 
+    # Space Product Stock
+    space_product_stock:
+      template: pages/space_product_stock.html.j2
+      _import_static_data: 
+        - space_page_base
+
+    # Space Vendor
+    space_vendor:
+      template: pages/space_vendor.html.j2
+      _import_static_data: 
+        - space_page_base
 
 
     # Content Admin
